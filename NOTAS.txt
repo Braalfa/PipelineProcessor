@@ -1,0 +1,6 @@
+* Pagina 400 : Explicacion de cada componente
+* Pagina 439 figura 7.47: Procesador con pipeline
+
+IDEA: Separar el procesador en dos tareas:
+	1. Control
+	2. Datapath
