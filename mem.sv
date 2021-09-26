@@ -1,4 +1,5 @@
 /*
+	todo: definir bien los tamanos de las memorias
 	Memory with segmentation
 	Inputs:
 	- clk: the clock
@@ -17,9 +18,10 @@ module mem(input logic clk, we,
 	
 	logic [31:0] RAM[63:0];
 
-	initial
+	initial begin
 		$readmemh("instructions.txt",RAM);
-		//$readmemh("datamemory.txt",RAM, 32);
+		$readmemh("datamemory.txt",RAM, 32);
+	end
 	
 	always_ff @(posedge clk)
 		if (we) RAM[32+a2] <= wd;
