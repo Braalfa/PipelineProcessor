@@ -1,10 +1,8 @@
 
 // TO-DO: 
-// problema con el tamano de la instruccion y de los datos (se resuelve con 32 bits en ambos)
-// clock de la memoria
-// eliminar innecesarios de alu, 
-// agregar paso libre a alu
-// cmp y manejo de branch??
+// problema con el tamano de la instruccion y de los datos (confirmar solucion)
+// eliminar operaciones innecesarias de alu, 
+// agregar paso libre a alu para ambos datos
 			
  
 module CPU #(parameter WIDTH = 16, parameter REGNUM = 16, 
