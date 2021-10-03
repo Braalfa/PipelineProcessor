@@ -21,9 +21,9 @@
 	- WIDTH: width of the data
 	- ADRESSWIDTH: size of the addresses in regfile
 */
-module Decode #(parameter WIDTH = 8, parameter REGNUM = 8, parameter ADDRESSWIDTH = 3)
+module Decode #(parameter WIDTH = 	8, parameter REGNUM = 8, parameter ADDRESSWIDTH = 3)
 	(input logic [ADDRESSWIDTH-1:0] reg1Address, reg2Address, writeAddress,
-	 input logic [WIDTH-1:0] inmmediate, PCPlus8,
+	 input logic [WIDTH-1:0] inmmediate, dataToSave, PCPlus8,
 	 input logic clock, reset, obtainPCAsR1, writeEnable,
 	 output logic [WIDTH-1:0] reg1Content, reg2Content
 	 );
@@ -32,7 +32,7 @@ module Decode #(parameter WIDTH = 8, parameter REGNUM = 8, parameter ADDRESSWIDT
 	
 	mux2  #(WIDTH) r1AddressSelector (reg1Address, 4'd8, obtainPCAsR1, reg1FinalAddress);
 	regfile #(WIDTH, REGNUM, ADDRESSWIDTH) registerFile (clock, writeEnable, 
-reg1FinalAddress,reg2Address, writeAddress, inmmediate, PCPlus8, reg1Content, reg2Content );
+reg1FinalAddress,reg2Address, writeAddress, dataToSave, PCPlus8, reg1Content, reg2Content );
 
 endmodule
 

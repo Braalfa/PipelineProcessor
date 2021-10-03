@@ -15,9 +15,9 @@ module CPU #(parameter WIDTH = 8, parameter REGNUM = 8, parameter ADDRESSWIDTH =
 	//-------------------------------------------------------------------------------//
 	// Fetch
 	
-	logic [WIDTH-1:0] NewPC, PC, PCPlus8;
+	logic [WIDTH-1:0] NewPCF, PC, PCPlus8;
 	logic PCSelector;
-	Fetch #(WIDTH) Fetch(NewPC, PCSelector, clock, reset, PC, PCPlus8);
+	Fetch #(WIDTH) Fetch(NewPCF, PCSelector, clock, reset, PC, PCPlus8);
 	
 	// Fetch - Decoding FlipFlop
 	resetableflipflop  #(WIDTH) FetchFlipFlop(clock, reset, InstructionF, InstructionD);
@@ -26,14 +26,14 @@ module CPU #(parameter WIDTH = 8, parameter REGNUM = 8, parameter ADDRESSWIDTH =
 	
 	// Decoder
 	
-	logic [ADDRESSWIDTH-1:0] reg1Address, reg2Address, writeAddress;
-	logic [WIDTH-1:0] inmediateD, inmediateE;
+	logic [ADDRESSWIDTH-1:0] reg1Address, reg2Address, writeAddressD;
+	logic [WIDTH-1:0] dataToSaveD, regDestinationAddressD, regDestinationAddressE;
 	logic obtainPCAsR1, writeEnable;
 	logic [WIDTH-1:0] reg1ContentD, reg2ContentD, reg1ContentE, reg2ContentE;
 	
 	Decode #(WIDTH, REGNUM, ADDRESSWIDTH) Decode
-	( reg1Address, reg2Address, writeAddress,
-	  inmediateD, PCPlus8,
+	( reg1Address, reg2Address, writeAddressD,
+	  regDestinationAddressD, dataToSaveD, PCPlus8,
 	  clock, reset, obtainPCAsR1, writeEnable,
 	  reg1ContentD, reg2ContentD
 	 );
@@ -42,8 +42,8 @@ module CPU #(parameter WIDTH = 8, parameter REGNUM = 8, parameter ADDRESSWIDTH =
 	 // Decode - Execution Flip-Flop
 	 
 	 resetableflipflop  #(3*WIDTH) DecodeFlipFlop(clock, reset, 
-	 {reg1ContentD, reg2ContentD, inmediateD}, 
-	 {reg1ContentE, reg2ContentE, inmediateE});
+	 {reg1ContentD, reg2ContentD, regDestinationAddressD}, 
+	 {reg1ContentE, reg2ContentE, regDestinationAddressE});
 
 	 
 	//-------------------------------------------------------------------------------//
@@ -53,7 +53,7 @@ module CPU #(parameter WIDTH = 8, parameter REGNUM = 8, parameter ADDRESSWIDTH =
 	logic [3:0] aluControl;
 	logic [WIDTH-1:0] aluOutputE, aluOutputM;
 	logic N, Z, V, C;
-	logic [WIDTH-1:0] inmediateM, reg2ContentM;
+	logic [WIDTH-1:0] regDestinationAddressM, reg2ContentM;
 	
 	Execute #(WIDTH) Execute
 	(reg1ContentE, reg2ContentE,
@@ -67,13 +67,13 @@ module CPU #(parameter WIDTH = 8, parameter REGNUM = 8, parameter ADDRESSWIDTH =
 	 
 	 
 	 resetableflipflop  #(3*WIDTH) ExecuteFlipFlop(clock, reset, 
-	 {aluOutputE, reg2ContentE, inmediateE}, 
-	 {aluOutputM, reg2ContentM, inmediateM});
+	 {aluOutputE, reg2ContentE, regDestinationAddressE}, 
+	 {aluOutputM, reg2ContentM, regDestinationAddressM});
 	 
    //-------------------------------------------------------------------------------//
 
 	//Memory
-	logic [WIDTH-1:0] inmediateWB, aluOutputWB;
+	logic [WIDTH-1:0] regDestinationAddressWB, aluOutputWB;
 	
 	assign MemoryDataToWrite = reg2ContentM;
 	assign MemoryDataAddress = aluOutputM;
@@ -81,8 +81,19 @@ module CPU #(parameter WIDTH = 8, parameter REGNUM = 8, parameter ADDRESSWIDTH =
 	 // Memory - Write Back Flip-Flop
 
 	resetableflipflop  #(3*WIDTH) MemoryFlipFlop(clock, reset, 
-	 {aluOutputM, MemoryDataOutputM, inmediateM}, 
-	 {aluOutputWB, MemoryDataOutputWB, inmediateWB});
+	 {aluOutputM, MemoryDataOutputM, regDestinationAddressM}, 
+	 {aluOutputWB, MemoryDataOutputWB, regDestinationAddressWB});
 
+    //-------------------------------------------------------------------------------//
+	 
+	 //Write Back
+	 
+	 logic resultWBSelector;
+	 logic outputWB;
+	 mux2  #(WIDTH) writeBack (aluOutputWB, MemoryDataOutputWB, resultWBSelector, outputWB);
+	 assign writeAddressD = regDestinationAddressWB;
+	 assign dataToSaveD = outputWB;
+	 assign NewPCF = outputWB;
+	 
 endmodule
 
