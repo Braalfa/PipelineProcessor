@@ -21,16 +21,32 @@
 	- WIDTH: width of the data
 	- ADRESSWIDTH: size of the addresses in regfile
 */
-module Decode #(parameter WIDTH = 	8, parameter REGNUM = 8, parameter ADDRESSWIDTH = 3)
-	(input logic [ADDRESSWIDTH-1:0] reg1Address, reg2Address, writeAddress,
-	 input logic [WIDTH-1:0] inmmediate, dataToSave, PCPlus8,
+module Decode #(parameter WIDTH = 	8, parameter REGNUM = 8, 
+					parameter ADDRESSWIDTH = 3, parameter OPCODEWIDTH = 4,
+					parameter INSTRUCTIONWIDTH = 24)
+	(input logic [ADDRESSWIDTH-1:0] writeAddress,
+	 input logic [WIDTH-1:0] dataToSave, PCPlus8,
+	 input logic [INSTRUCTIONWIDTH-1:0] instruction,
 	 input logic clock, reset, obtainPCAsR1, writeEnable,
-	 output logic [WIDTH-1:0] reg1Content, reg2Content
+	 output logic [WIDTH-1:0] reg1Content, reg2Content, inmediate,
+	 output logic [ADDRESSWIDTH-1:0] regDestinationAddress,
+	 output logic [OPCODEWIDTH-1:0] opcode
 	 );
 	
 	logic [ADDRESSWIDTH-1:0] reg1FinalAddress;
+	logic [ADDRESSWIDTH-1:0] reg1Address, reg2Address;
 	
-	mux2  #(WIDTH) r1AddressSelector (reg1Address, 4'd8, obtainPCAsR1, reg1FinalAddress);
+	
+	assign reg1Address = instruction[15:12];
+	assign reg2Address = instruction[11:8];
+	assign regDestinationAddress = instruction[19:16];
+	assign inmediate = instruction[15:0];
+	assign opcode = instruction[23:20];
+	
+	
+	mux2  #(ADDRESSWIDTH) r1AddressSelector (reg1Address, 4'd15, obtainPCAsR1, reg1FinalAddress);
+	
+	
 	regfile #(WIDTH, REGNUM, ADDRESSWIDTH) registerFile (clock, writeEnable, 
 reg1FinalAddress,reg2Address, writeAddress, dataToSave, PCPlus8, reg1Content, reg2Content );
 
