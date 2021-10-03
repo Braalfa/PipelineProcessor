@@ -12,10 +12,11 @@
 	- rd2: data requested
 */
 
-module mem #(parameter WIDTH = 8)
+module mem #(parameter WIDTH = 16, parameter INSTRUCTIONWIDTH = 24)
   (input logic clk, we,
 	input logic [WIDTH-1:0] a1, a2, wd,
-	output logic [WIDTH-1:0] rd1, rd2);
+	output logic [INSTRUCTIONWIDTH-1:0] rd1,
+	output logic [WIDTH-1:0] rd2);
 	
 	logic [WIDTH-1:0] RAM[63:0];
 
