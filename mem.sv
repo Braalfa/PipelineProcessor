@@ -12,11 +12,12 @@
 	- rd2: data requested
 */
 
-module mem(input logic clk, we,
-	input logic [31:0] a1, a2, wd,
-	output logic [31:0] rd1, rd2);
+module mem #(parameter WIDTH = 8)
+  (input logic clk, we,
+	input logic [WIDTH-1:0] a1, a2, wd,
+	output logic [WIDTH-1:0] rd1, rd2);
 	
-	logic [31:0] RAM[63:0];
+	logic [WIDTH-1:0] RAM[63:0];
 
 	initial begin
 		$readmemh("instructions.txt",RAM);

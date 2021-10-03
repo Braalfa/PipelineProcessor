@@ -9,16 +9,16 @@
 	- PC: the current PC value
 	- PCPlus8: PC + 4?
 */
-module Fetch
-	(input logic [31:0] NewPC,
+module Fetch #(parameter WIDTH = 8)
+	(input logic [WIDTH-1:0] NewPC,
 	 input logic PCSelector, clock, reset,
-	 output logic [31:0] PC, PCPlus8
+	 output logic [WIDTH-1:0] PC, PCPlus8
 	 );
 	
-	logic [31:0] TempPC;
+	logic [WIDTH-1:0] TempPC;
 	
-	resetableflipflop  #(32) pcflipflop(clock, reset, TempPC ,PC);
-	mux2  #(32) pcmux (PCPlus8, NewPC, PCSelector, TempPC);
-	adder  #(32) pcadder(PC, 4, PCPlus8);
+	resetableflipflop  #(WIDTH) pcflipflop(clock, reset, TempPC ,PC);
+	mux2  #(WIDTH) pcmux (PCPlus8, NewPC, PCSelector, TempPC);
+	adder  #(WIDTH) pcadder(PC, 4, PCPlus8);
 	
 endmodule
