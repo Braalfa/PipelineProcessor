@@ -25,17 +25,24 @@ module CPU #(parameter WIDTH = 8, parameter REGNUM = 8, parameter ADDRESSWIDTH =
 	// Decoder
 	
 	logic [ADDRESSWIDTH-1:0] reg1Address, reg2Address, writeAddress;
-	logic [WIDTH-1:0] inmmediate;
+	logic [WIDTH-1:0] inmediateD, inmediateE;
 	logic obtainPCAsR1, writeEnable;
-	logic [WIDTH-1:0] reg1Content, reg2Content;
+	logic [WIDTH-1:0] reg1ContentD, reg2ContentD, reg1ContentE, reg2ContentE;
 	
-	Decode #(WIDTH, REGNUM, ADDRESSWIDTH)
+	Decode #(WIDTH, REGNUM, ADDRESSWIDTH) Decode
 	( reg1Address, reg2Address, writeAddress,
-	  inmmediate, PCPlus8, inmmediate,
+	  inmediateD, PCPlus8,
 	  clock, reset, obtainPCAsR1, writeEnable,
-	  reg1Content, reg2Content
+	  reg1ContentD, reg2ContentD
 	 );
 	 
-	 // To do: crear un flip flop parametrizable
-
+	 
+	 // Decode - Execution Flip-Flop
+	 
+	 resetableflipflop  #(3*WIDTH) DecodeFlipFlop(clock, reset, 
+	 {reg1ContentD, reg2ContentD, inmediateD}, 
+	 {reg1ContentE, reg2ContentE, inmediateE});
+	 
+	 
 endmodule
+
