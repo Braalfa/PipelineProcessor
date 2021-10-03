@@ -7,11 +7,12 @@ module CPU #(parameter WIDTH = 8, parameter REGNUM = 8, parameter ADDRESSWIDTH =
 	// Connection to memory
 	
 	logic writeDataEnable;
-	logic [WIDTH-1:0] DataAddress, DataWrite, InstructionF, InstructionD, MemoryData;
-	mem #(WIDTH) Memory(clock, writeDataEnable, PC, DataAddress, 
-					DataWrite, InstructionF, MemoryData);
-	assign writeDataEnable = 0;
+	logic [WIDTH-1:0] MemoryDataAddress, MemoryDataToWrite, 
+	InstructionF, InstructionD, MemoryDataOutputM, MemoryDataOutputWB;
+	mem #(WIDTH) Memory(clock, writeDataEnable, PC, MemoryDataAddress, 
+					MemoryDataToWrite, InstructionF, MemoryDataOutputM);
 	
+	//-------------------------------------------------------------------------------//
 	// Fetch
 	
 	logic [WIDTH-1:0] NewPC, PC, PCPlus8;
@@ -21,6 +22,7 @@ module CPU #(parameter WIDTH = 8, parameter REGNUM = 8, parameter ADDRESSWIDTH =
 	// Fetch - Decoding FlipFlop
 	resetableflipflop  #(WIDTH) FetchFlipFlop(clock, reset, InstructionF, InstructionD);
 	
+	//-------------------------------------------------------------------------------//
 	
 	// Decoder
 	
@@ -42,7 +44,45 @@ module CPU #(parameter WIDTH = 8, parameter REGNUM = 8, parameter ADDRESSWIDTH =
 	 resetableflipflop  #(3*WIDTH) DecodeFlipFlop(clock, reset, 
 	 {reg1ContentD, reg2ContentD, inmediateD}, 
 	 {reg1ContentE, reg2ContentE, inmediateE});
+
+	 
+	//-------------------------------------------------------------------------------//
+
+	//Execute
+	
+	logic [3:0] aluControl;
+	logic [WIDTH-1:0] aluOutputE, aluOutputM;
+	logic N, Z, V, C;
+	logic [WIDTH-1:0] inmediateM, reg2ContentM;
+	
+	Execute #(WIDTH) Execute
+	(reg1ContentE, reg2ContentE,
+	 aluControl,
+	 aluOutputE,
+	 N, Z, V, C
+	 );		
+	
+	
+	 // Execution - Memory Flip-Flop
 	 
 	 
+	 resetableflipflop  #(3*WIDTH) ExecuteFlipFlop(clock, reset, 
+	 {aluOutputE, reg2ContentE, inmediateE}, 
+	 {aluOutputM, reg2ContentM, inmediateM});
+	 
+   //-------------------------------------------------------------------------------//
+
+	//Memory
+	logic [WIDTH-1:0] inmediateWB, aluOutputWB;
+	
+	assign MemoryDataToWrite = reg2ContentM;
+	assign MemoryDataAddress = aluOutputM;
+	
+	 // Memory - Write Back Flip-Flop
+
+	resetableflipflop  #(3*WIDTH) MemoryFlipFlop(clock, reset, 
+	 {aluOutputM, MemoryDataOutputM, inmediateM}, 
+	 {aluOutputWB, MemoryDataOutputWB, inmediateWB});
+
 endmodule
 
