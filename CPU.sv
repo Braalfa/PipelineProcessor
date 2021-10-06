@@ -15,6 +15,7 @@ module CPU #(parameter WIDTH = 16, parameter REGNUM = 16,
 					resultSelectorWB,
 					data2SelectorE,
 					input logic [2:0] aluControlE,
+					input logic [1:0] data1ForwardSelectorE, data2ForwardSelectorE,
 					output logic N, Z, V, C,
 					output logic [OPCODEWIDTH-1:0] opcodeD
 					);
@@ -71,13 +72,12 @@ module CPU #(parameter WIDTH = 16, parameter REGNUM = 16,
 	logic [WIDTH-1:0] reg2ContentM, forwardM, forwardWB;
 	logic [ADDRESSWIDTH-1:0] regDestinationAddressM;
 	
-	logic [1:0] data1ForwardSelector, data2ForwardSelector;
 	
 	Execute #(WIDTH) Execute
 	(reg1ContentE, reg2ContentE, inmmediateE, forwardM, forwardWB,
 	 aluControlE,
 	 data2SelectorE,
-	 data1ForwardSelector, data2ForwardSelector,
+	 data1ForwardSelectorE, data2ForwardSelectorE,
 	 aluOutputE,
 	 N, Z, V, C
 	 );		
