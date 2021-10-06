@@ -1,7 +1,7 @@
 module ALU #(parameter WIDTH = 16)( 
     input [WIDTH-1:0] A,
 	 input [WIDTH-1:0] B,
-	 input [3:0] sel,
+	 input [2:0] sel,
     output logic [WIDTH-1:0] Out,
 	 output logic N,
 	 output logic Z,
