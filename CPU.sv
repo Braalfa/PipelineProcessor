@@ -68,13 +68,16 @@ module CPU #(parameter WIDTH = 16, parameter REGNUM = 16,
 	//Execute
 	
 	logic [WIDTH-1:0] aluOutputE, aluOutputM;
-	logic [WIDTH-1:0] reg2ContentM;
+	logic [WIDTH-1:0] reg2ContentM, forwardM, forwardWB;
 	logic [ADDRESSWIDTH-1:0] regDestinationAddressM;
 	
+	logic [1:0] data1ForwardSelector, data2ForwardSelector;
+	
 	Execute #(WIDTH) Execute
-	(reg1ContentE, reg2ContentE, inmmediateE,
+	(reg1ContentE, reg2ContentE, inmmediateE, forwardM, forwardWB,
 	 aluControlE,
 	 data2SelectorE,
+	 data1ForwardSelector, data2ForwardSelector,
 	 aluOutputE,
 	 N, Z, V, C
 	 );		
@@ -95,7 +98,7 @@ module CPU #(parameter WIDTH = 16, parameter REGNUM = 16,
 	
 	assign MemoryDataToWrite = reg2ContentM;
 	assign MemoryDataAddress = aluOutputM;
-	
+	assign forwardM = aluOutputM;
 	 // Memory - Write Back Flip-Flop
 
 	resetableflipflop  #(2*WIDTH+ADDRESSWIDTH) MemoryFlipFlop(clock, reset, 
@@ -111,6 +114,7 @@ module CPU #(parameter WIDTH = 16, parameter REGNUM = 16,
 	 assign writeAddressD = regDestinationAddressWB;
 	 assign dataToSaveD = outputWB;
 	 assign NewPCF = outputWB;
-	 
+	 assign forwardWB = outputWB;
+
 endmodule
 
