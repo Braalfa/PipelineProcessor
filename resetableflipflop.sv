@@ -9,11 +9,15 @@
  	- q: current saved value
 **/
 module resetableflipflop #(parameter WIDTH = 8)
-	(input logic clk, reset,
+	(input logic clk, reset, enable,
 	input logic [WIDTH-1:0] d,
 	output logic [WIDTH-1:0] q);
 	
-	always_ff @(posedge clk, posedge reset)
-	if (reset) q <= 0;
-	else q <= d;
+	logic [WIDTH-1:0] out;
+	
+	always_ff @(posedge clk, posedge reset) begin
+		if (reset) out <= 0;
+		else if(enable) out <= d;
+	end
+	assign q = out;
 endmodule

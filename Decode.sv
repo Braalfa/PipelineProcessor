@@ -29,12 +29,11 @@ module Decode #(parameter WIDTH = 	8, parameter REGNUM = 8,
 	 input logic [INSTRUCTIONWIDTH-1:0] instruction,
 	 input logic clock, reset, obtainPCAsR1, writeEnable,
 	 output logic [WIDTH-1:0] reg1Content, reg2Content, inmediate,
-	 output logic [ADDRESSWIDTH-1:0] regDestinationAddress,
+	 output logic [ADDRESSWIDTH-1:0] regDestinationAddress, reg1FinalAddress, reg2Address,
 	 output logic [OPCODEWIDTH-1:0] opcode
 	 );
 	
-	logic [ADDRESSWIDTH-1:0] reg1FinalAddress;
-	logic [ADDRESSWIDTH-1:0] reg1Address, reg2Address;
+	logic [ADDRESSWIDTH-1:0] reg1Address;
 	
 	
 	assign reg1Address = instruction[15:12];
