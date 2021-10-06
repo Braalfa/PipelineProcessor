@@ -13,7 +13,7 @@
 */
 module Execute #(parameter WIDTH = 8)
 	(input logic [WIDTH-1:0] data1, data2, data3,
-	 input logic [3:0] aluControl,
+	 input logic [2:0] aluControl,
 	 input logic data2Selector,
 	 output logic [WIDTH-1:0] aluOutput,
 	 output logic N, Z, V, C

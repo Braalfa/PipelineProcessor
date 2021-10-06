@@ -14,7 +14,7 @@ module CPU #(parameter WIDTH = 16, parameter REGNUM = 16,
 					writeDataEnableM,
 					resultSelectorWB,
 					data2SelectorE,
-					input logic [3:0] aluControlE,
+					input logic [2:0] aluControlE,
 					output logic N, Z, V, C,
 					output logic [OPCODEWIDTH-1:0] opcodeD
 					);
