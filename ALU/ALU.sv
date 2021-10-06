@@ -46,12 +46,7 @@ module ALU #(parameter WIDTH = 16)(
 
 	shiftL_modulo #( WIDTH ) ShiftL(A,OutShiftL,VShiftL,CShiftL);
 	
-	//=============SHIFTR=============
-	
-	logic [WIDTH-1:0] OutShiftR;
-	logic CShiftR,VShiftR;
 
-	shiftR_modulo #( WIDTH ) ShiftR(A,OutShiftR,VShiftR,CShiftR);
 	
 
 	always_comb begin  
@@ -86,12 +81,6 @@ module ALU #(parameter WIDTH = 16)(
 				Out = OutShiftL;
 				C <= CShiftL;
 				V <= VShiftL;
-				
-			end
-			3'b110 : begin
-				Out = OutShiftR;
-				C <= CShiftR;
-				V <= VShiftR;
 				
 			end
 			default : begin
