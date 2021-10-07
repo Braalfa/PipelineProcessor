@@ -14,6 +14,7 @@ module CPU #(parameter WIDTH = 16, parameter REGNUM = 16,
 					writeDataEnableMD,
 					resultSelectorWBD,
 					data2SelectorED,
+					takeBranchE,
 					input logic [2:0] aluControlED,
 					output logic N, Z, V, C,
 					output logic [OPCODEWIDTH-1:0] opcodeD
@@ -21,16 +22,16 @@ module CPU #(parameter WIDTH = 16, parameter REGNUM = 16,
 	
 	
 	logic [1:0] data1ForwardSelectorE, data2ForwardSelectorE;
-	logic stallF, stallD, flushE;
+	logic stallF, stallD, flushE, flushD;
 	
 		
 	//Hazards Unit 
 	hazardsUnitsv #(WIDTH, ADDRESSWIDTH) HazardsUnit(
-		writeEnableDWB, writeEnableDM, resultSelectorWBE,
+		writeEnableDWB, writeEnableDM, resultSelectorWBE, takeBranchE,
 		regDestinationAddressM, regDestinationAddressWB, regDestinationAddressE,
 		reg1AddressE, reg2AddressE, reg1AddressD, reg2AddressD,
 		data1ForwardSelectorE, data2ForwardSelectorE,
-		stallF, stallD, flushE);
+		stallF, stallD, flushE, flushD);
 
 	// Memory 
 	
@@ -44,10 +45,10 @@ module CPU #(parameter WIDTH = 16, parameter REGNUM = 16,
 	// Fetch
 
 	logic [WIDTH-1:0] NewPCF, PC, PCPlus8;
-	Fetch #(WIDTH) Fetch(NewPCF, PCSelectorFWB, clock, reset, stallF, PC, PCPlus8);
+	Fetch #(WIDTH) Fetch(NewPCF, takeBranchE, clock, reset, !stallF, PC, PCPlus8);
 	
 	// Fetch - Decoding FlipFlop
-	resetableflipflop  #(INSTRUCTIONWIDTH) FetchFlipFlop(clock, reset, stallD, InstructionF, InstructionD);
+	resetableflipflop  #(INSTRUCTIONWIDTH) FetchFlipFlop(clock, flushD, !stallD, InstructionF, InstructionD);
 	
 	//-------------------------------------------------------------------------------//
 	
