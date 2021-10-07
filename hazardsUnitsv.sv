@@ -7,11 +7,11 @@
 */
 
 module hazardsUnitsv #(parameter WIDTH = 16, parameter ADDRESSWIDTH = 4)
-	(input logic writeEnableDWB, writeEnableDM, resultSelectorWBE,
+	(input logic writeEnableDWB, writeEnableDM, resultSelectorWBE, takeBranchE,
 	input logic [ADDRESSWIDTH-1:0] writeAddressM, writeAddressW, writeAddressE,
 	reg1ReadAddressE, reg2ReadAddressE, reg1ReadAddressD, reg2ReadAddressD,
 	output logic [1:0] data1ForwardSelectorE, data2ForwardSelectorE,
-	output logic stallF, stallD, flushE);
+	output logic stallF, stallD, flushE, flushD);
 	
 	logic LDRstall;
 	logic Match_12D_E;
@@ -38,13 +38,15 @@ module hazardsUnitsv #(parameter WIDTH = 16, parameter ADDRESSWIDTH = 4)
 			end
 		end 
 		
-		// Stalls on Load
+		// Stalls on Load and Branching
 		
 		Match_12D_E = (reg1ReadAddressD == writeAddressE) || (reg2ReadAddressD == writeAddressE);
 		LDRstall = Match_12D_E && resultSelectorWBE;
-		stallF = LDRstall;
+		
 		stallD = LDRstall;
-		flushE = LDRstall;
+		stallF = LDRstall;
+		flushE = LDRstall || takeBranchE;
+		flushD = takeBranchE;
 	end
 	
 endmodule

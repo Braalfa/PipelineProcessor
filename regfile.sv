@@ -13,7 +13,7 @@
 	- WIDTH: width of each register
 	- ADRESSWIDTH: size of the addresses
 **/
-module regfile #(parameter WIDTH = 8, parameter REGNUM = 8, parameter ADDRESSWIDTH = 3)
+module regfile #(parameter WIDTH = 16, parameter REGNUM = 16, parameter ADDRESSWIDTH = 4)
 	(input logic clk,
 	input logic we3,
 	input logic [ADDRESSWIDTH-1:0] ra1, ra2, wa3,
