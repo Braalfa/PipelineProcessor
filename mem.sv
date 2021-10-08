@@ -12,23 +12,12 @@
 	- rd2: data requested
 */
 
-module mem #(parameter WIDTH = 8, parameter INSTRUCTIONWIDTH = 24)
+module mem #(parameter WIDTH = 16, parameter INSTRUCTIONWIDTH = 24)
   (input logic clk, we,
 	input logic [WIDTH-1:0] a1, a2, wd,
 	output logic [INSTRUCTIONWIDTH-1:0] rd1,
 	output logic [WIDTH-1:0] rd2);
-	
-	logic [WIDTH-1:0] RAM[63:0];
-
-	initial begin
-		$readmemh("instructions.txt",RAM);
-		$readmemh("datamemory.txt",RAM, 32);
-	end
-	
-	always_ff @(posedge clk) begin
-		rd2 <= RAM[32+a2];
-		if (we) RAM[32+a2] <= wd;
-	end
-	
-	assign rd1 = {RAM[a1], RAM[a1+1]}; 
+		
+	ram ram({1'b0, a2[12:0]}, {1'b1, a1[10:0]}, clk, wd, 32'b0, we, 1'b0, rd2[7:0], rd1);
+	assign rd2[15:8] = 8'b0;
 endmodule
