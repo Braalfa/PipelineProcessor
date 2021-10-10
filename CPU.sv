@@ -38,17 +38,17 @@ module CPU #(parameter WIDTH = 16, parameter REGNUM = 16,
 	logic [WIDTH-1:0] MemoryDataAddress, MemoryDataToWrite,
 							MemoryDataOutputM, MemoryDataOutputWB;
 	logic [INSTRUCTIONWIDTH-1:0] InstructionF, InstructionD;
-	mem #(WIDTH, INSTRUCTIONWIDTH) Memory(clock, writeDataEnableMM, PC, MemoryDataAddress, 
+	mem #(WIDTH, INSTRUCTIONWIDTH) Memory(clock, writeDataEnableMM, PCF, MemoryDataAddress, 
 					MemoryDataToWrite, InstructionF, MemoryDataOutputM);
 	
 	//-------------------------------------------------------------------------------//
 	// Fetch
 
-	logic [WIDTH-1:0] NewPCF, PC, PCPlus8;
-	Fetch #(WIDTH) Fetch(NewPCF, takeBranchE, clock, reset, !stallF, PC, PCPlus8);
+	logic [WIDTH-1:0] NewPCF, PCF, PCD;
+	Fetch #(WIDTH) Fetch(NewPCF, takeBranchE, clock, reset, !stallF, PCF);
 	
 	// Fetch - Decoding FlipFlop
-	resetableflipflop  #(INSTRUCTIONWIDTH) FetchFlipFlop(clock, flushD, !stallD, InstructionF, InstructionD);
+	resetableflipflop  #(INSTRUCTIONWIDTH + WIDTH) FetchFlipFlop(clock, flushD, !stallD, {InstructionF, PCF}, {InstructionD, PCD});
 	
 	//-------------------------------------------------------------------------------//
 	
@@ -71,7 +71,7 @@ module CPU #(parameter WIDTH = 16, parameter REGNUM = 16,
 	
 	Decode #(WIDTH, REGNUM, ADDRESSWIDTH, OPCODEWIDTH, INSTRUCTIONWIDTH) Decode
 	( writeAddressD,
-	  dataToSaveD, PCPlus8,
+	  dataToSaveD, PCD,
 	  InstructionD,
 	  clock, reset, obtainPCAsR1DD, writeEnableDD,
 	  reg1ContentD, reg2ContentD, inmmediateD,
