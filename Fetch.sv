@@ -12,13 +12,13 @@
 module Fetch #(parameter WIDTH = 8)
 	(input logic [WIDTH-1:0] NewPC,
 	 input logic PCSelector, clock, reset, enable,
-	 output logic [WIDTH-1:0] PC, PCPlus8
+	 output logic [WIDTH-1:0] PC
 	 );
 	
-	logic [WIDTH-1:0] TempPC;
+	logic [WIDTH-1:0] TempPC, PCPlus1;
 	
 	resetableflipflop  #(WIDTH) pcflipflop(clock, reset, enable, TempPC ,PC);
-	mux2  #(WIDTH) pcmux (PCPlus8, NewPC, PCSelector, TempPC);
-	adder  #(WIDTH) pcadder(PC, 1, PCPlus8);
+	mux2  #(WIDTH) pcmux (PCPlus1, NewPC, PCSelector, TempPC);
+	adder  #(WIDTH) pcadder(PC, 1, PCPlus1);
 	
 endmodule
