@@ -46,7 +46,7 @@ module Decode #(parameter WIDTH = 	8, parameter REGNUM = 8,
 	mux2  #(ADDRESSWIDTH) r1AddressSelector (reg1Address, 4'd15, obtainPCAsR1, reg1FinalAddress);
 	
 	
-	regfile #(WIDTH, REGNUM, ADDRESSWIDTH) registerFile (clock, writeEnable, 
+	regfile #(WIDTH, REGNUM, ADDRESSWIDTH) registerFile (!clock, writeEnable, 
 reg1FinalAddress,reg2Address, writeAddress, dataToSave, PCPlus8, reg1Content, reg2Content );
 
 endmodule
