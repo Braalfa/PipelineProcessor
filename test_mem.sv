@@ -21,7 +21,7 @@ module test_mem();
 		we = 1;
 	   a1 = 0;
 		a2 = 8;
-		wd = 8'h22;
+		wd = 8'h25;
 		
 	   clk = 0;		
 		#10;
