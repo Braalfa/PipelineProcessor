@@ -8,17 +8,39 @@
 module CPU #(parameter WIDTH = 16, parameter REGNUM = 16, 
 				parameter ADDRESSWIDTH = 4, parameter OPCODEWIDTH = 4,
 				parameter INSTRUCTIONWIDTH = 24)
-	(input logic clock, reset, 
-					obtainPCAsR1DD, writeEnableDD,
-					writeDataEnableMD,
-					resultSelectorWBD,
-					data2SelectorED,
-					takeBranchE,
-					input logic [2:0] aluControlED,
-					output logic NE2, ZE2, VE2, CE2,
-					output logic [OPCODEWIDTH-1:0] opcodeD, opcodeE
-					);
+	(input logic clock, reset);
 	
+	
+	logic obtainPCAsR1DD, writeEnableDD,
+	writeDataEnableMD,
+	resultSelectorWBD,
+	data2SelectorED,
+	takeBranchE,
+	outFlag;
+	logic [2:0] aluControlED;
+	logic NE2, ZE2, VE2, CE2;
+	logic [OPCODEWIDTH-1:0] opcodeD, opcodeE;
+	
+	// Control Unit
+	controlunit #(OPCODEWIDTH) controlunit(
+		obtainPCAsR1DD, writeEnableDD,
+		writeDataEnableMD,
+		resultSelectorWBD,
+		data2SelectorED,
+		outFlag,
+		aluControlED,
+		opcodeD
+	);
+	
+	// condunit
+	
+	condunit #(OPCODEWIDTH)
+	(takeBranchE,
+	 opcodeE,
+	NE2, ZE2, VE2, CE2
+	);
+	
+	// -----------------//
 	
 	logic [1:0] data1ForwardSelectorE, data2ForwardSelectorE;
 	logic stallF, stallD, flushE, flushD;
@@ -107,7 +129,7 @@ module CPU #(parameter WIDTH = 16, parameter REGNUM = 16,
 			writeDataEnableMM,
 			resultSelectorWBM;
 			
-	logic NE1, ZE1, VE1, CE1, ND, ZD, VD, CD;
+	logic NE1, ZE1, VE1, CE1;
 	
 	logic [WIDTH-1:0] aluOutputE, aluOutputM;
 	logic [WIDTH-1:0] reg2ContentM, forwardM, forwardWB;
