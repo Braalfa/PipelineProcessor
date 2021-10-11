@@ -1,4 +1,4 @@
-module condunit
+module condunit #(parameter OPCODEWIDTH = 4)
 	(output logic takeBranchE,
 	input logic [OPCODEWIDTH-1:0] opcodeE,
 	input logic N, Z, V, C
