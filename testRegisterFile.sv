@@ -2,8 +2,8 @@ module testRegisterFile();
 	
 	logic clk, writeEnable;
 	logic [3:0] pointToAddress1, pointToAddress2, pointToAddressToWrite;
-	logic [7:0] writeData3, PC;
-	logic [7:0] readData1, readData2;
+	logic [15:0] writeData3, PC;
+	logic [15:0] readData1, readData2;
 
 	
 	regfile registerFile(clk, writeEnable, 
@@ -22,10 +22,10 @@ module testRegisterFile();
 	 
 		// Ejemplo 1: MOV R3, #9 
 		// Escritura (secuencial)
-		pointToAddressToWrite = 4'd3; writeData3 = 8'd9; writeEnable = 1; #6; writeEnable = 0; #4;
+		pointToAddressToWrite = 4'd3; writeData3 = 16'd9; writeEnable = 1; #6; writeEnable = 0; #4;
 		
 		// Ejemplo 2: MOV R6, #1 
-		pointToAddressToWrite = 4'd6; writeData3 = 8'd5; writeEnable = 1; #6; writeEnable = 0; #4;
+		pointToAddressToWrite = 4'd6; writeData3 = 16'd5; writeEnable = 1; #6; writeEnable = 0; #4;
 		
 		// Ejemplo 3: ADD R4, R3, R9
 		// Lectura (combinacional)
