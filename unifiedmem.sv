@@ -28,9 +28,9 @@ module unifiedmem #(parameter WIDTH = 16, parameter RAMSIZE = 4)
 	logic [7:0] RAM6 [RAMSIZE-1:0];
 
 	initial begin
-		$readmemh("C:\\Users\\alfab\\Documents\\PipelineProcessor\\mem1.txt",RAM1);
-		$readmemh("C:\\Users\\alfab\\Documents\\PipelineProcessor\\mem2.txt",RAM2);
-		$readmemh("C:\\Users\\alfab\\Documents\\PipelineProcessor\\mem3.txt",RAM3);
+		$readmemb("C:\\Users\\alfab\\Documents\\PipelineProcessor\\mem1.txt",RAM1);
+		$readmemb("C:\\Users\\alfab\\Documents\\PipelineProcessor\\mem2.txt",RAM2);
+		$readmemb("C:\\Users\\alfab\\Documents\\PipelineProcessor\\mem3.txt",RAM3);
 		$readmemh("C:\\Users\\alfab\\Documents\\PipelineProcessor\\mem4.txt",RAM4);
 		$readmemh("C:\\Users\\alfab\\Documents\\PipelineProcessor\\mem5.txt",RAM5);
 		$readmemh("C:\\Users\\alfab\\Documents\\PipelineProcessor\\mem6.txt",RAM6);

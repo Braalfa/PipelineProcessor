@@ -8,15 +8,17 @@
 module CPU #(parameter WIDTH = 16, parameter REGNUM = 16, 
 				parameter ADDRESSWIDTH = 4, parameter OPCODEWIDTH = 4,
 				parameter INSTRUCTIONWIDTH = 24)
-	(input logic clock, reset);
+	(input logic clock, reset, 
+	output logic outFlag,
+	output logic [WIDTH-1:0] out);
 	
+	assign out = MemoryDataOutputWB;
 	
 	logic obtainPCAsR1DD, writeEnableDD,
 	writeDataEnableMD,
 	resultSelectorWBD,
 	data2SelectorED,
-	takeBranchE,
-	outFlag;
+	takeBranchE;
 	logic [2:0] aluControlED;
 	logic NE2, ZE2, VE2, CE2;
 	logic [OPCODEWIDTH-1:0] opcodeD, opcodeE;
@@ -201,6 +203,35 @@ module CPU #(parameter WIDTH = 16, parameter REGNUM = 16,
 	 assign dataToSaveD = outputWB;
 	 assign NewPCF = outputWB;
 	 assign forwardWB = outputWB;
+	 
+	 
+	 always_ff@(clock) begin 
+		$display ("----------------Ciclo-------------------");
+		$display ($sformatf("Primer Flip Flop: InstructionD = %b, PCD = %d",InstructionF, PCF));
+		
+		$display ($sformatf("Segundo Flip Flop: reg1ContentD = %h, reg2ContentD = %h",reg1ContentD, reg2ContentD));
+		$display ($sformatf("Segundo Flip Flop: regDestinationAddressD = %h, inmmediateD = %h ", regDestinationAddressD, inmmediateD));
+		$display ($sformatf("Segundo Flip Flop: reg1AddressD = %h, reg2AddressD = %h ", reg1AddressD, reg2AddressD));
+		$display ($sformatf("Segundo Flip Flop: writeEnableDD = %h, writeDataEnableMD = %h ", writeEnableDD, writeDataEnableMD));
+		$display ($sformatf("Segundo Flip Flop: resultSelectorWBD = %h, data2SelectorED = %h ", resultSelectorWBD, data2SelectorED));
+		$display ($sformatf("Segundo Flip Flop: aluControlED = %h, opcodeD = %h ", aluControlED, opcodeD));
+		$display ($sformatf("Segundo Flip Flop: NE1 = %h, ZE1 = %h, VE1 = %h, CE1 = %h", NE1, ZE1, VE1, CE1));
+
+		$display ($sformatf("Tercer Flip Flop: aluOutputE = %b, reg2ContentE = %h",aluOutputE, reg2ContentE));
+		$display ($sformatf("Tercer Flip Flop: aluOutputE = %h, reg2ContentE = %b",regDestinationAddressE, writeEnableDE));
+		$display ($sformatf("Tercer Flip Flop: aluOutputE = %b, reg2ContentE = %b",writeDataEnableME, resultSelectorWBE));
+		
+		
+		
+		$display ($sformatf("Cuarto Flip Flop: aluOutputE = %b, reg2ContentE = %d",aluOutputM, MemoryDataOutputM));
+		$display ($sformatf("Cuarto Flip Flop: aluOutputE = %b, reg2ContentE = %d",regDestinationAddressM, writeEnableDM));
+		$display ($sformatf("Cuarto Flip Flop: aluOutputE = %b, reg2ContentE = %d",resultSelectorWBM));
+
+		
+		$display ($sformatf("WriteBack: regDestinationAddressWB = %b, outputWB = %d",regDestinationAddressWB, outputWB));
+		
+	
+	end
 
 endmodule
 
