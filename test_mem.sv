@@ -18,30 +18,39 @@ module test_mem();
 	initial 
 	begin
 	
-		we = 0;
+		we = 1;
 	   a1 = 0;
-		a2 = 0;
-		wd = 0;
+		a2 = 8;
+		wd = 8'h22;
 		
 	   clk = 0;		
 		#10;
 	   clk = 1;
 		#10;
+		we = 0;
+		a1 = a1+1;
+		a2 = 7;
 	   clk = 0;
 		#10;
 	   clk = 1;
 		#10;
+		a1 = a1+1;
 	   clk = 0;
 		#10;
 	   clk = 1;
 		#10;
+		a1 = a1+1;
+	   clk = 0;
+		we = 1;
+		#10;
 	   clk = 1;
 		#10;
+		we = 0;
+		a2 = 8;
+		a1 = a1+1;
 	   clk = 0;
 		#10;
 	   clk = 1;
-		#10;
-	   clk = 0;
 	end
 	
 endmodule 
