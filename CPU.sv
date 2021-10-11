@@ -12,8 +12,6 @@ module CPU #(parameter WIDTH = 16, parameter REGNUM = 16,
 	output logic outFlag,
 	output logic [WIDTH-1:0] out);
 	
-	assign out = MemoryDataOutputWB;
-	
 	logic obtainPCAsR1DD, writeEnableDD,
 	writeDataEnableMD,
 	resultSelectorWBD,
@@ -22,6 +20,57 @@ module CPU #(parameter WIDTH = 16, parameter REGNUM = 16,
 	logic [2:0] aluControlED;
 	logic NE2, ZE2, VE2, CE2;
 	logic [OPCODEWIDTH-1:0] opcodeD, opcodeE;
+	
+
+	
+	logic [1:0] data1ForwardSelectorE, data2ForwardSelectorE;
+	logic stallF, stallD, flushE, flushD;
+
+	
+
+	logic [WIDTH-1:0] NewPCF, PCF, PCD;
+
+
+	
+	logic [WIDTH-1:0] MemoryDataAddress, MemoryDataToWrite,
+							MemoryDataOutputM, MemoryDataOutputWB;
+	logic [INSTRUCTIONWIDTH-1:0] InstructionF, InstructionD;
+
+	
+	
+	logic writeEnableDE,
+			writeDataEnableME,
+			resultSelectorWBE,
+			data2SelectorEE;
+	logic [2:0] aluControlEE;	
+	logic [ADDRESSWIDTH-1:0] writeAddressD, 
+							regDestinationAddressD, regDestinationAddressE,
+							reg1AddressD, reg2AddressD, reg1AddressE, reg2AddressE;
+	logic [WIDTH-1:0] inmmediateD, inmmediateE, dataToSaveD;
+	logic [WIDTH-1:0] reg1ContentD, reg2ContentD, reg1ContentE, reg2ContentE;
+
+
+	
+	logic writeEnableDM,
+			writeDataEnableMM,
+			resultSelectorWBM;
+	logic NE1, ZE1, VE1, CE1;
+	logic [WIDTH-1:0] aluOutputE, aluOutputM;
+	logic [WIDTH-1:0] reg2ContentM, forwardM, forwardWB;
+	logic [ADDRESSWIDTH-1:0] regDestinationAddressM;
+
+	
+	
+	logic writeEnableDWB,
+			resultSelectorWBWB,
+			data2SelectorEWB;
+	logic [2:0] aluControlEWB;	
+	logic [WIDTH-1:0] aluOutputWB;
+	logic [ADDRESSWIDTH-1:0] regDestinationAddressWB;
+	
+	
+	logic [WIDTH-1:0] outputWB;
+
 	
 	// Control Unit
 	controlunit #(OPCODEWIDTH) controlunit(
@@ -36,17 +85,14 @@ module CPU #(parameter WIDTH = 16, parameter REGNUM = 16,
 	
 	// condunit
 	
-	condunit #(OPCODEWIDTH)
+	condunit #(OPCODEWIDTH) condunit
 	(takeBranchE,
 	 opcodeE,
 	NE2, ZE2, VE2, CE2
 	);
 	
 	// -----------------//
-	
-	logic [1:0] data1ForwardSelectorE, data2ForwardSelectorE;
-	logic stallF, stallD, flushE, flushD;
-	
+		
 		
 	//Hazards Unit 
 	hazardsUnitsv #(WIDTH, ADDRESSWIDTH) HazardsUnit(
@@ -58,16 +104,12 @@ module CPU #(parameter WIDTH = 16, parameter REGNUM = 16,
 
 	// Memory 
 	
-	logic [WIDTH-1:0] MemoryDataAddress, MemoryDataToWrite,
-							MemoryDataOutputM, MemoryDataOutputWB;
-	logic [INSTRUCTIONWIDTH-1:0] InstructionF, InstructionD;
 	mem #(WIDTH, INSTRUCTIONWIDTH) Memory(clock, writeDataEnableMM, PCF, MemoryDataAddress, 
 					MemoryDataToWrite, InstructionF, MemoryDataOutputM);
 	
 	//-------------------------------------------------------------------------------//
 	// Fetch
 
-	logic [WIDTH-1:0] NewPCF, PCF, PCD;
 	Fetch #(WIDTH) Fetch(NewPCF, takeBranchE, clock, reset, !stallF, PCF);
 	
 	// Fetch - Decoding FlipFlop
@@ -76,21 +118,7 @@ module CPU #(parameter WIDTH = 16, parameter REGNUM = 16,
 	//-------------------------------------------------------------------------------//
 	
 	// Decoder
-	
-	logic writeEnableDE,
-			writeDataEnableME,
-			resultSelectorWBE,
-			data2SelectorEE;
-	logic [2:0] aluControlEE;	
-
-	
-	
-	logic [ADDRESSWIDTH-1:0] writeAddressD, 
-							regDestinationAddressD, regDestinationAddressE,
-							reg1AddressD, reg2AddressD, reg1AddressE, reg2AddressE;
-	logic [WIDTH-1:0] inmmediateD, inmmediateE, dataToSaveD;
-	logic [WIDTH-1:0] reg1ContentD, reg2ContentD, reg1ContentE, reg2ContentE;
-	
+		
 	Decode #(WIDTH, REGNUM, ADDRESSWIDTH, OPCODEWIDTH, INSTRUCTIONWIDTH) Decode
 	( writeAddressD,
 	  dataToSaveD, PCD,
@@ -127,16 +155,6 @@ module CPU #(parameter WIDTH = 16, parameter REGNUM = 16,
 
 	//Execute
 	
-	logic writeEnableDM,
-			writeDataEnableMM,
-			resultSelectorWBM;
-			
-	logic NE1, ZE1, VE1, CE1;
-	
-	logic [WIDTH-1:0] aluOutputE, aluOutputM;
-	logic [WIDTH-1:0] reg2ContentM, forwardM, forwardWB;
-	logic [ADDRESSWIDTH-1:0] regDestinationAddressM;
-	
 	
 	Execute #(WIDTH) Execute
 	(reg1ContentE, reg2ContentE, inmmediateE, forwardM, forwardWB,
@@ -166,22 +184,10 @@ module CPU #(parameter WIDTH = 16, parameter REGNUM = 16,
 	//Memory
 	
 	
-
-	
-	logic writeEnableDWB,
-			resultSelectorWBWB,
-			data2SelectorEWB;
-	logic [2:0] aluControlEWB;	
-
-
-	
-	
-	logic [WIDTH-1:0] aluOutputWB;
-	logic [ADDRESSWIDTH-1:0] regDestinationAddressWB;
-	
 	assign MemoryDataToWrite = reg2ContentM;
 	assign MemoryDataAddress = aluOutputM;
 	assign forwardM = aluOutputM;
+
 	 // Memory - Write Back Flip-Flop
 
 	resetableflipflop  #(2*WIDTH+ADDRESSWIDTH+2) MemoryFlipFlop(clock, reset, 1'b1,
@@ -197,13 +203,16 @@ module CPU #(parameter WIDTH = 16, parameter REGNUM = 16,
 	 //Write Back
 	 
 	 
-	 logic [WIDTH-1:0] outputWB;
 	 mux2  #(WIDTH) writeBack (aluOutputWB, MemoryDataOutputWB, resultSelectorWBWB, outputWB);
 	 assign writeAddressD = regDestinationAddressWB;
 	 assign dataToSaveD = outputWB;
 	 assign NewPCF = outputWB;
 	 assign forwardWB = outputWB;
 	 
+	 
+	 
+	 assign out = MemoryDataOutputWB;
+
 	 
 	 always_ff@(clock) begin 
 		$display ("----------------Ciclo-------------------");
@@ -225,7 +234,7 @@ module CPU #(parameter WIDTH = 16, parameter REGNUM = 16,
 		
 		$display ($sformatf("Cuarto Flip Flop: aluOutputE = %b, reg2ContentE = %d",aluOutputM, MemoryDataOutputM));
 		$display ($sformatf("Cuarto Flip Flop: aluOutputE = %b, reg2ContentE = %d",regDestinationAddressM, writeEnableDM));
-		$display ($sformatf("Cuarto Flip Flop: aluOutputE = %b, reg2ContentE = %d",resultSelectorWBM));
+		$display ($sformatf("Cuarto Flip Flop: aluOutputE = %b",resultSelectorWBM));
 
 		
 		$display ($sformatf("WriteBack: regDestinationAddressWB = %b, outputWB = %d",regDestinationAddressWB, outputWB));
