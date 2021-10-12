@@ -14,11 +14,11 @@ module controlunit #(parameter OPCODEWIDTH = 4)
 		case(opcodeD)
 			4'b0000: begin 
 				obtainPCAsR1DD = 0; 
-				writeEnableDD = 1;
-				data2SelectorED = 1'bx;
-				aluControlED = 3'b110;
+				writeEnableDD = 0;
+				data2SelectorED = 0;
+				aluControlED = 3'b000;
 				writeDataEnableMD = 0;
-				resultSelectorWBD = 1;
+				resultSelectorWBD = 0;
 				outFlag = 0;
 			end
 			4'b0001: begin 
@@ -78,10 +78,10 @@ module controlunit #(parameter OPCODEWIDTH = 4)
 			4'b0111: begin 
 				obtainPCAsR1DD = 0; 
 				writeEnableDD = 1;
-				data2SelectorED = 0;
-				aluControlED = 3'b100;
+				data2SelectorED = 1'bx;
+				aluControlED = 3'b110;
 				writeDataEnableMD = 0;
-				resultSelectorWBD = 0;
+				resultSelectorWBD = 1;
 				outFlag = 0;
 			end
 			4'b1000: begin 

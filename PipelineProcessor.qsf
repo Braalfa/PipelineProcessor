@@ -113,10 +113,14 @@ set_global_assignment -name SYSTEMVERILOG_FILE test_cpu.sv
 set_global_assignment -name EDA_TEST_BENCH_NAME test_cpu -section_id eda_simulation
 set_global_assignment -name EDA_DESIGN_INSTANCE_NAME NA -section_id test_cpu
 set_global_assignment -name EDA_TEST_BENCH_MODULE_NAME test_cpu -section_id test_cpu
+set_global_assignment -name EDA_TEST_BENCH_NAME test_ALU -section_id eda_simulation
+set_global_assignment -name EDA_DESIGN_INSTANCE_NAME NA -section_id test_ALU
+set_global_assignment -name EDA_TEST_BENCH_MODULE_NAME test_ALU -section_id test_ALU
 set_global_assignment -name EDA_TEST_BENCH_FILE test_mem.sv -section_id test_mem
 set_global_assignment -name EDA_TEST_BENCH_FILE test_fetch.sv -section_id test_fetch
 set_global_assignment -name EDA_TEST_BENCH_FILE testRegisterFile.sv -section_id testRegisterFile
 set_global_assignment -name EDA_TEST_BENCH_FILE test_decode.sv -section_id test_decode
 set_global_assignment -name EDA_TEST_BENCH_FILE test_execute.sv -section_id test_execute
 set_global_assignment -name EDA_TEST_BENCH_FILE test_cpu.sv -section_id test_cpu
+set_global_assignment -name EDA_TEST_BENCH_FILE ALU/test_ALU.sv -section_id test_ALU
 set_instance_assignment -name PARTITION_HIERARCHY root_partition -to | -section_id Top
