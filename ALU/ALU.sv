@@ -54,49 +54,49 @@ module ALU #(parameter WIDTH = 16)(
       case (sel)  
          3'b000,
 			3'b001 : begin
-				Out <= OutSumador;
+				Out = OutSumador;
 				C <= CSumador;
 				V <= VSumador;
 				
 			end
 			3'b010 : begin
-				Out <= OutAND;
+				Out = OutAND;
 				C <= CAND;
 				V <= VAND;
 				
 			end
 			3'b011 :begin
-				Out <= OutOR;
+				Out = OutOR;
 				C <= COR;
 				V <= VOR;
 				
 			end
 			3'b100 : begin
-				Out <= OutXOR;
+				Out = OutXOR;
 				C <= CXOR;
 				V <= VXOR;
 				
 			end
 			3'b101 : begin
-				Out <= OutShiftL;
+				Out = OutShiftL;
 				C <= CShiftL;
 				V <= VShiftL;
 				
 			end
 			3'b110 : begin
-				Out <= A;
+				Out = A;
 				C <= 0;
 				V <= 0;
 
 			end
 			3'b111 : begin
-				Out <= B;
+				Out = B;
 				C <= 0;
 				V <= 0;
 
 			end
 			default : begin
-				Out <= A;
+				Out = A;
 				C <= 0;
 				V <= 0;
 				
@@ -105,7 +105,6 @@ module ALU #(parameter WIDTH = 16)(
 	
 		N <= Out[WIDTH-1];
 		Z <= ~|Out;
-		
 		
    end
 	
