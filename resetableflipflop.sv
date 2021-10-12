@@ -15,7 +15,7 @@ module resetableflipflop #(parameter WIDTH = 8)
 	
 	logic [WIDTH-1:0] out;
 	
-	always_ff @(posedge clk, posedge reset) begin
+	always_ff @(posedge clk) begin
 		if (reset) out <= 0;
 		else if(enable) out <= d;
 	end

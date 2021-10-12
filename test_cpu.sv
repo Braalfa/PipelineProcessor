@@ -19,14 +19,14 @@ module test_cpu();
 	
 	initial 
 	begin	
-		reset = 0;
-		#10;
 		reset = 1;
+		clock = 0;
 		#10;
+		clock = 1;
+		#10;
+		clock = 0;
 		reset = 0;
 		#10
-		clock = 0;
-		#10
 		clock = 1;
 		#10
 		clock = 0;
@@ -59,6 +59,22 @@ module test_cpu();
 		#10
 		clock = 0;
 		#10
+		clock = 1;
+		#10
+		clock = 0;
+				#10
+		clock = 1;
+		#10
+		clock = 0;
+				#10
+		clock = 1;
+		#10
+		clock = 0;
+				#10
+		clock = 1;
+		#10
+		clock = 0;
+				#10
 		clock = 1;
 		#10
 		clock = 0;
