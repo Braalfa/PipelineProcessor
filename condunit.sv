@@ -10,6 +10,7 @@ module condunit #(parameter OPCODEWIDTH = 4)
 			4'b1100: takeBranchE = ~Z; // NE
 			4'b1101: takeBranchE = N!=V; // LT
 			4'b1110: takeBranchE = N==V; // GE
+			4'b1111: takeBranchE = 1'b1;
 			default: takeBranchE = 1'b0; // 0
 		endcase
 	
