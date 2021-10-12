@@ -155,13 +155,14 @@ module CPU #(parameter WIDTH = 16, parameter REGNUM = 16,
 
 	//Execute
 	
-	
+	logic [WIDTH-1:0] reg2FinalE;
+
 	Execute #(WIDTH) Execute
 	(reg1ContentE, reg2ContentE, inmmediateE, forwardM, forwardWB,
 	 aluControlEE,
 	 data2SelectorEE,
 	 data1ForwardSelectorE, data2ForwardSelectorE,
-	 aluOutputE,
+	 reg2FinalE, aluOutputE,
 	 NE1, ZE1, VE1, CE1
 	 );		
 	
@@ -170,7 +171,7 @@ module CPU #(parameter WIDTH = 16, parameter REGNUM = 16,
 	 
 	 
 	 resetableflipflop  #(2*WIDTH+ADDRESSWIDTH+3) ExecuteFlipFlop(clock, reset, 1'b1,
-	 {aluOutputE, reg2ContentE, regDestinationAddressE,
+	 {aluOutputE, reg2FinalE, regDestinationAddressE,
 			writeEnableDE,
 			writeDataEnableME,
 			resultSelectorWBE}, 
@@ -235,7 +236,7 @@ module CPU #(parameter WIDTH = 16, parameter REGNUM = 16,
 		$display ($sformatf("Segundo Flip Flop: NE1 = %h, ZE1 = %h, VE1 = %h, CE1 = %h", NE1, ZE1, VE1, CE1));
 
 
-		$display ($sformatf("Tercer Flip Flop: aluOutputE = %b, reg2ContentE = %h",aluOutputE, reg2ContentE));
+		$display ($sformatf("Tercer Flip Flop: aluOutputE = %b, reg2FinalE = %b",aluOutputE, reg2FinalE));
 		$display ($sformatf("Tercer Flip Flop: regDestinationAddressE = %h, writeEnableDE = %b",regDestinationAddressE, writeEnableDE));
 		$display ($sformatf("Tercer Flip Flop: writeDataEnableME = %b, resultSelectorWBE = %b",writeDataEnableME, resultSelectorWBE));
 		
