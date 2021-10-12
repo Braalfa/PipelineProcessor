@@ -234,21 +234,22 @@ module CPU #(parameter WIDTH = 16, parameter REGNUM = 16,
 		$display ($sformatf("Segundo Flip Flop: aluControlED = %h, opcodeD = %h ", aluControlED, opcodeD));
 		$display ($sformatf("Segundo Flip Flop: NE1 = %h, ZE1 = %h, VE1 = %h, CE1 = %h", NE1, ZE1, VE1, CE1));
 
+
 		$display ($sformatf("Tercer Flip Flop: aluOutputE = %b, reg2ContentE = %h",aluOutputE, reg2ContentE));
-		$display ($sformatf("Tercer Flip Flop: aluOutputE = %h, reg2ContentE = %b",regDestinationAddressE, writeEnableDE));
-		$display ($sformatf("Tercer Flip Flop: aluOutputE = %b, reg2ContentE = %b",writeDataEnableME, resultSelectorWBE));
+		$display ($sformatf("Tercer Flip Flop: regDestinationAddressE = %h, writeEnableDE = %b",regDestinationAddressE, writeEnableDE));
+		$display ($sformatf("Tercer Flip Flop: writeDataEnableME = %b, resultSelectorWBE = %b",writeDataEnableME, resultSelectorWBE));
 		
 		
-		
-		$display ($sformatf("Cuarto Flip Flop: aluOutputE = %b, reg2ContentE = %d",aluOutputM, MemoryDataOutputM));
-		$display ($sformatf("Cuarto Flip Flop: aluOutputE = %b, reg2ContentE = %d",regDestinationAddressM, writeEnableDM));
-		$display ($sformatf("Cuarto Flip Flop: aluOutputE = %b",resultSelectorWBM));
+		$display ($sformatf("Cuarto Flip Flop: aluOutputM = %b, MemoryDataOutputM = %d",aluOutputM, MemoryDataOutputM));
+		$display ($sformatf("Cuarto Flip Flop: regDestinationAddressM = %b, writeEnableDM = %d",regDestinationAddressM, writeEnableDM));
+		$display ($sformatf("Cuarto Flip Flop: resultSelectorWBM = %b",resultSelectorWBM));
 
 		
-		$display ($sformatf("WriteBack: regDestinationAddressWB = %b, outputWB = %d",regDestinationAddressWB, outputWB));
+		$display ($sformatf("WriteBack: regDestinationAddressWB = %b, outputWB = %b",regDestinationAddressWB, outputWB));
 		
 		$display ($sformatf("Riesgos: stallF = %b, stallD = %d",stallF, stallD));
 		$display ($sformatf("Riesgos: flushE = %b, flushD = %d",flushE, flushD));
+		$display ($sformatf("Riesgos: data1ForwardSelectorE = %b, data2ForwardSelectorE = %b",data1ForwardSelectorE, data2ForwardSelectorE));
 	end
 
 endmodule
