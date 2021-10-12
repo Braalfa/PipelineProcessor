@@ -123,7 +123,7 @@ module CPU #(parameter WIDTH = 16, parameter REGNUM = 16,
 	( writeAddressD,
 	  dataToSaveD, PCD,
 	  InstructionD,
-	  clock, reset, obtainPCAsR1DD, writeEnableDD,
+	  clock, reset, obtainPCAsR1DD, writeEnableDWB,
 	  reg1ContentD, reg2ContentD, inmmediateD,
 	  regDestinationAddressD, reg1AddressD, reg2AddressD,
 	  opcodeD
@@ -218,7 +218,7 @@ module CPU #(parameter WIDTH = 16, parameter REGNUM = 16,
 	 end
 	 
 	 
-	 always_ff@(clock) begin 
+	 always_ff@(posedge clock) begin 
 		$display ("----------------Ciclo-------------------");
 				
 				
