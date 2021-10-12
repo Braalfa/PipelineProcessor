@@ -16,13 +16,12 @@ module Execute #(parameter WIDTH = 8)
 	 input logic [2:0] aluControl,
 	 input logic data2Selector,
 	 input logic [1:0] data1ForwardSelector, data2ForwardSelector,
-	 output logic [WIDTH-1:0] aluOutput,
+	 output logic [WIDTH-1:0] data2AfterForward, aluOutput,
 	 output logic N, Z, V, C
 	 );		
 	
-	logic [WIDTH-1:0] data2Final;
 	logic [WIDTH-1:0] data1AfterForward;
-	logic [WIDTH-1:0] data2AfterForward;
+	logic [WIDTH-1:0] data2Final;
 
 	mux3  #(WIDTH) data1ForwardMUX(data1, forwardWB, forwardM, 
 									data1ForwardSelector, data1AfterForward);	
