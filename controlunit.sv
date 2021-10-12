@@ -108,7 +108,7 @@ module controlunit #(parameter OPCODEWIDTH = 4)
 				data2SelectorED = 0;
 				aluControlED = 3'b001;
 				writeDataEnableMD = 0;
-				resultSelectorWBD =  1'bx;;
+				resultSelectorWBD =  1'bx;
 				outFlag = 0;
 			end
 			4'b1011: begin 
@@ -156,7 +156,15 @@ module controlunit #(parameter OPCODEWIDTH = 4)
 				resultSelectorWBD = 0;
 				outFlag = 0;			
 			end
-			
+			default begin
+				obtainPCAsR1DD = 0; 
+				writeEnableDD = 0;
+				data2SelectorED = 0;
+				aluControlED = 3'b000;
+				writeDataEnableMD = 0;
+				resultSelectorWBD = 0;
+				outFlag = 0;			
+			end
 		endcase
 		
 	

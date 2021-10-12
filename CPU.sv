@@ -213,11 +213,19 @@ module CPU #(parameter WIDTH = 16, parameter REGNUM = 16,
 	 
 	 assign out = MemoryDataOutputWB;
 
+	 initial begin 
+		resultSelectorWBE = 0;
+	 end
+	 
 	 
 	 always_ff@(clock) begin 
 		$display ("----------------Ciclo-------------------");
-		$display ($sformatf("Primer Flip Flop: InstructionD = %b, PCD = %d",InstructionF, PCF));
+				
+				
+		$display ($sformatf("Primer Flip Flop: InstructionF = %b, PCF = %d",InstructionF, PCF));
 		
+		
+		$display ($sformatf("Decode flags: obtainPCAsR1DD = %b, writeEnableDD = %d",obtainPCAsR1DD, writeEnableDD));
 		$display ($sformatf("Segundo Flip Flop: reg1ContentD = %h, reg2ContentD = %h",reg1ContentD, reg2ContentD));
 		$display ($sformatf("Segundo Flip Flop: regDestinationAddressD = %h, inmmediateD = %h ", regDestinationAddressD, inmmediateD));
 		$display ($sformatf("Segundo Flip Flop: reg1AddressD = %h, reg2AddressD = %h ", reg1AddressD, reg2AddressD));
@@ -239,7 +247,8 @@ module CPU #(parameter WIDTH = 16, parameter REGNUM = 16,
 		
 		$display ($sformatf("WriteBack: regDestinationAddressWB = %b, outputWB = %d",regDestinationAddressWB, outputWB));
 		
-	
+		$display ($sformatf("Riesgos: stallF = %b, stallD = %d",stallF, stallD));
+		$display ($sformatf("Riesgos: flushE = %b, flushD = %d",flushE, flushD));
 	end
 
 endmodule
