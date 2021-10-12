@@ -166,6 +166,9 @@ module CPU #(parameter WIDTH = 16, parameter REGNUM = 16,
 	 NE1, ZE1, VE1, CE1
 	 );		
 	
+
+
+	 assign NewPCF = aluOutputE;
 	
 	 // Execution - Memory Flip-Flop
 	 
@@ -207,7 +210,6 @@ module CPU #(parameter WIDTH = 16, parameter REGNUM = 16,
 	 mux2  #(WIDTH) writeBack (aluOutputWB, MemoryDataOutputWB, resultSelectorWBWB, outputWB);
 	 assign writeAddressD = regDestinationAddressWB;
 	 assign dataToSaveD = outputWB;
-	 assign NewPCF = outputWB;
 	 assign forwardWB = outputWB;
 	 
 	 
