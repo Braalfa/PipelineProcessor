@@ -21,9 +21,9 @@
 	- WIDTH: width of the data
 	- ADRESSWIDTH: size of the addresses in regfile
 */
-module Decode #(parameter WIDTH = 	8, parameter REGNUM = 8, 
+module Decode #(parameter WIDTH = 	32, parameter REGNUM = 8, 
 					parameter ADDRESSWIDTH = 3, parameter OPCODEWIDTH = 4,
-					parameter INSTRUCTIONWIDTH = 16)
+					parameter INSTRUCTIONWIDTH = 24)
 	(input logic [ADDRESSWIDTH-1:0] writeAddress,
 	 input logic [WIDTH-1:0] dataToSave,
 	 input logic [INSTRUCTIONWIDTH-1:0] instruction,
@@ -34,12 +34,12 @@ module Decode #(parameter WIDTH = 	8, parameter REGNUM = 8,
 	 );
 		
 	
-	assign reg1Address = instruction[3:0];
-	assign reg2Address = instruction[7:4];
-	assign regDestinationAddress = instruction[11:8];
-	assign inmediate[7:0] = instruction[7:0];
-	assign inmediate[WIDTH-1:8] = 0;
-	assign opcode = instruction[15:12];
+	assign reg1Address = instruction[15:12];
+	assign reg2Address = instruction[11:8];
+	assign regDestinationAddress = instruction[19:16];
+	assign inmediate[15:0] = instruction[15:0];
+	assign inmediate[WIDTH-1:16] = 0;
+	assign opcode = instruction[23:20];
 		
 	
 	regfile #(WIDTH, REGNUM, ADDRESSWIDTH) registerFile (!clock, startIO, writeEnable, 

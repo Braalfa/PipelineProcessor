@@ -20,7 +20,7 @@ module test_mem();
 	
 		we = 1;
 	   a1 = 0;
-		a2 = 8;
+		a2 = 17;
 		wd = 8'h25;
 		
 	   clk = 0;		
@@ -46,7 +46,7 @@ module test_mem();
 	   clk = 1;
 		#10;
 		we = 0;
-		a2 = 8;
+		a2 = 17;
 		a1 = a1+1;
 	   clk = 0;
 		#10;
