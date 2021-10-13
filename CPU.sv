@@ -5,9 +5,9 @@
 // agregar paso libre a alu para ambos datos
 			
  
-module CPU #(parameter WIDTH = 16, parameter REGNUM = 16, 
+module CPU #(parameter WIDTH = 32, parameter REGNUM = 16, 
 				parameter ADDRESSWIDTH = 4, parameter OPCODEWIDTH = 4,
-				parameter INSTRUCTIONWIDTH = 24)
+				parameter INSTRUCTIONWIDTH = 16)
 	(input logic clock, reset, 
 	output logic outFlag,
 	output logic [WIDTH-1:0] out);

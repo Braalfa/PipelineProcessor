@@ -2,8 +2,8 @@
 module test_mem();
 
 
-	parameter WIDTH = 16;
-	parameter INSTRUCTIONWIDTH = 24;
+	parameter WIDTH = 32;
+	parameter INSTRUCTIONWIDTH = 16;
 	logic clk, we;
 	logic [WIDTH-1:0] a1, a2, wd;
 	logic [INSTRUCTIONWIDTH-1:0] rd1;
