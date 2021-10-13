@@ -14,7 +14,7 @@
 	- ADRESSWIDTH: size of the addresses
 **/
 module regfile #(parameter WIDTH = 16, parameter REGNUM = 16, parameter ADDRESSWIDTH = 4)
-	(input logic clk,
+	(input logic clk, startIO,
 	input logic we3,
 	input logic [ADDRESSWIDTH-1:0] ra1, ra2, wa3,
 	input logic [WIDTH-1:0] wd3,
@@ -25,7 +25,7 @@ module regfile #(parameter WIDTH = 16, parameter REGNUM = 16, parameter ADDRESSW
 	
 	always_ff @(posedge clk)
 		if (we3) rf[wa3] <= wd3;
-		assign rd1 = rf[ra1];
-		assign rd2 = rf[ra2];
+		assign rd1 = (ra1 == 4'b1111) ? startIO : rf[ra1];
+		assign rd2 = (ra2 == 4'b1111) ? startIO : rf[ra2];
 
 endmodule
