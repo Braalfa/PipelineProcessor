@@ -7,7 +7,7 @@
  
 module CPU #(parameter WIDTH = 32, parameter REGNUM = 16, 
 				parameter ADDRESSWIDTH = 4, parameter OPCODEWIDTH = 4,
-				parameter INSTRUCTIONWIDTH = 16)
+				parameter INSTRUCTIONWIDTH = 24)
 	(input logic clock, reset, startIO, 
 	output logic outFlagIOWB,
 	output logic [24:0] out);

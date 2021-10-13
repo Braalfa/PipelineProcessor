@@ -2,7 +2,7 @@
 module test_cpu();
    
 	
-	parameter WIDTH = 16;
+	parameter WIDTH = 32;
 	parameter REGNUM = 16; 
 	parameter ADDRESSWIDTH = 4; 
 	parameter OPCODEWIDTH = 4;
