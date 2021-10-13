@@ -13,7 +13,7 @@ module test_cpu();
 	logic outFlag;
 	logic [WIDTH-1:0] out;
 	CPU #(WIDTH, REGNUM, ADDRESSWIDTH, OPCODEWIDTH, INSTRUCTIONWIDTH) CPU
-	(clock, reset, 
+	(clock, reset, 0,
 	outFlag,
 	out);
 	
