@@ -22,10 +22,13 @@ module regfile #(parameter WIDTH = 16, parameter REGNUM = 16, parameter ADDRESSW
 	
 	logic [WIDTH-1:0] rf[REGNUM-1:0];
 	
+	logic [WIDTH-1:0] startIOExtended;
+	assign startIOExtended[WIDTH-1:1] = 0;
+	assign startIOExtended[0] = startIO;
 	
 	always_ff @(posedge clk)
 		if (we3) rf[wa3] <= wd3;
-		assign rd1 = (ra1 == 4'b1111) ? startIO : rf[ra1];
-		assign rd2 = (ra2 == 4'b1111) ? startIO : rf[ra2];
+		assign rd1 = (ra1 == 4'b1111) ? startIOExtended : rf[ra1];
+		assign rd2 = (ra2 == 4'b1111) ? startIOExtended : rf[ra2];
 
 endmodule
