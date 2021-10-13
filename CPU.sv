@@ -8,7 +8,7 @@
 module CPU #(parameter WIDTH = 32, parameter REGNUM = 16, 
 				parameter ADDRESSWIDTH = 4, parameter OPCODEWIDTH = 4,
 				parameter INSTRUCTIONWIDTH = 16)
-	(input logic clock, reset, 
+	(input logic clock, reset, startIO, 
 	output logic outFlag,
 	output logic [WIDTH-1:0] out);
 	
@@ -123,7 +123,7 @@ module CPU #(parameter WIDTH = 32, parameter REGNUM = 16,
 	( writeAddressD,
 	  dataToSaveD,
 	  InstructionD,
-	  clock, reset, writeEnableDWB,
+	  clock, reset, writeEnableDWB, startIO,
 	  reg1ContentD, reg2ContentD, inmmediateD,
 	  regDestinationAddressD, reg1AddressD, reg2AddressD,
 	  opcodeD
