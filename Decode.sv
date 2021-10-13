@@ -25,16 +25,14 @@ module Decode #(parameter WIDTH = 	8, parameter REGNUM = 8,
 					parameter ADDRESSWIDTH = 3, parameter OPCODEWIDTH = 4,
 					parameter INSTRUCTIONWIDTH = 16)
 	(input logic [ADDRESSWIDTH-1:0] writeAddress,
-	 input logic [WIDTH-1:0] dataToSave, PCPlus8,
+	 input logic [WIDTH-1:0] dataToSave,
 	 input logic [INSTRUCTIONWIDTH-1:0] instruction,
-	 input logic clock, reset, obtainPCAsR1, writeEnable,
+	 input logic clock, reset, writeEnable,
 	 output logic [WIDTH-1:0] reg1Content, reg2Content, inmediate,
-	 output logic [ADDRESSWIDTH-1:0] regDestinationAddress, reg1FinalAddress, reg2Address,
+	 output logic [ADDRESSWIDTH-1:0] regDestinationAddress, reg1Address, reg2Address,
 	 output logic [OPCODEWIDTH-1:0] opcode
 	 );
-	
-	logic [ADDRESSWIDTH-1:0] reg1Address;
-	
+		
 	
 	assign reg1Address = instruction[3:0];
 	assign reg2Address = instruction[7:4];
@@ -42,13 +40,10 @@ module Decode #(parameter WIDTH = 	8, parameter REGNUM = 8,
 	assign inmediate[7:0] = instruction[7:0];
 	assign inmediate[WIDTH-1:8] = 0;
 	assign opcode = instruction[15:12];
-	
-	
-	mux2  #(ADDRESSWIDTH) r1AddressSelector (reg1Address, 4'd15, obtainPCAsR1, reg1FinalAddress);
-	
+		
 	
 	regfile #(WIDTH, REGNUM, ADDRESSWIDTH) registerFile (!clock, writeEnable, 
-reg1FinalAddress,reg2Address, writeAddress, dataToSave, PCPlus8, reg1Content, reg2Content );
+reg1Address,reg2Address, writeAddress, dataToSave, reg1Content, reg2Content );
 
 endmodule
 

@@ -1,6 +1,6 @@
 module controlunit #(parameter OPCODEWIDTH = 4)
 	(output logic  
-					obtainPCAsR1DD, writeEnableDD,
+					writeEnableDD,
 					writeDataEnableMD,
 					resultSelectorWBD,
 					data2SelectorED,
@@ -13,7 +13,6 @@ module controlunit #(parameter OPCODEWIDTH = 4)
 		
 		case(opcodeD)
 			4'b0000: begin 
-				obtainPCAsR1DD = 0; 
 				writeEnableDD = 0;
 				data2SelectorED = 0;
 				aluControlED = 3'b000;
@@ -22,7 +21,6 @@ module controlunit #(parameter OPCODEWIDTH = 4)
 				outFlag = 0;
 			end
 			4'b0001: begin 
-				obtainPCAsR1DD = 0; 
 				writeEnableDD = 0;
 			   data2SelectorED =  1'bx;;
 				aluControlED = 3'b110;
@@ -31,7 +29,6 @@ module controlunit #(parameter OPCODEWIDTH = 4)
 				outFlag = 0;
 			end
 			4'b0010: begin 
-				obtainPCAsR1DD = 0; 
 				writeEnableDD = 1;
 				data2SelectorED = 1;
 				aluControlED = 3'b111;
@@ -40,7 +37,6 @@ module controlunit #(parameter OPCODEWIDTH = 4)
 				outFlag = 0;
 			end
 			4'b0011: begin 
-				obtainPCAsR1DD = 0; 
 				writeEnableDD = 1;
 				data2SelectorED =  1'bx;;
 				aluControlED = 3'b110;
@@ -49,7 +45,6 @@ module controlunit #(parameter OPCODEWIDTH = 4)
 				outFlag = 0;
 			end
 			4'b0100: begin 
-				obtainPCAsR1DD = 0; 
 				writeEnableDD = 0;
 				data2SelectorED =  1'bx;;
 				aluControlED = 3'b110;
@@ -58,7 +53,6 @@ module controlunit #(parameter OPCODEWIDTH = 4)
 				outFlag = 1;
 			end
 			4'b0101: begin 
-				obtainPCAsR1DD = 0; 
 				writeEnableDD = 1;
 				data2SelectorED = 0;
 				aluControlED = 3'b000;
@@ -67,7 +61,6 @@ module controlunit #(parameter OPCODEWIDTH = 4)
 				outFlag = 0;
 			end
 			4'b0110: begin 
-				obtainPCAsR1DD = 0; 
 				writeEnableDD = 1;
 				data2SelectorED = 0;
 				aluControlED = 3'b001;
@@ -76,7 +69,6 @@ module controlunit #(parameter OPCODEWIDTH = 4)
 				outFlag = 0;
 			end
 			4'b0111: begin 
-				obtainPCAsR1DD = 0; 
 				writeEnableDD = 1;
 				data2SelectorED = 1'bx;
 				aluControlED = 3'b110;
@@ -85,7 +77,6 @@ module controlunit #(parameter OPCODEWIDTH = 4)
 				outFlag = 0;
 			end
 			4'b1000: begin 
-				obtainPCAsR1DD = 0; 
 				writeEnableDD = 1;
 				data2SelectorED = 0;
 				aluControlED = 3'b010;
@@ -94,7 +85,6 @@ module controlunit #(parameter OPCODEWIDTH = 4)
 				outFlag = 0;
 			end
 			4'b1001: begin 
-				obtainPCAsR1DD = 0; 
 				writeEnableDD = 1;
 				data2SelectorED = 0;
 				aluControlED = 3'b101;
@@ -103,7 +93,6 @@ module controlunit #(parameter OPCODEWIDTH = 4)
 				outFlag = 0;
 			end
 			4'b1010: begin 
-				obtainPCAsR1DD = 0; 
 				writeEnableDD = 0;
 				data2SelectorED = 0;
 				aluControlED = 3'b001;
@@ -112,52 +101,46 @@ module controlunit #(parameter OPCODEWIDTH = 4)
 				outFlag = 0;
 			end
 			4'b1011: begin 
-				obtainPCAsR1DD = 1; 
 				writeEnableDD = 0;
 				data2SelectorED = 1;
-				aluControlED = 3'b000;
+				aluControlED = 3'b111;
 				writeDataEnableMD = 0;
 				resultSelectorWBD = 0;
 				outFlag = 0;
 			end
 			4'b1100: begin 
-				obtainPCAsR1DD = 1; 
 				writeEnableDD = 0;
 				data2SelectorED = 1;
-				aluControlED = 3'b000;
+				aluControlED = 3'b111;
 				writeDataEnableMD = 0;
 				resultSelectorWBD = 0;
 				outFlag = 0;		
 			end
 			4'b1101: begin 
-				obtainPCAsR1DD = 1; 
 				writeEnableDD = 0;
 				data2SelectorED = 1;
-				aluControlED = 3'b000;
+				aluControlED = 3'b111;
 				writeDataEnableMD = 0;
 				resultSelectorWBD = 0;
 				outFlag = 0;			
 			end
 			4'b1110: begin 
-				obtainPCAsR1DD = 1; 
 				writeEnableDD = 0;
 				data2SelectorED = 1;
-				aluControlED = 3'b000;
+				aluControlED = 3'b111;
 				writeDataEnableMD = 0;
 				resultSelectorWBD = 0;
 				outFlag = 0;					
 			end
 			4'b1111: begin 
-				obtainPCAsR1DD = 1; 
 				writeEnableDD = 0;
 				data2SelectorED = 1;
-				aluControlED = 3'b000;
+				aluControlED = 3'b111;
 				writeDataEnableMD = 0;
 				resultSelectorWBD = 0;
 				outFlag = 0;			
 			end
 			default begin
-				obtainPCAsR1DD = 0; 
 				writeEnableDD = 0;
 				data2SelectorED = 0;
 				aluControlED = 3'b000;

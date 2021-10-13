@@ -12,7 +12,7 @@ module CPU #(parameter WIDTH = 32, parameter REGNUM = 16,
 	output logic outFlag,
 	output logic [WIDTH-1:0] out);
 	
-	logic obtainPCAsR1DD, writeEnableDD,
+	logic writeEnableDD,
 	writeDataEnableMD,
 	resultSelectorWBD,
 	data2SelectorED,
@@ -28,7 +28,7 @@ module CPU #(parameter WIDTH = 32, parameter REGNUM = 16,
 
 	
 
-	logic [WIDTH-1:0] NewPCF, PCF, PCD;
+	logic [WIDTH-1:0] NewPCF, PCF;
 
 
 	
@@ -74,7 +74,7 @@ module CPU #(parameter WIDTH = 32, parameter REGNUM = 16,
 	
 	// Control Unit
 	controlunit #(OPCODEWIDTH) controlunit(
-		obtainPCAsR1DD, writeEnableDD,
+		writeEnableDD,
 		writeDataEnableMD,
 		resultSelectorWBD,
 		data2SelectorED,
@@ -113,7 +113,7 @@ module CPU #(parameter WIDTH = 32, parameter REGNUM = 16,
 	Fetch #(WIDTH) Fetch(NewPCF, takeBranchE, clock, reset, !stallF, PCF);
 	
 	// Fetch - Decoding FlipFlop
-	resetableflipflop  #(INSTRUCTIONWIDTH + WIDTH) FetchFlipFlop(clock, flushD, !stallD, {InstructionF, PCF}, {InstructionD, PCD});
+	resetableflipflop  #(INSTRUCTIONWIDTH) FetchFlipFlop(clock, flushD, !stallD, {InstructionF}, {InstructionD});
 	
 	//-------------------------------------------------------------------------------//
 	
@@ -121,9 +121,9 @@ module CPU #(parameter WIDTH = 32, parameter REGNUM = 16,
 		
 	Decode #(WIDTH, REGNUM, ADDRESSWIDTH, OPCODEWIDTH, INSTRUCTIONWIDTH) Decode
 	( writeAddressD,
-	  dataToSaveD, PCD,
+	  dataToSaveD,
 	  InstructionD,
-	  clock, reset, obtainPCAsR1DD, writeEnableDWB,
+	  clock, reset, writeEnableDWB,
 	  reg1ContentD, reg2ContentD, inmmediateD,
 	  regDestinationAddressD, reg1AddressD, reg2AddressD,
 	  opcodeD
@@ -228,7 +228,6 @@ module CPU #(parameter WIDTH = 32, parameter REGNUM = 16,
 		$display ($sformatf("Primer Flip Flop: InstructionF = %b, PCF = %d",InstructionF, PCF));
 		
 		
-		$display ($sformatf("Decode flags: obtainPCAsR1DD = %b, writeEnableDD = %d",obtainPCAsR1DD, writeEnableDD));
 		$display ($sformatf("Segundo Flip Flop: reg1ContentD = %h, reg2ContentD = %h",reg1ContentD, reg2ContentD));
 		$display ($sformatf("Segundo Flip Flop: regDestinationAddressD = %h, inmmediateD = %h ", regDestinationAddressD, inmmediateD));
 		$display ($sformatf("Segundo Flip Flop: reg1AddressD = %h, reg2AddressD = %h ", reg1AddressD, reg2AddressD));
