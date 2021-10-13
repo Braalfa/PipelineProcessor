@@ -23,7 +23,7 @@
 */
 module Decode #(parameter WIDTH = 	8, parameter REGNUM = 8, 
 					parameter ADDRESSWIDTH = 3, parameter OPCODEWIDTH = 4,
-					parameter INSTRUCTIONWIDTH = 24)
+					parameter INSTRUCTIONWIDTH = 16)
 	(input logic [ADDRESSWIDTH-1:0] writeAddress,
 	 input logic [WIDTH-1:0] dataToSave, PCPlus8,
 	 input logic [INSTRUCTIONWIDTH-1:0] instruction,
@@ -36,11 +36,12 @@ module Decode #(parameter WIDTH = 	8, parameter REGNUM = 8,
 	logic [ADDRESSWIDTH-1:0] reg1Address;
 	
 	
-	assign reg1Address = instruction[15:12];
-	assign reg2Address = instruction[11:8];
-	assign regDestinationAddress = instruction[19:16];
-	assign inmediate = instruction[15:0];
-	assign opcode = instruction[23:20];
+	assign reg1Address = instruction[3:0];
+	assign reg2Address = instruction[7:4];
+	assign regDestinationAddress = instruction[11:8];
+	assign inmediate[7:0] = instruction[7:0];
+	assign inmediate[WIDTH-1:8] = 0;
+	assign opcode = instruction[15:12];
 	
 	
 	mux2  #(ADDRESSWIDTH) r1AddressSelector (reg1Address, 4'd15, obtainPCAsR1, reg1FinalAddress);
