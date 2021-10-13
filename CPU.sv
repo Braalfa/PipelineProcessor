@@ -9,14 +9,15 @@ module CPU #(parameter WIDTH = 32, parameter REGNUM = 16,
 				parameter ADDRESSWIDTH = 4, parameter OPCODEWIDTH = 4,
 				parameter INSTRUCTIONWIDTH = 16)
 	(input logic clock, reset, startIO, 
-	output logic outFlag,
-	output logic [WIDTH-1:0] out);
+	output logic outFlagIOWB,
+	output logic [24:0] out);
 	
 	logic writeEnableDD,
 	writeDataEnableMD,
 	resultSelectorWBD,
 	data2SelectorED,
-	takeBranchE;
+	takeBranchE,
+	outFlagIOD;
 	logic [2:0] aluControlED;
 	logic NE2, ZE2, VE2, CE2;
 	logic [OPCODEWIDTH-1:0] opcodeD, opcodeE;
@@ -41,7 +42,8 @@ module CPU #(parameter WIDTH = 32, parameter REGNUM = 16,
 	logic writeEnableDE,
 			writeDataEnableME,
 			resultSelectorWBE,
-			data2SelectorEE;
+			data2SelectorEE,
+			outFlagIOE;
 	logic [2:0] aluControlEE;	
 	logic [ADDRESSWIDTH-1:0] writeAddressD, 
 							regDestinationAddressD, regDestinationAddressE,
@@ -53,7 +55,8 @@ module CPU #(parameter WIDTH = 32, parameter REGNUM = 16,
 	
 	logic writeEnableDM,
 			writeDataEnableMM,
-			resultSelectorWBM;
+			resultSelectorWBM,
+			outFlagIOM;
 	logic NE1, ZE1, VE1, CE1;
 	logic [WIDTH-1:0] aluOutputE, aluOutputM;
 	logic [WIDTH-1:0] reg2ContentM, forwardM, forwardWB;
@@ -78,7 +81,7 @@ module CPU #(parameter WIDTH = 32, parameter REGNUM = 16,
 		writeDataEnableMD,
 		resultSelectorWBD,
 		data2SelectorED,
-		outFlag,
+		outFlagIOD,
 		aluControlED,
 		opcodeD
 	);
@@ -132,7 +135,7 @@ module CPU #(parameter WIDTH = 32, parameter REGNUM = 16,
 	 
 	 // Decode - Execution Flip-Flop
 	 
-	 resetableflipflop  #(3*ADDRESSWIDTH+3*WIDTH+4+3+4+4) DecodeFlipFlop(clock, flushE, 1'b1,
+	 resetableflipflop  #(3*ADDRESSWIDTH+3*WIDTH+4+3+4+4+1) DecodeFlipFlop(clock, flushE, 1'b1,
 	 {reg1ContentD, reg2ContentD, regDestinationAddressD, inmmediateD, reg1AddressD, reg2AddressD,
 			writeEnableDD,
 			writeDataEnableMD,
@@ -140,7 +143,7 @@ module CPU #(parameter WIDTH = 32, parameter REGNUM = 16,
 			data2SelectorED,
 	      aluControlED,
 			opcodeD,
-			NE1, ZE1, VE1, CE1}, 
+			NE1, ZE1, VE1, CE1, outFlagIOD}, 
 	 {reg1ContentE, reg2ContentE, regDestinationAddressE, inmmediateE, reg1AddressE, reg2AddressE,
 			writeEnableDE,
 			writeDataEnableME,
@@ -148,7 +151,7 @@ module CPU #(parameter WIDTH = 32, parameter REGNUM = 16,
 			data2SelectorEE,
 	      aluControlEE,
 			opcodeE,
-			NE2, ZE2, VE2, CE2});
+			NE2, ZE2, VE2, CE2, outFlagIOE});
 
 	 
 	//-------------------------------------------------------------------------------//
@@ -173,15 +176,17 @@ module CPU #(parameter WIDTH = 32, parameter REGNUM = 16,
 	 // Execution - Memory Flip-Flop
 	 
 	 
-	 resetableflipflop  #(2*WIDTH+ADDRESSWIDTH+3) ExecuteFlipFlop(clock, reset, 1'b1,
+	 resetableflipflop  #(2*WIDTH+ADDRESSWIDTH+4) ExecuteFlipFlop(clock, reset, 1'b1,
 	 {aluOutputE, reg2FinalE, regDestinationAddressE,
 			writeEnableDE,
 			writeDataEnableME,
-			resultSelectorWBE}, 
+			resultSelectorWBE,
+			outFlagIOE}, 
 	 {aluOutputM, reg2ContentM, regDestinationAddressM,
 			writeEnableDM,
 			writeDataEnableMM,
-			resultSelectorWBM});
+			resultSelectorWBM,
+			outFlagIOM});
 	 
    //-------------------------------------------------------------------------------//
 
@@ -194,13 +199,15 @@ module CPU #(parameter WIDTH = 32, parameter REGNUM = 16,
 
 	 // Memory - Write Back Flip-Flop
 
-	resetableflipflop  #(2*WIDTH+ADDRESSWIDTH+2) MemoryFlipFlop(clock, reset, 1'b1,
+	resetableflipflop  #(2*WIDTH+ADDRESSWIDTH+3) MemoryFlipFlop(clock, reset, 1'b1,
 	 {aluOutputM, MemoryDataOutputM, regDestinationAddressM,
 		   writeEnableDM,
-			resultSelectorWBM}, 
+			resultSelectorWBM,
+			outFlagIOM}, 
 	 {aluOutputWB, MemoryDataOutputWB, regDestinationAddressWB,
 			writeEnableDWB,
-			resultSelectorWBWB});
+			resultSelectorWBWB,
+			outFlagIOWB});
 
     //-------------------------------------------------------------------------------//
 	 
@@ -214,7 +221,7 @@ module CPU #(parameter WIDTH = 32, parameter REGNUM = 16,
 	 
 	 
 	 
-	 assign out = MemoryDataOutputWB;
+	 assign out = MemoryDataOutputWB[24:0];
 
 	 initial begin 
 		resultSelectorWBE = 0;
