@@ -79,7 +79,7 @@ module controlunit #(parameter OPCODEWIDTH = 4)
 			4'b1000: begin 
 				writeEnableDD = 1;
 				data2SelectorED = 0;
-				aluControlED = 3'b010;
+				aluControlED = 3'b011;
 				writeDataEnableMD = 0;
 				resultSelectorWBD = 0;
 				outFlag = 0;
@@ -110,8 +110,8 @@ module controlunit #(parameter OPCODEWIDTH = 4)
 			end
 			4'b1100: begin 
 				writeEnableDD = 0;
-				data2SelectorED = 1;
-				aluControlED = 3'b111;
+				data2SelectorED = 1'bx;
+				aluControlED = 3'b110;
 				writeDataEnableMD = 0;
 				resultSelectorWBD = 0;
 				outFlag = 0;		
@@ -124,14 +124,14 @@ module controlunit #(parameter OPCODEWIDTH = 4)
 				resultSelectorWBD = 0;
 				outFlag = 0;			
 			end
-			4'b1110: begin 
-				writeEnableDD = 0;
-				data2SelectorED = 1;
-				aluControlED = 3'b111;
-				writeDataEnableMD = 0;
-				resultSelectorWBD = 0;
-				outFlag = 0;					
-			end
+//			4'b1110: begin 
+//				writeEnableDD = 0;
+//				data2SelectorED = 1;
+//				aluControlED = 3'b111;
+//				writeDataEnableMD = 0;
+//				resultSelectorWBD = 0;
+//				outFlag = 0;					
+//			end
 			4'b1111: begin 
 				writeEnableDD = 0;
 				data2SelectorED = 1;
