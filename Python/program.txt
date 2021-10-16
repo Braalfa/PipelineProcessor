@@ -13,7 +13,7 @@ OR r2, r2, r3
 MOVI r1, 200
 STR r1, r2
 end:
-MOVI r2, 2500
+MOVI r2, 2700
 MOVI r3, 1
 out:
 OUT r1
