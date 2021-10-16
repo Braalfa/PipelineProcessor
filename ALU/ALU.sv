@@ -44,7 +44,7 @@ module ALU #(parameter WIDTH = 16)(
 	logic [WIDTH-1:0] OutShiftL;
 	logic CShiftL,VShiftL;
 
-	shiftL_modulo #( WIDTH ) ShiftL(A,OutShiftL,VShiftL,CShiftL);
+	shiftL_modulo #( WIDTH ) ShiftL(A, B, OutShiftL,VShiftL,CShiftL);
 	
 
 	
