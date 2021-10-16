@@ -29,7 +29,7 @@ module CPU #(parameter WIDTH = 32, parameter REGNUM = 16,
 
 	
 
-	logic [WIDTH-1:0] NewPCF, PCF;
+	logic [WIDTH-1:0] NewPCF, PCF, PCPlus1F;
 
 
 	
@@ -112,8 +112,7 @@ module CPU #(parameter WIDTH = 32, parameter REGNUM = 16,
 	
 	//-------------------------------------------------------------------------------//
 	// Fetch
-
-	Fetch #(WIDTH) Fetch(NewPCF, takeBranchE, clock, reset, !stallF, PCF);
+	Fetch #(WIDTH) Fetch(NewPCF, takeBranchE, clock, reset, !stallF, PCF, PCPlus1F);
 	
 	// Fetch - Decoding FlipFlop
 	resetableflipflop  #(INSTRUCTIONWIDTH) FetchFlipFlop(clock, flushD, !stallD, {InstructionF}, {InstructionD});
@@ -124,7 +123,7 @@ module CPU #(parameter WIDTH = 32, parameter REGNUM = 16,
 		
 	Decode #(WIDTH, REGNUM, ADDRESSWIDTH, OPCODEWIDTH, INSTRUCTIONWIDTH) Decode
 	( writeAddressD,
-	  dataToSaveD,
+	  dataToSaveD, PCPlus1F,
 	  InstructionD,
 	  clock, reset, writeEnableDWB, startIO,
 	  reg1ContentD, reg2ContentD, inmmediateD,
