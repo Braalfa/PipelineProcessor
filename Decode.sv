@@ -25,7 +25,7 @@ module Decode #(parameter WIDTH = 	32, parameter REGNUM = 8,
 					parameter ADDRESSWIDTH = 3, parameter OPCODEWIDTH = 4,
 					parameter INSTRUCTIONWIDTH = 24)
 	(input logic [ADDRESSWIDTH-1:0] writeAddress,
-	 input logic [WIDTH-1:0] dataToSave,
+	 input logic [WIDTH-1:0] dataToSave, PC,
 	 input logic [INSTRUCTIONWIDTH-1:0] instruction,
 	 input logic clock, reset, writeEnable, startIO,
 	 output logic [WIDTH-1:0] reg1Content, reg2Content, inmediate,
@@ -43,7 +43,7 @@ module Decode #(parameter WIDTH = 	32, parameter REGNUM = 8,
 		
 	
 	regfile #(WIDTH, REGNUM, ADDRESSWIDTH) registerFile (!clock, startIO, writeEnable, 
-reg1Address,reg2Address, writeAddress, dataToSave, reg1Content, reg2Content );
+reg1Address,reg2Address, writeAddress, dataToSave, PC, reg1Content, reg2Content );
 
 endmodule
 
