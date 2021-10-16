@@ -78,6 +78,575 @@ module test_cpu();
 		clock = 1;
 		#10
 		clock = 0;
+		#10;
+		clock = 1;
+		#10;
+		clock = 0;
+		reset = 0;
+		#10
+		clock = 1;
+		#10
+		clock = 0;
+		#10
+		clock = 1;
+		#10
+		clock = 0;
+		#10
+		clock = 1;
+		#10
+		clock = 0;
+		#10
+		clock = 1;
+		#10
+		clock = 0;
+		#10
+		clock = 1;
+		#10
+		clock = 0;
+		#10
+		clock = 1;
+		#10
+		clock = 0;
+		#10
+		clock = 1;
+		#10
+		clock = 0;
+		#10
+		clock = 1;
+		#10
+		clock = 0;
+		#10
+		clock = 1;
+		#10
+		clock = 0;
+				#10
+		clock = 1;
+		#10
+		clock = 0;
+				#10
+		clock = 1;
+		#10
+		clock = 0;
+				#10
+		clock = 1;
+		#10
+		clock = 0;
+				#10
+		clock = 1;
+		#10
+		clock = 0;
+		#10;
+		clock = 1;
+		#10;
+		clock = 0;
+		reset = 0;
+		#10
+		clock = 1;
+		#10
+		clock = 0;
+		#10
+		clock = 1;
+		#10
+		clock = 0;
+		#10
+		clock = 1;
+		#10
+		clock = 0;
+		#10
+		clock = 1;
+		#10
+		clock = 0;
+		#10
+		clock = 1;
+		#10
+		clock = 0;
+		#10
+		clock = 1;
+		#10
+		clock = 0;
+		#10
+		clock = 1;
+		#10
+		clock = 0;
+		#10
+		clock = 1;
+		#10
+		clock = 0;
+		#10
+		clock = 1;
+		#10
+		clock = 0;
+				#10
+		clock = 1;
+		#10
+		clock = 0;
+				#10
+		clock = 1;
+		#10
+		clock = 0;
+				#10
+		clock = 1;
+		#10
+		clock = 0;
+				#10
+		clock = 1;
+		#10
+		clock = 0;
+		#10;
+		clock = 1;
+		#10;
+		clock = 0;
+		reset = 0;
+		#10
+		clock = 1;
+		#10
+		clock = 0;
+		#10
+		clock = 1;
+		#10
+		clock = 0;
+		#10
+		clock = 1;
+		#10
+		clock = 0;
+		#10
+		clock = 1;
+		#10
+		clock = 0;
+		#10
+		clock = 1;
+		#10
+		clock = 0;
+		#10
+		clock = 1;
+		#10
+		clock = 0;
+		#10
+		clock = 1;
+		#10
+		clock = 0;
+		#10
+		clock = 1;
+		#10
+		clock = 0;
+		#10
+		clock = 1;
+		#10
+		clock = 0;
+				#10
+		clock = 1;
+		#10
+		clock = 0;
+				#10
+		clock = 1;
+		#10
+		clock = 0;
+				#10
+		clock = 1;
+		#10
+		clock = 0;
+				#10
+		clock = 1;
+		#10
+		clock = 0;
+		#10;
+		clock = 1;
+		#10;
+		clock = 0;
+		reset = 0;
+		#10
+		clock = 1;
+		#10
+		clock = 0;
+		#10
+		clock = 1;
+		#10
+		clock = 0;
+		#10
+		clock = 1;
+		#10
+		clock = 0;
+		#10
+		clock = 1;
+		#10
+		clock = 0;
+		#10
+		clock = 1;
+		#10
+		clock = 0;
+		#10
+		clock = 1;
+		#10
+		clock = 0;
+		#10
+		clock = 1;
+		#10
+		clock = 0;
+		#10
+		clock = 1;
+		#10
+		clock = 0;
+		#10
+		clock = 1;
+		#10
+		clock = 0;
+				#10
+		clock = 1;
+		#10
+		clock = 0;
+				#10
+		clock = 1;
+		#10
+		clock = 0;
+				#10
+		clock = 1;
+		#10
+		clock = 0;
+				#10
+		clock = 1;
+		#10
+		clock = 0;
+		#10;
+		clock = 1;
+		#10;
+		clock = 0;
+		reset = 0;
+		#10
+		clock = 1;
+		#10
+		clock = 0;
+		#10
+		clock = 1;
+		#10
+		clock = 0;
+		#10
+		clock = 1;
+		#10
+		clock = 0;
+		#10
+		clock = 1;
+		#10
+		clock = 0;
+		#10
+		clock = 1;
+		#10
+		clock = 0;
+		#10
+		clock = 1;
+		#10
+		clock = 0;
+		#10
+		clock = 1;
+		#10
+		clock = 0;
+		#10
+		clock = 1;
+		#10
+		clock = 0;
+		#10
+		clock = 1;
+		#10
+		clock = 0;
+				#10
+		clock = 1;
+		#10
+		clock = 0;
+				#10
+		clock = 1;
+		#10
+		clock = 0;
+				#10
+		clock = 1;
+		#10
+		clock = 0;
+				#10
+		clock = 1;
+		#10
+		clock = 0;
+		#10;
+		clock = 1;
+		#10;
+		clock = 0;
+		reset = 0;
+		#10
+		clock = 1;
+		#10
+		clock = 0;
+		#10
+		clock = 1;
+		#10
+		clock = 0;
+		#10
+		clock = 1;
+		#10
+		clock = 0;
+		#10
+		clock = 1;
+		#10
+		clock = 0;
+		#10
+		clock = 1;
+		#10
+		clock = 0;
+		#10
+		clock = 1;
+		#10
+		clock = 0;
+		#10
+		clock = 1;
+		#10
+		clock = 0;
+		#10
+		clock = 1;
+		#10
+		clock = 0;
+		#10
+		clock = 1;
+		#10
+		clock = 0;
+				#10
+		clock = 1;
+		#10
+		clock = 0;
+				#10
+		clock = 1;
+		#10
+		clock = 0;
+				#10
+		clock = 1;
+		#10
+		clock = 0;
+				#10
+		clock = 1;
+		#10
+		clock = 0;
+		#10;
+		clock = 1;
+		#10;
+		clock = 0;
+		reset = 0;
+		#10
+		clock = 1;
+		#10
+		clock = 0;
+		#10
+		clock = 1;
+		#10
+		clock = 0;
+		#10
+		clock = 1;
+		#10
+		clock = 0;
+		#10
+		clock = 1;
+		#10
+		clock = 0;
+		#10
+		clock = 1;
+		#10
+		clock = 0;
+		#10
+		clock = 1;
+		#10
+		clock = 0;
+		#10
+		clock = 1;
+		#10
+		clock = 0;
+		#10
+		clock = 1;
+		#10
+		clock = 0;
+		#10
+		clock = 1;
+		#10
+		clock = 0;
+				#10
+		clock = 1;
+		#10
+		clock = 0;
+				#10
+		clock = 1;
+		#10
+		clock = 0;
+				#10
+		clock = 1;
+		#10
+		clock = 0;
+				#10
+		clock = 1;
+		#10
+		clock = 0;
+		#10;
+		clock = 1;
+		#10;
+		clock = 0;
+		reset = 0;
+		#10
+		clock = 1;
+		#10
+		clock = 0;
+		#10
+		clock = 1;
+		#10
+		clock = 0;
+		#10
+		clock = 1;
+		#10
+		clock = 0;
+		#10
+		clock = 1;
+		#10
+		clock = 0;
+		#10
+		clock = 1;
+		#10
+		clock = 0;
+		#10
+		clock = 1;
+		#10
+		clock = 0;
+		#10
+		clock = 1;
+		#10
+		clock = 0;
+		#10
+		clock = 1;
+		#10
+		clock = 0;
+		#10
+		clock = 1;
+		#10
+		clock = 0;
+				#10
+		clock = 1;
+		#10
+		clock = 0;
+				#10
+		clock = 1;
+		#10
+		clock = 0;
+				#10
+		clock = 1;
+		#10
+		clock = 0;
+				#10
+		clock = 1;
+		#10
+		clock = 0;
+		#10;
+		clock = 1;
+		#10;
+		clock = 0;
+		reset = 0;
+		#10
+		clock = 1;
+		#10
+		clock = 0;
+		#10
+		clock = 1;
+		#10
+		clock = 0;
+		#10
+		clock = 1;
+		#10
+		clock = 0;
+		#10
+		clock = 1;
+		#10
+		clock = 0;
+		#10
+		clock = 1;
+		#10
+		clock = 0;
+		#10
+		clock = 1;
+		#10
+		clock = 0;
+		#10
+		clock = 1;
+		#10
+		clock = 0;
+		#10
+		clock = 1;
+		#10
+		clock = 0;
+		#10
+		clock = 1;
+		#10
+		clock = 0;
+				#10
+		clock = 1;
+		#10
+		clock = 0;
+				#10
+		clock = 1;
+		#10
+		clock = 0;
+				#10
+		clock = 1;
+		#10
+		clock = 0;
+				#10
+		clock = 1;
+		#10
+		clock = 0;
+		#10;
+		clock = 1;
+		#10;
+		clock = 0;
+		reset = 0;
+		#10
+		clock = 1;
+		#10
+		clock = 0;
+		#10
+		clock = 1;
+		#10
+		clock = 0;
+		#10
+		clock = 1;
+		#10
+		clock = 0;
+		#10
+		clock = 1;
+		#10
+		clock = 0;
+		#10
+		clock = 1;
+		#10
+		clock = 0;
+		#10
+		clock = 1;
+		#10
+		clock = 0;
+		#10
+		clock = 1;
+		#10
+		clock = 0;
+		#10
+		clock = 1;
+		#10
+		clock = 0;
+		#10
+		clock = 1;
+		#10
+		clock = 0;
+				#10
+		clock = 1;
+		#10
+		clock = 0;
+				#10
+		clock = 1;
+		#10
+		clock = 0;
+				#10
+		clock = 1;
+		#10
+		clock = 0;
+				#10
+		clock = 1;
+		#10;
 	end
 	
 endmodule 
