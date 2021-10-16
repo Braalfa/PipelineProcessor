@@ -1,0 +1,22 @@
+MOVI r0, 0
+LDR r1, r0
+MOVI r2, 65
+CMP r1, r2
+BE writeA
+BI end
+writeA:
+MOVI r2, 18417
+MOVI r3, 575
+MOVI r4, 10
+SL r2, r2, r4
+OR r2, r2, r3
+MOVI r1, 200
+STR r1, r2
+end:
+MOVI r2, 2500
+MOVI r3, 1
+out:
+OUT r1
+ADD r1, r1, r3
+CMP r1, r2
+BL out

@@ -32,7 +32,7 @@ module outdebug();
 		#10;
 		
 		i = 0;
-		while(i<3) begin
+		while(i<2500) begin
 			clock = 1;
 			#10
 			if(outFlag) begin 
