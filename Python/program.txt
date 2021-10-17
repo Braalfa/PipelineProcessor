@@ -1,22 +1,44 @@
 MOVI r0, 0
-LDR r1, r0
+MOVI r10, 1
+MOVI r12, 0
+MOVI r9, 200
+MOV r11, r9
+load:
+LDR r1, r12
+CMP r1, r0
+BE end
 MOVI r2, 65
 CMP r1, r2
 BE writeA
-BI end
+MOVI r2, 66
+CMP r1, r2
+BE writeB
+BI next
 writeA:
 MOVI r2, 18417
 MOVI r3, 575
 MOVI r4, 10
 SL r2, r2, r4
 OR r2, r2, r3
-MOVI r1, 200
-STR r1, r2
+STR r11, r2
+BI next
+writeB:
+MOVI r2, 18417
+MOVI r3, 575
+MOVI r4, 10
+SL r2, r2, r4
+OR r2, r2, r3
+STR r11, r2
+BI next
+next:
+ADD r11, r11, r10
+ADD r12, r12, r10
+BI load
 end:
-MOVI r2, 2700
-MOVI r3, 1
+MOVI r2, 2500
+ADD r2, r2, r9
 out:
-OUT r1
-ADD r1, r1, r3
-CMP r1, r2
+OUT r9
+ADD r9, r9, r10
+CMP r9, r2
 BL out

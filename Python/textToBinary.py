@@ -1,4 +1,4 @@
-text = "A"
+text = "ACB"
 memsize = 512
 asciiList = ['{:032b}'.format(ord(c))+"\n" for c in text]
 
