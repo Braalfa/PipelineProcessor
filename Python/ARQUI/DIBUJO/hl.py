@@ -87,8 +87,8 @@ def plotLine(x0, y0, x1, y1):
 
     dx = x1 - x0
     dy = y1 - y0
-
     yi = 1
+
     if dy < 0:
         yi = -1
         dy = -dy
@@ -100,8 +100,10 @@ def plotLine(x0, y0, x1, y1):
 
     # x,x1,y,eval,yi,D,dif,dy,
     while True:  # break x1<x
+
         if (x1 < x):
             break
+
         if eval:
             coords = getCoords(x, y)
         else:
@@ -261,7 +263,7 @@ def draw(char):
         plotLine(3, 2, 4, 2)  # |
         plotLine(0, 2, 0, 4)  # |
 
-    print(char, resultDraw)
+    print(resultDraw)
 
     memmory[offset] = resultDraw
 

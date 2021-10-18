@@ -12,7 +12,7 @@ mainWhile:
     BI          draw
 draw_ret:
     STR         r11, r12        ; mem[Offset] = r12
-    ;OUT         r11
+    OUT         r11
     MOVI        r0, 1           ; r0 = 1  
     ADD         r11, r11, r0    ; Offset = Offset + 1
     BI          mainWhile
@@ -232,29 +232,29 @@ plotLine_ret2:
     SUB         r4, r8, r6          ; dx = x1 - x0
     SUB         r9, r9, r7          ; dy = y1 - y0
     MOVI        r5, 1               ; yi = 1
+
     MOVI        r0, 0
-    CMP         r9, r0              ; 0 < dy
+    CMP         r9, r0              ; dy < 0
     BL          plotLine_if3
     BI          plotLine_ret3
-    
 plotLine_if3:
     MOVI        r1, 1
-    SUB         r4, r0, r1          ; yi = -1
-    MOV         r9, r0, r9          ; dy = -dy
+    SUB         r5, r0, r1          ; yi = -1
+    SUB         r9, r0, r9          ; dy = -dy
 plotLine_ret3:
+    
+
     SUB         r4, r9, r4          ; dif = dy - dx
     ADD         r3, r9, r4          ; D = dy + dif
     MOV         r7, r7              ; y = y0
     MOV         r6, r6              ; x = x0
 
+   
 draWhile:
-    MOV         r0, r7
-    STR         r11, r0        ; mem[Offset] = r12
-    OUT         r11
-
     CMP         r8, r6              ; x1 < x
     BL          draw_end
 
+    MOVI        r1, 1
     CMP         r10, r1             ; if eval == 1
     BE          plotLine_if4
     BI          plotLine_else4
@@ -272,6 +272,7 @@ plotLine_else4:
 plotLine_ret4:
 
     OR          r12, r12,  r0       ; resultDraw = resultDraw | coords
+    
     MOVI        r0, 0               ; tmp = 0
     CMP         r0, r3              ; 0 < D
     BL          plotLine_if5
@@ -300,7 +301,7 @@ draw_end:
 ; internal      
 ;               r10 => eval
 draw:
-    MOV        r12, r0
+    MOVI        r12, 0
 
     MOVI        r1, 65    ; A
     CMP         r0, r1
@@ -320,8 +321,6 @@ draw_A:
     MOVI        r9, 0
     MOV         r14, r15
     BI          plotLine
-
-    BI          draw_ret
 
     MOVI        r6, 0
     MOVI        r7, 3
@@ -343,9 +342,8 @@ draw_A:
     MOVI        r9, 4
     MOV         r14, r15
     BI          plotLine
-    
-    
 
+    BI          draw_ret
 
 
 ; _________________________END
