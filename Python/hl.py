@@ -14,6 +14,9 @@ with open('../outfile.txt') as f:
 for i in range(len(memmory)):
     memmory[i] = memmory[i][:-1]
 
+for i in range(len(memmory), 2500):
+    memmory.append("{:032b}".format(0))
+
 for i in range(2500):
     bits = [int(c) for c in memmory[i]]
     bits.reverse()
