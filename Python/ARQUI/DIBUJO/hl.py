@@ -44,6 +44,7 @@ def circleBres(xc, yc, r):
     y = r
     tmp = r << 1
     d = 3 - tmp
+
     drawCircle(xc, yc, x, y)
     # y,x,d,
     while True:
@@ -118,6 +119,20 @@ def plotLine(x0, y0, x1, y1):
             D = D + dy
             D = D + dy
         x = x + 1
+
+
+def drawAll():
+    global resultDraw
+    i = 0
+
+    # A
+    resultDraw = 0
+    plotLine(0, 0, 4, 0)
+    plotLine(0, 3, 4, 3)
+    plotLine(0, 0, 0, 4)
+    plotLine(4, 0, 4, 4)
+    memmoryLetters[i] = resultDraw
+    i += 1
 
 
 def draw(char):
@@ -263,8 +278,6 @@ def draw(char):
         plotLine(3, 2, 4, 2)  # |
         plotLine(0, 2, 0, 4)  # |
 
-    print(resultDraw)
-
     memmory[offset] = resultDraw
 
 
@@ -272,6 +285,7 @@ memmory = {x: 0 for x in range(200)}
 file = open("test.txt")
 text = file.read()
 memmoryText = list(text)+[0]
+memmoryLetters = {x: 0 for x in range(200)}
 
 offset = 0
 resultDraw = 0
