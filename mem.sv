@@ -14,10 +14,16 @@
 */
 
 module mem #(parameter WIDTH = 32, parameter INSTRUCTIONWIDTH = 24, parameter RAMSIZE = 512)
-  (input logic clk, we,
+  (input logic clk, we, startIO,
 	input logic [WIDTH-1:0] a1, a2, wd,
 	output logic [INSTRUCTIONWIDTH-1:0] rd1,
 	output logic [WIDTH-1:0] rd2);
+	
+	
+	logic [WIDTH-1:0] startIOExtended;
+	assign startIOExtended[WIDTH-1:1] = 0;
+	assign startIOExtended[0] = startIO;
+	
 	
 	logic [6:0] weAux;
 	logic [WIDTH*7-1:0] aAux, wdAux;
@@ -44,7 +50,8 @@ module mem #(parameter WIDTH = 32, parameter INSTRUCTIONWIDTH = 24, parameter RA
 	
 	always_comb begin
 		rd2 = 0;
-		if(a2<RAMSIZE) rd2 = rdAux[WIDTH*2-1:WIDTH];
+		if (a2==RAMSIZE*7) rd2 = startIOExtended;
+		else if(a2<RAMSIZE) rd2 = rdAux[WIDTH*2-1:WIDTH];
 		else if (a2<RAMSIZE*2) rd2  = rdAux[WIDTH*3-1:WIDTH*2];
 		else if (a2<RAMSIZE*3)  rd2  = rdAux[WIDTH*4-1:WIDTH*3];
 		else if (a2<RAMSIZE*4)  rd2  = rdAux[WIDTH*5-1:WIDTH*4];

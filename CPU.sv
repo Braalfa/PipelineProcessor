@@ -107,7 +107,7 @@ module CPU #(parameter WIDTH = 32, parameter REGNUM = 16,
 
 	// Memory 
 	
-	mem #(WIDTH, INSTRUCTIONWIDTH) Memory(clock, writeDataEnableMM, PCF, MemoryDataAddress, 
+	mem #(WIDTH, INSTRUCTIONWIDTH) Memory(clock, writeDataEnableMM, startIO, PCF, MemoryDataAddress, 
 					MemoryDataToWrite, InstructionF, MemoryDataOutputM);
 	
 	//-------------------------------------------------------------------------------//
@@ -125,7 +125,7 @@ module CPU #(parameter WIDTH = 32, parameter REGNUM = 16,
 	( writeAddressD,
 	  dataToSaveD, PCPlus1F,
 	  InstructionD,
-	  clock, reset, writeEnableDWB, startIO,
+	  clock, reset, writeEnableDWB,
 	  reg1ContentD, reg2ContentD, inmmediateD,
 	  regDestinationAddressD, reg1AddressD, reg2AddressD,
 	  opcodeD
