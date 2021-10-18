@@ -133,18 +133,26 @@ circleBres:
     MOVI        r0, 1               
     SL          r0, r7, r0              ; tmp = r << 1
 
+    
+
     MOVI        r1, 3
     SUB         r8, r1, r0              ; d = 3 - tmp
 
     MOV         r10, r15                ; ret = PC + 2
     BI          drawCircle              ; drawCircle(xc, yc, x, y)
 
+
+
 circleBresWhile:
+    ;MOV         r0 ,r8
+    ;STR         r11, r0
+    ;OUT         r11
+
     CMP         r6, r5                  ; y < x
     BL          circleBresWhile_break   ; break
 
     MOVI        r0, 1                       
-    ADD         r6, r6, r0              ; x = x + 1
+    ADD         r5, r5, r0              ; x = x + 1
 
     MOVI        r0, 0
     CMP         r0, r8                  ; 0 < d
@@ -156,7 +164,7 @@ circleBres_if1:
     SUB         r6, r6, r0              ; y = y - 1
     
     MOVI        r0, 10
-    SUB         r8, r8, r0              ; d = d + 10
+    ADD         r8, r8, r0              ; d = d + 10
 
     SUB         r0, r5, r6              ; tmp = x - y
 
@@ -167,7 +175,7 @@ circleBres_if1:
     BI circleBres_ret1
 circleBres_else1:
     MOVI        r0, 6
-    SUB         r8, r8, r0              ; d = d + 6
+    ADD         r8, r8, r0              ; d = d + 6
 
     MOVI        r0, 2
     SL          r0, r5, r0              ; tmp = x << 2
@@ -307,12 +315,21 @@ draw:
     CMP         r0, r1
     BE          draw_A
 
+    MOVI        r1, 49    ; 1
+    CMP         r0, r1
+    BE          draw_Circle
+
     MOVI        r12, 32
     BI          draw_ret
 
-    MOVI        r1, 49    ; 1
-    CMP         r0, r1
-    BE          circleBres
+draw_Circle:
+    MOVI        r3, 2
+    MOVI        r4, 2
+    MOVI        r7, 2
+    MOV         r14, r15
+    BI          circleBres
+
+    BI          draw_ret
 
 draw_A:
     MOVI        r6, 0
