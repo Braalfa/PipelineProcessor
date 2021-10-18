@@ -1,0 +1,357 @@
+; _________________________START
+start:
+    MOVI        r11, 0          ; Offset = 100, contador para mainWhile
+    MOVI        r12, 0          ; resultDraw = 0
+
+; _________________________MAIN LOOP
+mainWhile:
+    LDR         r0, r11         ; char = mem[Offset]
+    MOVI        r1, 0           ; r1 = 0
+    CMP         r0, r1          ; 0 == char          
+    BE          mainWhile_break
+    BI          draw
+draw_ret:
+    STR         r11, r12        ; mem[Offset] = r12
+    ;OUT         r11
+    MOVI        r0, 1           ; r0 = 1  
+    ADD         r11, r11, r0    ; Offset = Offset + 1
+    BI          mainWhile
+
+mainWhile_break:
+    BI          end
+
+;-------------------------------------------
+; r11 => Offset
+; r12 => ResultDraw
+; r13 => Return 2
+; r14 => Return 1
+;-------------------------------------------
+
+
+; Args          r0 => x
+; Out           r0 => |x|
+; Overwrite     r0, r1
+; return point  r13
+absolute:
+    MOVI        r1, 0           ; tmp = 0
+    CMP         r1, r0          ; 0 < x
+    BL          absolute_end
+    BI          absolute_if
+
+absolute_if:
+    SUB         r0, r1, r0      ; x = tmp-x
+
+absolute_end:
+    B           r13             ; return
+
+; Args          r0 => x, r1 => y
+; Out           r0 => coords
+; Overwrite     r0, r1, r2
+; return point  r13
+getCoords:
+    MOVI        r2, 1           ; tmp = 1
+    SL          r0, r2, r0      ; coords = tmp << x
+
+    MOVI        r2, 2           ; tmp = 2         
+    SL          r2, r1, r2      ; tmp = y << 2
+    ADD         r2, r2, r1      ; tmp = tmp + y
+    SL          r0, r0, r2      ; coords = coords << tmp
+    B           r13             ; return 
+
+; Args          r3 => xc, r4 => yc, r5 => x, r6 => y
+; Out           NA
+; Overwrite     NA
+; return point  r10
+; internal      
+;               
+drawCircle:
+    ADD         r0, r3, r5          ;resultDraw = resultDraw | getCoords(xc + x, yc + y)
+    ADD         r1, r4, r6
+    MOV         r13, r15
+    BI          getCoords
+    OR          r12, r12, r0
+
+    SUB         r0, r3, r5          ;resultDraw = resultDraw | getCoords(xc - x, yc + y)
+    ADD         r1, r4, r6
+    MOV         r13, r15
+    BI          getCoords
+    OR          r12, r12, r0
+
+    ADD         r0, r3, r5          ;resultDraw = resultDraw | getCoords(xc + x, yc - y)
+    SUB         r1, r4, r6
+    MOV         r13, r15
+    BI          getCoords
+    OR          r12, r12, r0
+    
+    SUB         r0, r3, r5          ;resultDraw = resultDraw | getCoords(xc - x, yc - y)
+    SUB         r1, r4, r6
+    MOV         r13, r15
+    BI          getCoords
+    OR          r12, r12, r0
+
+    ADD         r0, r3, r6          ;resultDraw = resultDraw | getCoords(xc + y, yc + x)
+    ADD         r1, r4, r5
+    MOV         r13, r15
+    BI          getCoords
+    OR          r12, r12, r0
+
+    SUB         r0, r3, r6          ;resultDraw = resultDraw | getCoords(xc - y, yc + x)
+    ADD         r1, r4, r5
+    MOV         r13, r15
+    BI          getCoords
+    OR          r12, r12, r0
+
+    ADD         r0, r3, r6          ;resultDraw = resultDraw | getCoords(xc + y, yc - x)
+    SUB         r1, r4, r5
+    MOV         r13, r15
+    BI          getCoords
+    OR          r12, r12, r0
+
+    SUB         r0, r3, r6          ;resultDraw = resultDraw | getCoords(xc - y, yc - x)
+    SUB         r1, r4, r5
+    MOV         r13, r15
+    BI          getCoords
+    OR          r12, r12, r0
+    
+    B          r10
+
+
+; Args          r3 => xc, r4 => yc, r7 => r
+; Out           NA
+; Overwrite     NA
+; return point  r14
+; internal      
+;               r3 => xc
+;               r4 => yc
+;               r5 => x
+;               r6 => y
+;               r7 => r
+;               r8 => d
+circleBres:
+    MOVI        r5, 0                   ; x = 0
+    MOV         r6, r7                  ; y = r
+    MOVI        r0, 1               
+    SL          r0, r7, r0              ; tmp = r << 1
+
+    MOVI        r1, 3
+    SUB         r8, r1, r0              ; d = 3 - tmp
+
+    MOV         r10, r15                ; ret = PC + 2
+    BI          drawCircle              ; drawCircle(xc, yc, x, y)
+
+circleBresWhile:
+    CMP         r6, r5                  ; y < x
+    BL          circleBresWhile_break   ; break
+
+    MOVI        r0, 1                       
+    ADD         r6, r6, r0              ; x = x + 1
+
+    MOVI        r0, 0
+    CMP         r0, r8                  ; 0 < d
+    BL          circleBres_if1
+    BI          circleBres_else1
+
+circleBres_if1:
+    MOVI        r0, 1   
+    SUB         r6, r6, r0              ; y = y - 1
+    
+    MOVI        r0, 10
+    SUB         r8, r8, r0              ; d = d + 10
+
+    SUB         r0, r5, r6              ; tmp = x - y
+
+    MOVI        r1, 2
+    SL          r0, r0, r1              ; tmp = tmp << 2
+
+    ADD         r8, r8, r0              ; d = d + tmp
+    BI circleBres_ret1
+circleBres_else1:
+    MOVI        r0, 6
+    SUB         r8, r8, r0              ; d = d + 6
+
+    MOVI        r0, 2
+    SL          r0, r5, r0              ; tmp = x << 2
+
+    ADD         r8, r8, r0              ; d = d + tmp
+circleBres_ret1:
+
+    MOV         r10, r15                ; ret = PC + 2
+    BI          drawCircle              ; drawCircle(xc, yc, x, y)
+    BI          circleBresWhile
+
+
+circleBresWhile_break:
+    BI          draw_ret
+
+; Args          r6 => x0, r7 => y0, r8 => x1, r9 => y1
+; Out           NA
+; Overwrite     NA
+; return point  r14
+; internal      
+;               r10 => eval
+;               r6 => x0 && x
+;               r7 => y0 && y
+;               r8 => x1 
+;               r9 => y1 && dy
+;               r5 => yi
+;               r4 => dx && dif
+;               r3 => D
+plotLine:
+    SUB         r10, r8, r6         ; eval = x1 - x0
+    MOV         r0, r10
+    MOV         r13, r15            ; ret2 = PC + 2
+    BI          absolute
+    MOV         r10, r0             ; eval = absolute(eval)
+
+    SUB         r0, r9, r7          ; tmp = y1 - y0
+    MOV         r13, r15            ; ret2 = PC + 2
+    BI          absolute            ; tmp = absolute(tmp)
+
+    CMP         r0, r10             ; tmp < eval
+    BL          plotLine_if1
+    BI          plotLine_else1
+plotLine_if1:
+    MOVI        r10, 1              ; eval = 1
+    BI          plotLine_ret1       
+plotLine_else1:
+    MOVI        r10, 0              ; eval = 0
+plotLine_ret1:
+
+    MOVI        r0, 0
+    CMP         r10, r0             ; not eval
+    BE          plotLine_if2
+    BI          plotLine_ret2
+plotLine_if2:
+    MOV         r0, r6              ; tmp = x0
+    MOV         r6, r7              ; x0 = y0
+    MOV         r7, r0              ; y0 = tmp
+    MOV         r0, r8              ; tmp = x1
+    MOV         r8, r9              ; x1 = y1
+    MOV         r9, r0              ; y1 = tmp
+plotLine_ret2:
+    SUB         r4, r8, r6          ; dx = x1 - x0
+    SUB         r9, r9, r7          ; dy = y1 - y0
+    MOVI        r5, 1               ; yi = 1
+    MOVI        r0, 0
+    CMP         r9, r0              ; 0 < dy
+    BL          plotLine_if3
+    BI          plotLine_ret3
+    
+plotLine_if3:
+    MOVI        r1, 1
+    SUB         r4, r0, r1          ; yi = -1
+    MOV         r9, r0, r9          ; dy = -dy
+plotLine_ret3:
+    SUB         r4, r9, r4          ; dif = dy - dx
+    ADD         r3, r9, r4          ; D = dy + dif
+    MOV         r7, r7              ; y = y0
+    MOV         r6, r6              ; x = x0
+
+draWhile:
+    MOV         r0, r7
+    STR         r11, r0        ; mem[Offset] = r12
+    OUT         r11
+
+    CMP         r8, r6              ; x1 < x
+    BL          draw_end
+
+    CMP         r10, r1             ; if eval == 1
+    BE          plotLine_if4
+    BI          plotLine_else4
+plotLine_if4:
+    MOV         r0, r6              ; param x = x
+    MOV         r1, r7              ; param y = y
+    MOV         r13, r15            ; ret2 = PC + 2
+    BI          getCoords           ; coords = getCoords(x, y)
+    BI          plotLine_ret4
+plotLine_else4:
+    MOV         r0, r7              ; param x = y
+    MOV         r1, r6              ; param y = x
+    MOV         r13, r15            ; ret2 = PC + 2
+    BI          getCoords           ; coords = getCoords(x, y)
+plotLine_ret4:
+
+    OR          r12, r12,  r0       ; resultDraw = resultDraw | coords
+    MOVI        r0, 0               ; tmp = 0
+    CMP         r0, r3              ; 0 < D
+    BL          plotLine_if5
+    BI          plotLine_else5
+
+plotLine_if5:
+    ADD         r7, r7, r5          ; y = y + yi
+    ADD         r3, r3, r4          ; D = D + dif
+    ADD         r3, r3, r4          ; D = D + dif
+    BI          plotLine_ret5
+plotLine_else5: 
+    ADD         r3, r3, r9          ; D = D + dy
+    ADD         r3, r3, r9          ; D = D + dy
+plotLine_ret5:
+    MOVI        r0, 1
+    ADD         r6, r6, r0          ; x = x + 1
+    BI  draWhile
+
+draw_end:
+    B           r14
+
+; Args          r0 => char
+; Out           NA
+; Overwrite     NA
+; return point  NA
+; internal      
+;               r10 => eval
+draw:
+    MOV        r12, r0
+
+    MOVI        r1, 65    ; A
+    CMP         r0, r1
+    BE          draw_A
+
+    MOVI        r12, 32
+    BI          draw_ret
+
+    MOVI        r1, 49    ; 1
+    CMP         r0, r1
+    BE          circleBres
+
+draw_A:
+    MOVI        r6, 0
+    MOVI        r7, 0
+    MOVI        r8, 4
+    MOVI        r9, 0
+    MOV         r14, r15
+    BI          plotLine
+
+    BI          draw_ret
+
+    MOVI        r6, 0
+    MOVI        r7, 3
+    MOVI        r8, 4
+    MOVI        r9, 3
+    MOV         r14, r15
+    BI          plotLine
+
+    MOVI        r6, 0
+    MOVI        r7, 0
+    MOVI        r8, 0
+    MOVI        r9, 4
+    MOV         r14, r15
+    BI          plotLine
+
+    MOVI        r6, 4
+    MOVI        r7, 0
+    MOVI        r8, 4
+    MOVI        r9, 4
+    MOV         r14, r15
+    BI          plotLine
+    
+    
+
+
+
+; _________________________END
+end:
+             
+
+
+
+

@@ -1,0 +1,97 @@
+; ------------GLOBALES------------
+; r0 => 0
+; r1  => general1
+; r11 => resultDraw
+; r12 => general2
+; r13 => return1
+; --------------------------------
+
+; ------------------  getCoords --------------------------------------
+
+getCoords:
+    MOVI r1, 1
+    LSL r1, 
+
+; ------------------  absolute --------------------------------------
+
+absolute:
+    CMP	r0, r1
+	BL fin_if_0   ; blt
+	BI else_0
+else_0:
+	SUB	r1, r0, r1
+fin_if_0:
+    B r13
+
+; ------------------  plotLine --------------------------------------
+    ; r2 -> x0
+    ; r3 -> x1
+    ; r4 -> eval
+    ; r5 -> tmp
+    ; r6 -> y0
+    ; r7 -> y1
+    ; r8 -> dx
+    ; r9 -> dy
+    ; r10 -> yi
+
+    ; r5 -> dif
+    ; r7 -> D
+
+    ; r2 -> rango
+    ; r3 -> x
+    ;    -> coords
+
+    SUB r4, r3, r2   ; eval
+    MOV r1, r4
+    MOV r13, r14    ; PC+2    
+    BI absolute
+    MOV r4, r1
+
+    SUB r5, r7, r6   ; tmp
+    MOV r1, r5
+    MOV r13, r14    ; PC+2    
+    BI absolute
+    MOV r5, r1
+
+    CMP	r5, r4 ; tmp < eval
+	BL if_1   ; blt
+	BI else_1
+if_1:
+    MOVI r4, 1
+	BI fin_if_1
+else_1:
+	MOVI r4, 0
+fin_if_1:
+
+    MOVI r1, 0
+    CMP	r1, r4 ; not eval
+    BE if_2
+    BI fin_if_2  
+if_2:
+    MOV r5, r2
+    MOV r2, r6
+    MOV r6, r5
+    MOV r5, r3
+    MOV r3, r7
+    MOV r7, r5                    
+fin_if_2:
+    SUB r8, r3, r2
+    SUB r9, r7, r6
+    MOVI r10, 1
+
+    CMP	r1, r4 ; dy < 0
+    BL if_3
+    BI fin_if_3  
+if_3:
+    MOVI r1, 1
+    SUB r10, r0, r1
+    SUB r9, r0, r9
+fin_if_3:
+    SUB r5, r9, r8
+    ADD r7, r9, r5
+    MOV r6, r6  ; y -> y0 
+
+; ------
+    MOV r1, r3     ; duplicar x1
+    MOV r3, r2     ; x -> contador for_plotLine
+    MOV r2, r1, r2 ; rango
