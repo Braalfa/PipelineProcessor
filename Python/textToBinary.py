@@ -1,11 +1,18 @@
-text = "ABCDEFGHIJKLMNOPQRSABCDEFTUVWXYZ"
+text = "ABCDEFG   HIJKLMNOP   QRSA BCDE   FTUVWXYZ"
+
 memsize = 512
 
 asciiList = []
 for i in range(0, 30):
     asciiList.append('{:032b}'.format(0)+"\n" )
-asciiList.extend(['{:032b}'.format(ord(c)-64)+"\n" for c in text])
+for c in text:
+    if c == " ":
+        asciiList.append('{:032b}'.format(28)+"\n" )
+    else:
+        asciiList.append('{:032b}'.format(ord(c)-64)+"\n")
 asciiList.append('{:032b}'.format(27)+"\n" )
+
+print(len(asciiList)-30)
 
 for i in range(len(asciiList), memsize):
     asciiList.append('{:032b}'.format(0)+"\n" )
