@@ -29,13 +29,13 @@ module unifiedmem #(parameter WIDTH = 32, parameter RAMSIZE = 512)
 	logic [WIDTH-1:0] RAM7 [RAMSIZE-1:0];
 
 	initial begin
-		$readmemb("C:\\Users\\alfab\\Documents\\PipelineProcessor\\mem1.txt",RAM1);
-		$readmemb("C:\\Users\\alfab\\Documents\\PipelineProcessor\\mem2.txt",RAM2);
-		$readmemb("C:\\Users\\alfab\\Documents\\PipelineProcessor\\mem3.txt",RAM3);
-		$readmemb("C:\\Users\\alfab\\Documents\\PipelineProcessor\\mem4.txt",RAM4);
-		$readmemb("C:\\Users\\alfab\\Documents\\PipelineProcessor\\mem5.txt",RAM5);
-		$readmemb("C:\\Users\\alfab\\Documents\\PipelineProcessor\\mem6.txt",RAM6);
-   	$readmemb("C:\\Users\\alfab\\Documents\\PipelineProcessor\\mem7.txt",RAM7);
+		$readmemb("C:\\Users\\Juanp\\Documents\\Workspace\\TEC\\PipelineProcessor\\mem1.txt",RAM1);
+		$readmemb("C:\\Users\\Juanp\\Documents\\Workspace\\TEC\\PipelineProcessor\\mem2.txt",RAM2);
+		$readmemb("C:\\Users\\Juanp\\Documents\\Workspace\\TEC\\PipelineProcessor\\mem3.txt",RAM3);
+		$readmemb("C:\\Users\\Juanp\\Documents\\Workspace\\TEC\\PipelineProcessor\\mem4.txt",RAM4);
+		$readmemb("C:\\Users\\Juanp\\Documents\\Workspace\\TEC\\PipelineProcessor\\mem5.txt",RAM5);
+		$readmemb("C:\\Users\\Juanp\\Documents\\Workspace\\TEC\\PipelineProcessor\\mem6.txt",RAM6);
+   	$readmemb("C:\\Users\\Juanp\\Documents\\Workspace\\TEC\\PipelineProcessor\\mem7.txt",RAM7);
 	end
 	
 	assign rd[WIDTH-1:0] = RAM1[a[WIDTH-1:0]]; 

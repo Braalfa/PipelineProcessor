@@ -20,7 +20,7 @@ module outdebug();
 	logic [15:0] i;
 	integer OutFile;
 	initial begin
-		OutFile = $fopen("C://Users//alfab//Documents//PipelineProcessor//outfile.txt");
+		OutFile = $fopen("C:\\Users\\Juanp\\Documents\\Workspace\\TEC\\PipelineProcessor\\outfile.txt");
 
 		reset = 1;
 		clock = 0;
@@ -32,7 +32,7 @@ module outdebug();
 		#10;
 		
 		i = 0;
-		while(i<15) begin
+		while(i<5) begin
 			clock = 1;
 			#10
 			if(outFlag) begin 

@@ -139,7 +139,7 @@ final = "".join(final)
 final = final.split("\n")
 final = [x.ljust(24, "0") for x in final]
 
-outFile = open("out.txt", "w")
+outFile = open("../../../mem1.txt", "w")
 outFile.write("\n".join(final))
 
 print([len(x) for x in final], final)
