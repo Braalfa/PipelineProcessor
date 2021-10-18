@@ -1,12 +1,15 @@
-text = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+text = "ABCDEFGHIJKLMNOPQRSABCDEFTUVWXYZ"
 memsize = 512
-asciiList = ['{:032b}'.format(ord(c)-64)+"\n" for c in text]
+
+asciiList = []
+for i in range(0, 30):
+    asciiList.append('{:032b}'.format(0)+"\n" )
+asciiList.extend(['{:032b}'.format(ord(c)-64)+"\n" for c in text])
+asciiList.append('{:032b}'.format(27)+"\n" )
 
 for i in range(len(asciiList), memsize):
     asciiList.append('{:032b}'.format(0)+"\n" )
 
-asciiList.append('{:032b}'.format(28)+"\n" )
-asciiList.append('{:032b}'.format(29)+"\n" )
 
 f = open("../mem2.txt", "w")
 f.writelines(asciiList)
