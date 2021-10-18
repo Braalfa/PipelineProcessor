@@ -10,3 +10,5 @@ db/
 *.bak
 
 simulation/
+
+*.png
