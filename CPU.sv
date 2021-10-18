@@ -227,38 +227,5 @@ module CPU #(parameter WIDTH = 32, parameter REGNUM = 16,
 	 end
 	 
 	 
-	 always_ff@(posedge clock) begin 
-		$display ("----------------Ciclo-------------------");
-				
-				
-		$display ($sformatf("Primer Flip Flop: InstructionF = %b, PCF = %d",InstructionF, PCF));
-		
-		
-		$display ($sformatf("Segundo Flip Flop: reg1ContentD = %h, reg2ContentD = %h",reg1ContentD, reg2ContentD));
-		$display ($sformatf("Segundo Flip Flop: regDestinationAddressD = %h, inmmediateD = %h ", regDestinationAddressD, inmmediateD));
-		$display ($sformatf("Segundo Flip Flop: reg1AddressD = %h, reg2AddressD = %h ", reg1AddressD, reg2AddressD));
-		$display ($sformatf("Segundo Flip Flop: writeEnableDD = %h, writeDataEnableMD = %h ", writeEnableDD, writeDataEnableMD));
-		$display ($sformatf("Segundo Flip Flop: resultSelectorWBD = %h, data2SelectorED = %h ", resultSelectorWBD, data2SelectorED));
-		$display ($sformatf("Segundo Flip Flop: aluControlED = %h, opcodeD = %h ", aluControlED, opcodeD));
-		$display ($sformatf("Segundo Flip Flop: NE1 = %h, ZE1 = %h, VE1 = %h, CE1 = %h", NE1, ZE1, VE1, CE1));
-
-
-		$display ($sformatf("Tercer Flip Flop: aluOutputE = %b, reg2FinalE = %b",aluOutputE, reg2FinalE));
-		$display ($sformatf("Tercer Flip Flop: regDestinationAddressE = %h, writeEnableDE = %b",regDestinationAddressE, writeEnableDE));
-		$display ($sformatf("Tercer Flip Flop: writeDataEnableME = %b, resultSelectorWBE = %b",writeDataEnableME, resultSelectorWBE));
-		
-		
-		$display ($sformatf("Cuarto Flip Flop: aluOutputM = %b, MemoryDataOutputM = %d",aluOutputM, MemoryDataOutputM));
-		$display ($sformatf("Cuarto Flip Flop: regDestinationAddressM = %b, writeEnableDM = %d",regDestinationAddressM, writeEnableDM));
-		$display ($sformatf("Cuarto Flip Flop: resultSelectorWBM = %b",resultSelectorWBM));
-
-		
-		$display ($sformatf("WriteBack: regDestinationAddressWB = %b, outputWB = %b",regDestinationAddressWB, outputWB));
-		
-		$display ($sformatf("Riesgos: stallF = %b, stallD = %d",stallF, stallD));
-		$display ($sformatf("Riesgos: flushE = %b, flushD = %d",flushE, flushD));
-		$display ($sformatf("Riesgos: data1ForwardSelectorE = %b, data2ForwardSelectorE = %b",data1ForwardSelectorE, data2ForwardSelectorE));
-	end
-
 endmodule
 
