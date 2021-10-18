@@ -1007,13 +1007,20 @@ drawAll:
 
     
 
-    ;28
+    ;27
     MOVI        r3, 2
     MOVI        r4, 2
     MOVI        r7, 2
     MOV         r14, r15
     BI          circleBres
 
+    STR         r11, r12
+    MOVI        r0, 1
+    ADD         r11, r11, r0
+    MOVI        r12, 0
+
+    ;28
+    MOVI        r12, 0
     STR         r11, r12
     MOVI        r0, 1
     ADD         r11, r11, r0
