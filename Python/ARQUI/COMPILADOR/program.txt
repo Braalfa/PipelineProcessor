@@ -1,20 +1,26 @@
 ; _________________________START
 start:
-    MOVI        r11, 0          ; Offset = 100, contador para mainWhile
+    BI          drawAll
+
+drawAll_ret:
+    MOVI        r11, 30          ; Offset = 100, contador para mainWhile
     MOVI        r12, 0          ; resultDraw = 0
 
 ; _________________________MAIN LOOP
 mainWhile:
     LDR         r0, r11         ; char = mem[Offset]
+
     MOVI        r1, 0           ; r1 = 0
     CMP         r0, r1          ; 0 == char          
     BE          mainWhile_break
-    BI          draw
-draw_ret:
-    STR         r11, r12        ; mem[Offset] = r12
+
+    LDR         r0, r0
+    STR         r11, r0
     OUT         r11
-    MOVI        r0, 1           ; r0 = 1  
-    ADD         r11, r11, r0    ; Offset = Offset + 1
+
+    MOVI        r0, 1
+    ADD         r11, r11, r0
+
     BI          mainWhile
 
 mainWhile_break:
@@ -141,8 +147,6 @@ circleBres:
     MOV         r10, r15                ; ret = PC + 2
     BI          drawCircle              ; drawCircle(xc, yc, x, y)
 
-
-
 circleBresWhile:
     ;MOV         r0 ,r8
     ;STR         r11, r0
@@ -189,7 +193,7 @@ circleBres_ret1:
 
 
 circleBresWhile_break:
-    BI          draw_ret
+    B          r14
 
 ; Args          r6 => x0, r7 => y0, r8 => x1, r9 => y1
 ; Out           NA
@@ -302,36 +306,18 @@ plotLine_ret5:
 draw_end:
     B           r14
 
-; Args          r0 => char
+
+
+; Args          NA
 ; Out           NA
 ; Overwrite     NA
 ; return point  NA
 ; internal      
-;               r10 => eval
-draw:
+drawAll:
+    MOVI        r11, 1
     MOVI        r12, 0
 
-    MOVI        r1, 65    ; A
-    CMP         r0, r1
-    BE          draw_A
-
-    MOVI        r1, 49    ; 1
-    CMP         r0, r1
-    BE          draw_Circle
-
-    MOVI        r12, 32
-    BI          draw_ret
-
-draw_Circle:
-    MOVI        r3, 2
-    MOVI        r4, 2
-    MOVI        r7, 2
-    MOV         r14, r15
-    BI          circleBres
-
-    BI          draw_ret
-
-draw_A:
+    ; A
     MOVI        r6, 0
     MOVI        r7, 0
     MOVI        r8, 4
@@ -360,7 +346,681 @@ draw_A:
     MOV         r14, r15
     BI          plotLine
 
-    BI          draw_ret
+    STR         r11, r12
+    MOVI        r0, 1
+    ADD         r11, r11, r0
+    MOVI        r12, 0
+
+    ; B
+    MOVI r6, 0
+    MOVI r7, 0
+    MOVI r8, 3
+    MOVI r9, 0
+    MOV r14, r15
+    BI plotLine
+    MOVI r6, 0
+    MOVI r7, 2
+    MOVI r8, 4
+    MOVI r9, 2
+    MOV r14, r15
+    BI plotLine
+    MOVI r6, 0
+    MOVI r7, 4
+    MOVI r8, 4
+    MOVI r9, 4
+    MOV r14, r15
+    BI plotLine
+    MOVI r6, 0
+    MOVI r7, 0
+    MOVI r8, 0
+    MOVI r9, 4
+    MOV r14, r15
+    BI plotLine
+    MOVI r6, 3
+    MOVI r7, 0
+    MOVI r8, 3
+    MOVI r9, 2
+    MOV r14, r15
+    BI plotLine
+    MOVI r6, 4
+    MOVI r7, 2
+    MOVI r8, 4
+    MOVI r9, 4
+    MOV r14, r15
+    BI plotLine
+    STR r11, r12
+    MOVI r0, 1
+    ADD r11, r11, r0
+    MOVI r12, 0
+    ; C
+    MOVI r6, 0
+    MOVI r7, 0
+    MOVI r8, 4
+    MOVI r9, 0
+    MOV r14, r15
+    BI plotLine
+    MOVI r6, 0
+    MOVI r7, 4
+    MOVI r8, 4
+    MOVI r9, 4
+    MOV r14, r15
+    BI plotLine
+    MOVI r6, 0
+    MOVI r7, 0
+    MOVI r8, 0
+    MOVI r9, 4
+    MOV r14, r15
+    BI plotLine
+    STR r11, r12
+    MOVI r0, 1
+    ADD r11, r11, r0
+    MOVI r12, 0
+    ; D
+    MOVI r6, 0
+    MOVI r7, 0
+    MOVI r8, 0
+    MOVI r9, 4
+    MOV r14, r15
+    BI plotLine
+    MOVI r6, 4
+    MOVI r7, 1
+    MOVI r8, 4
+    MOVI r9, 3
+    MOV r14, r15
+    BI plotLine
+    MOVI r6, 0
+    MOVI r7, 0
+    MOVI r8, 4
+    MOVI r9, 1
+    MOV r14, r15
+    BI plotLine
+    MOVI r6, 0
+    MOVI r7, 4
+    MOVI r8, 4
+    MOVI r9, 3
+    MOV r14, r15
+    BI plotLine
+    STR r11, r12
+    MOVI r0, 1
+    ADD r11, r11, r0
+    MOVI r12, 0
+    ; E
+    MOVI r6, 0
+    MOVI r7, 0
+    MOVI r8, 4
+    MOVI r9, 0
+    MOV r14, r15
+    BI plotLine
+    MOVI r6, 0
+    MOVI r7, 2
+    MOVI r8, 4
+    MOVI r9, 2
+    MOV r14, r15
+    BI plotLine
+    MOVI r6, 0
+    MOVI r7, 4
+    MOVI r8, 4
+    MOVI r9, 4
+    MOV r14, r15
+    BI plotLine
+    MOVI r6, 0
+    MOVI r7, 0
+    MOVI r8, 0
+    MOVI r9, 4
+    MOV r14, r15
+    BI plotLine
+    STR r11, r12
+    MOVI r0, 1
+    ADD r11, r11, r0
+    MOVI r12, 0
+    ; F
+    MOVI r6, 0
+    MOVI r7, 0
+    MOVI r8, 4
+    MOVI r9, 0
+    MOV r14, r15
+    BI plotLine
+    MOVI r6, 0
+    MOVI r7, 2
+    MOVI r8, 4
+    MOVI r9, 2
+    MOV r14, r15
+    BI plotLine
+    MOVI r6, 0
+    MOVI r7, 0
+    MOVI r8, 0
+    MOVI r9, 4
+    MOV r14, r15
+    BI plotLine
+    STR r11, r12
+    MOVI r0, 1
+    ADD r11, r11, r0
+    MOVI r12, 0
+    ; G
+    MOVI r6, 0
+    MOVI r7, 0
+    MOVI r8, 4
+    MOVI r9, 0
+    MOV r14, r15
+    BI plotLine
+    MOVI r6, 2
+    MOVI r7, 2
+    MOVI r8, 4
+    MOVI r9, 2
+    MOV r14, r15
+    BI plotLine
+    MOVI r6, 0
+    MOVI r7, 4
+    MOVI r8, 4
+    MOVI r9, 4
+    MOV r14, r15
+    BI plotLine
+    MOVI r6, 0
+    MOVI r7, 0
+    MOVI r8, 0
+    MOVI r9, 4
+    MOV r14, r15
+    BI plotLine
+    MOVI r6, 4
+    MOVI r7, 2
+    MOVI r8, 4
+    MOVI r9, 4
+    MOV r14, r15
+    BI plotLine
+    STR r11, r12
+    MOVI r0, 1
+    ADD r11, r11, r0
+    MOVI r12, 0
+    ; H
+    MOVI r6, 0
+    MOVI r7, 2
+    MOVI r8, 4
+    MOVI r9, 2
+    MOV r14, r15
+    BI plotLine
+    MOVI r6, 0
+    MOVI r7, 0
+    MOVI r8, 0
+    MOVI r9, 4
+    MOV r14, r15
+    BI plotLine
+    MOVI r6, 4
+    MOVI r7, 0
+    MOVI r8, 4
+    MOVI r9, 4
+    MOV r14, r15
+    BI plotLine
+    STR r11, r12
+    MOVI r0, 1
+    ADD r11, r11, r0
+    MOVI r12, 0
+    ; I
+    MOVI r6, 0
+    MOVI r7, 0
+    MOVI r8, 4
+    MOVI r9, 0
+    MOV r14, r15
+    BI plotLine
+    MOVI r6, 0
+    MOVI r7, 4
+    MOVI r8, 4
+    MOVI r9, 4
+    MOV r14, r15
+    BI plotLine
+    MOVI r6, 2
+    MOVI r7, 0
+    MOVI r8, 2
+    MOVI r9, 4
+    MOV r14, r15
+    BI plotLine
+    STR r11, r12
+    MOVI r0, 1
+    ADD r11, r11, r0
+    MOVI r12, 0
+    ; J
+    MOVI r6, 1
+    MOVI r7, 0
+    MOVI r8, 4
+    MOVI r9, 0
+    MOV r14, r15
+    BI plotLine
+    MOVI r6, 2
+    MOVI r7, 0
+    MOVI r8, 2
+    MOVI r9, 4
+    MOV r14, r15
+    BI plotLine
+    MOVI r6, 0
+    MOVI r7, 4
+    MOVI r8, 2
+    MOVI r9, 4
+    MOV r14, r15
+    BI plotLine
+    STR r11, r12
+    MOVI r0, 1
+    ADD r11, r11, r0
+    MOVI r12, 0
+    ; K
+    MOVI r6, 0
+    MOVI r7, 0
+    MOVI r8, 0
+    MOVI r9, 4
+    MOV r14, r15
+    BI plotLine
+    MOVI r6, 1
+    MOVI r7, 2
+    MOVI r8, 4
+    MOVI r9, 0
+    MOV r14, r15
+    BI plotLine
+    MOVI r6, 1
+    MOVI r7, 2
+    MOVI r8, 4
+    MOVI r9, 4
+    MOV r14, r15
+    BI plotLine
+    STR r11, r12
+    MOVI r0, 1
+    ADD r11, r11, r0
+    MOVI r12, 0
+    ; L
+    MOVI r6, 0
+    MOVI r7, 0
+    MOVI r8, 0
+    MOVI r9, 4
+    MOV r14, r15
+    BI plotLine
+    MOVI r6, 0
+    MOVI r7, 4
+    MOVI r8, 4
+    MOVI r9, 4
+    MOV r14, r15
+    BI plotLine
+    STR r11, r12
+    MOVI r0, 1
+    ADD r11, r11, r0
+    MOVI r12, 0
+    ; M
+    MOVI r6, 0
+    MOVI r7, 0
+    MOVI r8, 0
+    MOVI r9, 4
+    MOV r14, r15
+    BI plotLine
+    MOVI r6, 4
+    MOVI r7, 0
+    MOVI r8, 4
+    MOVI r9, 4
+    MOV r14, r15
+    BI plotLine
+    MOVI r6, 0
+    MOVI r7, 0
+    MOVI r8, 2
+    MOVI r9, 3
+    MOV r14, r15
+    BI plotLine
+    MOVI r6, 4
+    MOVI r7, 0
+    MOVI r8, 2
+    MOVI r9, 3
+    MOV r14, r15
+    BI plotLine
+    STR r11, r12
+    MOVI r0, 1
+    ADD r11, r11, r0
+    MOVI r12, 0
+    ; N
+    MOVI r6, 0
+    MOVI r7, 0
+    MOVI r8, 0
+    MOVI r9, 4
+    MOV r14, r15
+    BI plotLine
+    MOVI r6, 4
+    MOVI r7, 0
+    MOVI r8, 4
+    MOVI r9, 4
+    MOV r14, r15
+    BI plotLine
+    MOVI r6, 0
+    MOVI r7, 0
+    MOVI r8, 4
+    MOVI r9, 4
+    MOV r14, r15
+    BI plotLine
+    STR r11, r12
+    MOVI r0, 1
+    ADD r11, r11, r0
+    MOVI r12, 0
+    ; O
+    MOVI r6, 0
+    MOVI r7, 1
+    MOVI r8, 0
+    MOVI r9, 3
+    MOV r14, r15
+    BI plotLine
+    MOVI r6, 1
+    MOVI r7, 0
+    MOVI r8, 3
+    MOVI r9, 0
+    MOV r14, r15
+    BI plotLine
+    MOVI r6, 1
+    MOVI r7, 4
+    MOVI r8, 3
+    MOVI r9, 4
+    MOV r14, r15
+    BI plotLine
+    MOVI r6, 4
+    MOVI r7, 1
+    MOVI r8, 4
+    MOVI r9, 3
+    MOV r14, r15
+    BI plotLine
+    STR r11, r12
+    MOVI r0, 1
+    ADD r11, r11, r0
+    MOVI r12, 0
+    ; P
+    MOVI r6, 0
+    MOVI r7, 0
+    MOVI r8, 0
+    MOVI r9, 4
+    MOV r14, r15
+    BI plotLine
+    MOVI r6, 1
+    MOVI r7, 0
+    MOVI r8, 4
+    MOVI r9, 0
+    MOV r14, r15
+    BI plotLine
+    MOVI r6, 1
+    MOVI r7, 3
+    MOVI r8, 4
+    MOVI r9, 3
+    MOV r14, r15
+    BI plotLine
+    MOVI r6, 4
+    MOVI r7, 0
+    MOVI r8, 4
+    MOVI r9, 3
+    MOV r14, r15
+    BI plotLine
+    STR r11, r12
+    MOVI r0, 1
+    ADD r11, r11, r0
+    MOVI r12, 0
+    ; Q
+    MOVI r6, 0
+    MOVI r7, 1
+    MOVI r8, 0
+    MOVI r9, 3
+    MOV r14, r15
+    BI plotLine
+    MOVI r6, 1
+    MOVI r7, 0
+    MOVI r8, 3
+    MOVI r9, 0
+    MOV r14, r15
+    BI plotLine
+    MOVI r6, 1
+    MOVI r7, 4
+    MOVI r8, 3
+    MOVI r9, 4
+    MOV r14, r15
+    BI plotLine
+    MOVI r6, 4
+    MOVI r7, 1
+    MOVI r8, 4
+    MOVI r9, 3
+    MOV r14, r15
+    BI plotLine
+    MOVI r6, 3
+    MOVI r7, 3
+    MOVI r8, 4
+    MOVI r9, 4
+    MOV r14, r15
+    BI plotLine
+    STR r11, r12
+    MOVI r0, 1
+    ADD r11, r11, r0
+    MOVI r12, 0
+    ; R
+    MOVI r6, 0
+    MOVI r7, 0
+    MOVI r8, 0
+    MOVI r9, 4
+    MOV r14, r15
+    BI plotLine
+    MOVI r6, 1
+    MOVI r7, 0
+    MOVI r8, 4
+    MOVI r9, 0
+    MOV r14, r15
+    BI plotLine
+    MOVI r6, 1
+    MOVI r7, 3
+    MOVI r8, 4
+    MOVI r9, 3
+    MOV r14, r15
+    BI plotLine
+    MOVI r6, 4
+    MOVI r7, 0
+    MOVI r8, 4
+    MOVI r9, 3
+    MOV r14, r15
+    BI plotLine
+    MOVI r6, 3
+    MOVI r7, 3
+    MOVI r8, 4
+    MOVI r9, 4
+    MOV r14, r15
+    BI plotLine
+    STR r11, r12
+    MOVI r0, 1
+    ADD r11, r11, r0
+    MOVI r12, 0
+    ; S
+    MOVI r6, 0
+    MOVI r7, 0
+    MOVI r8, 0
+    MOVI r9, 2
+    MOV r14, r15
+    BI plotLine
+    MOVI r6, 4
+    MOVI r7, 2
+    MOVI r8, 4
+    MOVI r9, 4
+    MOV r14, r15
+    BI plotLine
+    MOVI r6, 0
+    MOVI r7, 0
+    MOVI r8, 4
+    MOVI r9, 0
+    MOV r14, r15
+    BI plotLine
+    MOVI r6, 0
+    MOVI r7, 4
+    MOVI r8, 4
+    MOVI r9, 4
+    MOV r14, r15
+    BI plotLine
+    MOVI r6, 0
+    MOVI r7, 2
+    MOVI r8, 4
+    MOVI r9, 2
+    MOV r14, r15
+    BI plotLine
+    STR r11, r12
+    MOVI r0, 1
+    ADD r11, r11, r0
+    MOVI r12, 0
+    ; T
+    MOVI r6, 0
+    MOVI r7, 0
+    MOVI r8, 4
+    MOVI r9, 0
+    MOV r14, r15
+    BI plotLine
+    MOVI r6, 2
+    MOVI r7, 0
+    MOVI r8, 2
+    MOVI r9, 4
+    MOV r14, r15
+    BI plotLine
+    STR r11, r12
+    MOVI r0, 1
+    ADD r11, r11, r0
+    MOVI r12, 0
+    ; U
+    MOVI r6, 0
+    MOVI r7, 0
+    MOVI r8, 0
+    MOVI r9, 4
+    MOV r14, r15
+    BI plotLine
+    MOVI r6, 4
+    MOVI r7, 0
+    MOVI r8, 4
+    MOVI r9, 4
+    MOV r14, r15
+    BI plotLine
+    MOVI r6, 0
+    MOVI r7, 4
+    MOVI r8, 4
+    MOVI r9, 4
+    MOV r14, r15
+    BI plotLine
+    STR r11, r12
+    MOVI r0, 1
+    ADD r11, r11, r0
+    MOVI r12, 0
+    ; V
+    MOVI r6, 0
+    MOVI r7, 0
+    MOVI r8, 2
+    MOVI r9, 4
+    MOV r14, r15
+    BI plotLine
+    MOVI r6, 4
+    MOVI r7, 0
+    MOVI r8, 2
+    MOVI r9, 4
+    MOV r14, r15
+    BI plotLine
+    STR r11, r12
+    MOVI r0, 1
+    ADD r11, r11, r0
+    MOVI r12, 0
+    ; W
+    MOVI r6, 0
+    MOVI r7, 0
+    MOVI r8, 0
+    MOVI r9, 4
+    MOV r14, r15
+    BI plotLine
+    MOVI r6, 2
+    MOVI r7, 0
+    MOVI r8, 2
+    MOVI r9, 4
+    MOV r14, r15
+    BI plotLine
+    MOVI r6, 4
+    MOVI r7, 0
+    MOVI r8, 4
+    MOVI r9, 4
+    MOV r14, r15
+    BI plotLine
+    MOVI r6, 0
+    MOVI r7, 4
+    MOVI r8, 4
+    MOVI r9, 4
+    MOV r14, r15
+    BI plotLine
+    STR r11, r12
+    MOVI r0, 1
+    ADD r11, r11, r0
+    MOVI r12, 0
+    ; X
+    MOVI r6, 0
+    MOVI r7, 0
+    MOVI r8, 4
+    MOVI r9, 4
+    MOV r14, r15
+    BI plotLine
+    MOVI r6, 4
+    MOVI r7, 0
+    MOVI r8, 0
+    MOVI r9, 4
+    MOV r14, r15
+    BI plotLine
+    STR r11, r12
+    MOVI r0, 1
+    ADD r11, r11, r0
+    MOVI r12, 0
+    ; Y
+    MOVI r6, 0
+    MOVI r7, 0
+    MOVI r8, 2
+    MOVI r9, 2
+    MOV r14, r15
+    BI plotLine
+    MOVI r6, 4
+    MOVI r7, 0
+    MOVI r8, 2
+    MOVI r9, 2
+    MOV r14, r15
+    BI plotLine
+    MOVI r6, 2
+    MOVI r7, 3
+    MOVI r8, 2
+    MOVI r9, 4
+    MOV r14, r15
+    BI plotLine
+    STR r11, r12
+    MOVI r0, 1
+    ADD r11, r11, r0
+    MOVI r12, 0
+    ; Z
+    MOVI r6, 0
+    MOVI r7, 0
+    MOVI r8, 4
+    MOVI r9, 0
+    MOV r14, r15
+    BI plotLine
+    MOVI r6, 4
+    MOVI r7, 0
+    MOVI r8, 0
+    MOVI r9, 4
+    MOV r14, r15
+    BI plotLine
+    MOVI r6, 0
+    MOVI r7, 4
+    MOVI r8, 4
+    MOVI r9, 4
+    MOV r14, r15
+    BI plotLine
+    STR r11, r12
+    MOVI r0, 1
+    ADD r11, r11, r0
+    MOVI r12, 0
+
+    
+
+    ;28
+    MOVI        r3, 2
+    MOVI        r4, 2
+    MOVI        r7, 2
+    MOV         r14, r15
+    BI          circleBres
+
+    STR         r11, r12
+    MOVI        r0, 1
+    ADD         r11, r11, r0
+    MOVI        r12, 0
+
+    BI          drawAll_ret
+
 
 
 ; _________________________END

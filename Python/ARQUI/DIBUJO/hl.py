@@ -123,7 +123,7 @@ def plotLine(x0, y0, x1, y1):
 
 def drawAll():
     global resultDraw
-    i = 0
+    i = 1
 
     # A
     resultDraw = 0
@@ -134,167 +134,255 @@ def drawAll():
     memmoryLetters[i] = resultDraw
     i += 1
 
+    # B
+    resultDraw = 0
+    plotLine(0, 0, 3, 0)  # -
+    plotLine(0, 2, 4, 2)  # -
+    plotLine(0, 4, 4, 4)  # -
+    plotLine(0, 0, 0, 4)  # |
+    plotLine(3, 0, 3, 2)  # |
+    plotLine(4, 2, 4, 4)  # |
+    memmoryLetters[i] = resultDraw
+    i += 1
+
+    # C
+    resultDraw = 0
+    plotLine(0, 0, 4, 0)  # -
+    plotLine(0, 4, 4, 4)  # -
+    plotLine(0, 0, 0, 4)  # |
+    memmoryLetters[i] = resultDraw
+    i += 1
+
+    # D
+    resultDraw = 0
+    plotLine(0, 0, 0, 4)  # |
+    plotLine(4, 1, 4, 3)  # |
+    plotLine(0, 0, 4, 1)  # -
+    plotLine(0, 4, 4, 3)  # -
+    memmoryLetters[i] = resultDraw
+    i += 1
+
+    # E
+    resultDraw = 0
+    plotLine(0, 0, 4, 0)  # -
+    plotLine(0, 2, 4, 2)  # -
+    plotLine(0, 4, 4, 4)  # -
+    plotLine(0, 0, 0, 4)  # |
+    memmoryLetters[i] = resultDraw
+    i += 1
+
+    # F
+    resultDraw = 0
+    plotLine(0, 0, 4, 0)  # -
+    plotLine(0, 2, 4, 2)  # -
+    plotLine(0, 0, 0, 4)  # |
+    memmoryLetters[i] = resultDraw
+    i += 1
+
+    # G
+    resultDraw = 0
+    plotLine(0, 0, 4, 0)  # -
+    plotLine(2, 2, 4, 2)  # -
+    plotLine(0, 4, 4, 4)  # -
+    plotLine(0, 0, 0, 4)  # |
+    plotLine(4, 2, 4, 4)  # |
+    memmoryLetters[i] = resultDraw
+    i += 1
+
+    # H
+    resultDraw = 0
+    plotLine(0, 2, 4, 2)  # -
+    plotLine(0, 0, 0, 4)  # |
+    plotLine(4, 0, 4, 4)  # |
+    memmoryLetters[i] = resultDraw
+    i += 1
+
+    # I
+    resultDraw = 0
+    plotLine(0, 0, 4, 0)  # -
+    plotLine(0, 4, 4, 4)  # -
+    plotLine(2, 0, 2, 4)  # |
+    memmoryLetters[i] = resultDraw
+    i += 1
+
+    # J
+    resultDraw = 0
+    plotLine(1, 0, 4, 0)  # -
+    plotLine(2, 0, 2, 4)  # |
+    plotLine(0, 4, 2, 4)  # -
+    memmoryLetters[i] = resultDraw
+    i += 1
+
+    # K
+    resultDraw = 0
+    plotLine(0, 0, 0, 4)  # |
+    plotLine(1, 2, 4, 0)  # /
+    plotLine(1, 2, 4, 4)  # \
+    memmoryLetters[i] = resultDraw
+    i += 1
+
+    # L
+    resultDraw = 0
+    plotLine(0, 0, 0, 4)  # |
+    plotLine(0, 4, 4, 4)  # -
+    memmoryLetters[i] = resultDraw
+    i += 1
+
+    # M
+    resultDraw = 0
+    plotLine(0, 0, 0, 4)  # |
+    plotLine(4, 0, 4, 4)  # |
+    plotLine(0, 0, 2, 3)  # |
+    plotLine(4, 0, 2, 3)  # |
+    memmoryLetters[i] = resultDraw
+    i += 1
+
+    # N
+    resultDraw = 0
+    plotLine(0, 0, 0, 4)  # |
+    plotLine(4, 0, 4, 4)  # |
+    plotLine(0, 0, 4, 4)  # |
+    memmoryLetters[i] = resultDraw
+    i += 1
+
+    # O
+    resultDraw = 0
+    plotLine(0, 1, 0, 3)  # |
+    plotLine(1, 0, 3, 0)  # -
+    plotLine(1, 4, 3, 4)  # -
+    plotLine(4, 1, 4, 3)  # |
+    memmoryLetters[i] = resultDraw
+    i += 1
+
+    # P
+    resultDraw = 0
+    plotLine(0, 0, 0, 4)  # |
+    plotLine(1, 0, 4, 0)  # -
+    plotLine(1, 3, 4, 3)  # -
+    plotLine(4, 0, 4, 3)  # |
+    memmoryLetters[i] = resultDraw
+    i += 1
+
+    # Q
+    resultDraw = 0
+    plotLine(0, 1, 0, 3)  # |
+    plotLine(1, 0, 3, 0)  # -
+    plotLine(1, 4, 3, 4)  # -
+    plotLine(4, 1, 4, 3)  # |
+    plotLine(3, 3, 4, 4)  # |
+    memmoryLetters[i] = resultDraw
+    i += 1
+
+    # R
+    resultDraw = 0
+    plotLine(0, 0, 0, 4)  # |
+    plotLine(3, 0, 3, 3)  # |
+    plotLine(0, 0, 3, 0)  # -
+    plotLine(0, 3, 4, 3)  # -
+    plotLine(4, 3, 4, 4)  # |
+    memmoryLetters[i] = resultDraw
+    i += 1
+
+    # S
+    resultDraw = 0
+    plotLine(0, 0, 0, 2)  # |
+    plotLine(4, 2, 4, 4)  # |
+    plotLine(0, 0, 4, 0)  # -
+    plotLine(0, 4, 4, 4)  # -
+    plotLine(0, 2, 4, 2)  # -
+    memmoryLetters[i] = resultDraw
+    i += 1
+
+    # T
+    resultDraw = 0
+    plotLine(0, 0, 4, 0)  # -
+    plotLine(2, 0, 2, 4)  # |
+    memmoryLetters[i] = resultDraw
+    i += 1
+
+    # U
+    resultDraw = 0
+    plotLine(0, 0, 0, 4)  # |
+    plotLine(4, 0, 4, 4)  # |
+    plotLine(0, 4, 4, 4)  # -
+    memmoryLetters[i] = resultDraw
+    i += 1
+
+    # V
+    resultDraw = 0
+    plotLine(0, 0, 2, 4)  # \
+    plotLine(4, 0, 2, 4)  # /
+    memmoryLetters[i] = resultDraw
+    i += 1
+
+    # W
+    resultDraw = 0
+    plotLine(0, 0, 0, 4)  # |
+    plotLine(2, 0, 2, 4)  # |
+    plotLine(4, 0, 4, 4)  # |
+    plotLine(0, 4, 4, 4)  # -
+    memmoryLetters[i] = resultDraw
+    i += 1
+
+    # X
+    resultDraw = 0
+    plotLine(0, 0, 4, 4)  # \
+    plotLine(4, 0, 0, 4)  # /
+    memmoryLetters[i] = resultDraw
+    i += 1
+
+    # Y
+    resultDraw = 0
+    plotLine(0, 0, 2, 2)  # \
+    plotLine(4, 0, 2, 2)  # /
+    plotLine(2, 3, 2, 4)  # |
+    memmoryLetters[i] = resultDraw
+    i += 1
+
+    # Z
+    resultDraw = 0
+    plotLine(0, 0, 4, 0)  # -
+    plotLine(4, 0, 0, 4)  # /
+    plotLine(0, 4, 4, 4)  # -
+    memmoryLetters[i] = resultDraw
+    i += 1
+
+    # 28
+    resultDraw = 0
+    circleBres(2, 2, 2)  # O
+    memmoryLetters[i] = resultDraw
+    i += 1
+
+    # 29
+    resultDraw = 0
+    plotLine(2, 0, 2, 1)  # |
+    plotLine(2, 3, 2, 4)  # |
+    plotLine(0, 2, 1, 2)  # |
+    plotLine(3, 2, 4, 2)  # |
+    plotLine(0, 2, 0, 4)  # |
+    memmoryLetters[i] = resultDraw
+    i += 1
+
 
 def draw(char):
-    global resultDraw
-    resultDraw = 0
-    if (char == 'A'):
-        plotLine(0, 0, 4, 0)
-        plotLine(0, 3, 4, 3)
-        plotLine(0, 0, 0, 4)
-        plotLine(4, 0, 4, 4)
-        # s = "{0:032b}".format(resultDraw)
-        # print('-'.join(s[i:i+8] for i in range(0, len(s), 8)))
-    elif (char == 'B'):
-        plotLine(0, 0, 3, 0)  # -
-        plotLine(0, 2, 4, 2)  # -
-        plotLine(0, 4, 4, 4)  # -
-        plotLine(0, 0, 0, 4)  # |
-        plotLine(3, 0, 3, 2)  # |
-        plotLine(4, 2, 4, 4)  # |
-    elif (char == 'C'):
-        plotLine(0, 0, 4, 0)  # -
-        plotLine(0, 4, 4, 4)  # -
-        plotLine(0, 0, 0, 4)  # |
-    elif (char == 'D'):
-        plotLine(0, 0, 0, 4)  # |
-        plotLine(4, 1, 4, 3)  # |
-        plotLine(0, 0, 4, 1)  # -
-        plotLine(0, 4, 4, 3)  # -
-    elif (char == 'E'):
-        plotLine(0, 0, 4, 0)  # -
-        plotLine(0, 2, 4, 2)  # -
-        plotLine(0, 4, 4, 4)  # -
-        plotLine(0, 0, 0, 4)  # |
-    elif (char == 'F'):
-        plotLine(0, 0, 4, 0)  # -
-        plotLine(0, 2, 4, 2)  # -
-        plotLine(0, 0, 0, 4)  # |
-    elif (char == 'G'):
-        plotLine(0, 0, 4, 0)  # -
-        plotLine(2, 2, 4, 2)  # -
-        plotLine(0, 4, 4, 4)  # -
-        plotLine(0, 0, 0, 4)  # |
-        plotLine(4, 2, 4, 4)  # |
-    elif (char == 'H'):
-        plotLine(0, 2, 4, 2)  # -
-        plotLine(0, 0, 0, 4)  # |
-        plotLine(4, 0, 4, 4)  # |
-    elif (char == 'I'):
-        plotLine(0, 0, 4, 0)  # -
-        plotLine(0, 4, 4, 4)  # -
-        plotLine(2, 0, 2, 4)  # |
-
-    elif (char == 'J'):
-        plotLine(1, 0, 4, 0)  # -
-        plotLine(2, 0, 2, 4)  # |
-        plotLine(0, 4, 2, 4)  # -
-    elif (char == 'K'):
-        plotLine(0, 0, 0, 4)  # |
-        plotLine(1, 2, 4, 0)  # /
-        plotLine(1, 2, 4, 4)  # \
-    elif (char == 'L'):
-        plotLine(0, 0, 0, 4)  # |
-        plotLine(0, 4, 4, 4)  # -
-
-    elif (char == 'M'):
-        plotLine(0, 0, 0, 4)  # |
-        plotLine(4, 0, 4, 4)  # |
-        plotLine(0, 0, 2, 3)  # |
-        plotLine(4, 0, 2, 3)  # |
-    elif (char == 'N'):
-        plotLine(0, 0, 0, 4)  # |
-        plotLine(4, 0, 4, 4)  # |
-        plotLine(0, 0, 4, 4)  # |
-
-    elif (char == 'O'):
-        plotLine(0, 1, 0, 3)  # |
-        plotLine(1, 0, 3, 0)  # -
-        plotLine(1, 4, 3, 4)  # -
-        plotLine(4, 1, 4, 3)  # |
-    elif (char == 'P'):
-        plotLine(0, 0, 0, 4)  # |
-        plotLine(1, 0, 4, 0)  # -
-        plotLine(1, 3, 4, 3)  # -
-        plotLine(4, 0, 4, 3)  # |
-    elif (char == 'Q'):
-        plotLine(0, 1, 0, 3)  # |
-        plotLine(1, 0, 3, 0)  # -
-        plotLine(1, 4, 3, 4)  # -
-        plotLine(4, 1, 4, 3)  # |
-        plotLine(3, 3, 4, 4)  # |
-    elif (char == 'R'):
-        plotLine(0, 0, 0, 4)  # |
-        plotLine(1, 0, 4, 0)  # -
-        plotLine(1, 3, 4, 3)  # -
-        plotLine(4, 0, 4, 3)  # |
-        plotLine(3, 3, 4, 4)  # |
-
-    elif (char == 'S'):
-        plotLine(0, 0, 0, 2)  # |
-        plotLine(4, 2, 4, 4)  # |
-        plotLine(0, 0, 4, 0)  # -
-        plotLine(0, 4, 4, 4)  # -
-        plotLine(0, 2, 4, 2)  # -
-    elif (char == 'T'):
-        plotLine(0, 0, 4, 0)  # -
-        plotLine(2, 0, 2, 4)  # |
-    elif (char == 'U'):
-        plotLine(0, 0, 0, 4)  # |
-        plotLine(4, 0, 4, 4)  # |
-        plotLine(0, 4, 4, 4)  # -
-
-    elif (char == 'V'):
-        plotLine(0, 0, 2, 4)  # \
-        plotLine(4, 0, 2, 4)  # /
-    elif (char == 'W'):
-        plotLine(0, 0, 0, 4)  # |
-        plotLine(2, 0, 2, 4)  # |
-        plotLine(4, 0, 4, 4)  # |
-        plotLine(0, 4, 4, 4)  # -
-    elif (char == 'X'):
-        plotLine(0, 0, 4, 4)  # \
-        plotLine(4, 0, 0, 4)  # /
-    elif (char == 'Y'):
-        plotLine(0, 0, 2, 2)  # \
-        plotLine(4, 0, 2, 2)  # /
-        plotLine(2, 3, 2, 4)  # |
-    elif (char == 'Z'):
-        plotLine(0, 0, 4, 0)  # -
-        plotLine(4, 0, 0, 4)  # /
-        plotLine(0, 4, 4, 4)  # -
-
-    elif (char == 'O'):
-        plotLine(0, 0, 0, 4)  # |
-        plotLine(4, 0, 4, 4)  # |
-        plotLine(0, 4, 4, 4)  # -
-        plotLine(0, 0, 4, 0)  # -
-    elif (char == '1'):
-        circleBres(2, 2, 2)  # O
-    elif (char == '2'):
-        plotLine(2, 0, 2, 1)  # |
-        plotLine(2, 3, 2, 4)  # |
-        plotLine(0, 2, 1, 2)  # |
-        plotLine(3, 2, 4, 2)  # |
-        plotLine(0, 2, 0, 4)  # |
-
-    memmory[offset] = resultDraw
+    tmp = memmoryLetters[char]
+    memmory[offset] = tmp
 
 
 memmory = {x: 0 for x in range(200)}
 file = open("test.txt")
 text = file.read()
-memmoryText = list(text)+[0]
-memmoryLetters = {x: 0 for x in range(200)}
+memmoryText = [1, 23, 4, 9, 18, 0]
+memmoryLetters = {x: 0 for x in range(30)}
 
 offset = 0
 resultDraw = 0
+drawAll()
 while True:
     if (memmoryText[offset] == 0):
         break
     draw(memmoryText[offset])
     offset = offset + 1
-
 
 # _________________________________/ALTO NIVEL/_________________________________
 LINE_SIZE = 41
