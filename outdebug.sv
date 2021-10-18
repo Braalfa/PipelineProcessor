@@ -32,11 +32,12 @@ module outdebug();
 		#10;
 		
 		i = 0;
-		while(i<2500) begin
+		while(i<15) begin
 			clock = 1;
 			#10
 			if(outFlag) begin 
 				$fdisplay(OutFile,"%b", out);
+				$display ($sformatf("Out:  %d",out));
 				i+=1;
 			end
 			clock = 0;
