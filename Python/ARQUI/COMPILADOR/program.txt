@@ -56,11 +56,14 @@ absolute_end:
 ; Overwrite     r0, r1, r2
 ; return point  r13
 getCoords:
+    MOVI        r2, 6  
+    ADD         r0, r0, r2
     MOVI        r2, 1           ; tmp = 1
     SL          r0, r2, r0      ; coords = tmp << x
 
     MOVI        r2, 2           ; tmp = 2         
     SL          r2, r1, r2      ; tmp = y << 2
+    ADD         r2, r2, r1      ; tmp = tmp + y
     ADD         r2, r2, r1      ; tmp = tmp + y
     SL          r0, r0, r2      ; coords = coords << tmp
     B           r13             ; return 

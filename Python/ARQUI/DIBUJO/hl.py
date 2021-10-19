@@ -11,11 +11,13 @@ def absolute(x):
 
 def getCoords(x, y):
     tmp = 1
+    x = x + 6
     coords = tmp << x
     tmp = 2
     tmp = y << tmp
     tmp = tmp + y
-    coords = coords << tmp
+    tmp = tmp + y 
+    coords = coords << tmp     
     return coords
 
 
@@ -389,15 +391,16 @@ LINE_SIZE = 41
 LETTERS = 60
 LETTER_BITS = 32
 
-im = Image.new('1', (250, 250))
+im = Image.new('1', (300, 300))
 offsetX = 0
 offsetY = 0
 for i in range(200):
-    bits = list("{:032b}".format(memmory[i]))
+    bits = list("{:036b}".format(memmory[i]))
+    print("{:036b}".format(memmory[i]))
     bits.reverse()
-    for j in range(32):
-        X = j % 5 + offsetX*6
-        Y = int(j/5) + offsetY*6
+    for j in range(36):
+        X = j % 6 + offsetX*6
+        Y = int(j/6) + offsetY*6
         if (bits[j] == '1'):
             color = ImageColor.getcolor('white', '1')
         else:

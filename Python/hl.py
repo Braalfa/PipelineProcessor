@@ -15,14 +15,14 @@ for i in range(len(memmory)):
     memmory[i] = memmory[i][:-1]
 
 for i in range(len(memmory), 2500):
-    memmory.append("{:032b}".format(0))
+    memmory.append("{:036b}".format(0))
 
 for i in range(2500):
     bits = [int(c) for c in memmory[i]]
     bits.reverse()
-    for j in range(25):
-        X = j % 5 + 6*(i%50)
-        Y = j//5 + 6*(i//50)
+    for j in range(36):
+        X = j % 6 + 6*(i%50)
+        Y = j//6 + 6*(i//50)
         if (bits[j] == 1):
             color = ImageColor.getcolor('black', '1')
         else:
