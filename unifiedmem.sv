@@ -13,7 +13,7 @@
 	- rd2: data requested
 */
 
-module unifiedmem #(parameter WIDTH = 32, parameter RAMSIZE = 2)
+module unifiedmem #(parameter WIDTH = 36)
   (input logic clk,
 	input logic [3:0] we,
 	input logic [WIDTH*4-1:0] a, wd,
