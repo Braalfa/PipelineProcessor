@@ -1019,7 +1019,45 @@ drawAll:
     ADD         r11, r11, r0
     MOVI        r12, 0
 
-    ;28
+    ; 28
+    MOVI r6, 2
+    MOVI r7, 0
+    MOVI r8, 2
+    MOVI r9, 1
+    MOV r14, r15
+    BI plotLine
+    MOVI r6, 2
+    MOVI r7, 3
+    MOVI r8, 2
+    MOVI r9, 4
+    MOV r14, r15
+    BI plotLine
+    MOVI r6, 0
+    MOVI r7, 2
+    MOVI r8, 1
+    MOVI r9, 2
+    MOV r14, r15
+    BI plotLine
+    MOVI r6, 3
+    MOVI r7, 2
+    MOVI r8, 4
+    MOVI r9, 2
+    MOV r14, r15
+    BI plotLine
+    MOVI r6, 0
+    MOVI r7, 2
+    MOVI r8, 0
+    MOVI r9, 4
+    MOV r14, r15
+    BI plotLine
+
+    STR r11, r12
+    MOVI r0, 1
+    ADD r11, r11, r0
+    MOVI r12, 0
+
+
+    ;29
     MOVI        r12, 0
     STR         r11, r12
     MOVI        r0, 1

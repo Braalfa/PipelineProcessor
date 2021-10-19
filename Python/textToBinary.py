@@ -1,4 +1,4 @@
-text = "ABCDEFG   HIJKLMNOP   QRSA BCDE   FTUVWXYZ"
+text = "ABCDEFG   HIJKLMNOP   QRSA BCDE   FTUVWXYZ1"
 
 memsize = 512
 
@@ -7,10 +7,12 @@ for i in range(0, 30):
     asciiList.append('{:032b}'.format(0)+"\n" )
 for c in text:
     if c == " ":
+        asciiList.append('{:032b}'.format(29)+"\n" )
+    elif c == "1":
+        asciiList.append('{:032b}'.format(27)+"\n" )
         asciiList.append('{:032b}'.format(28)+"\n" )
     else:
         asciiList.append('{:032b}'.format(ord(c)-64)+"\n")
-asciiList.append('{:032b}'.format(27)+"\n" )
 
 print(len(asciiList)-30)
 
