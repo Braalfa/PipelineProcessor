@@ -25,22 +25,19 @@ module mem #(parameter WIDTH = 32, parameter INSTRUCTIONWIDTH = 24, parameter RA
 	assign startIOExtended[0] = startIO;
 	
 	
-	logic [6:0] weAux;
-	logic [WIDTH*7-1:0] aAux, wdAux;
-	logic [WIDTH*7-1:0] rdAux;
+	logic [3:0] weAux;
+	logic [WIDTH*4-1:0] aAux, wdAux;
+	logic [WIDTH*4-1:0] rdAux;
 	
 	assign weAux[0] = 0;
 	assign wdAux[WIDTH-1:0] = 0;
 	assign aAux[WIDTH-1:0] = a1;
 	assign rd1 = rdAux[WIDTH-1:0];
 	
-	assign wdAux[WIDTH*7-1:WIDTH] = {wd, wd, wd, wd, wd, wd};
+	assign wdAux[WIDTH*4-1:WIDTH] = {wd, wd, wd};
 	assign aAux[WIDTH*2-1:WIDTH*1] = a2;
-	assign aAux[WIDTH*3-1:WIDTH*2] = a2-RAMSIZE*1;
-	assign aAux[WIDTH*4-1:WIDTH*3] = a2-RAMSIZE*2;
-	assign aAux[WIDTH*5-1:WIDTH*4] = a2-RAMSIZE*3;
-	assign aAux[WIDTH*6-1:WIDTH*5] = a2-RAMSIZE*4;
-	assign aAux[WIDTH*7-1:WIDTH*6] = a2-RAMSIZE*5;
+	assign aAux[WIDTH*3-1:WIDTH*2] = a2-32;
+	assign aAux[WIDTH*4-1:WIDTH*3] = a2-(32+1024);
 
 	
 	unifiedmem #(WIDTH, RAMSIZE) unifiedmem(clk,
@@ -51,22 +48,16 @@ module mem #(parameter WIDTH = 32, parameter INSTRUCTIONWIDTH = 24, parameter RA
 	always_comb begin
 		rd2 = 0;
 		if (a2==RAMSIZE*7) rd2 = startIOExtended;
-		else if(a2<RAMSIZE) rd2 = rdAux[WIDTH*2-1:WIDTH];
-		else if (a2<RAMSIZE*2) rd2  = rdAux[WIDTH*3-1:WIDTH*2];
-		else if (a2<RAMSIZE*3)  rd2  = rdAux[WIDTH*4-1:WIDTH*3];
-		else if (a2<RAMSIZE*4)  rd2  = rdAux[WIDTH*5-1:WIDTH*4];
-		else if (a2<RAMSIZE*5)  rd2  = rdAux[WIDTH*6-1:WIDTH*5];
-		else if (a2<RAMSIZE*6)  rd2  = rdAux[WIDTH*7-1:WIDTH*6];
+		else if(a2<32) rd2 = rdAux[WIDTH*2-1:WIDTH];
+		else if (a2<32+1024) rd2  = rdAux[WIDTH*3-1:WIDTH*2];
+		else if (a2<32+1024+512)  rd2  = rdAux[WIDTH*4-1:WIDTH*3];
 		
 	
-		weAux[6:1] = 0;
+		weAux[3:1] = 0;
 		if (we) begin
-			if(a2<RAMSIZE) weAux[1] = 1;
-			else if (a2<RAMSIZE*2) weAux[2] = 1;
-			else if (a2<RAMSIZE*3) weAux[3] = 1;
-			else if (a2<RAMSIZE*4) weAux[4] = 1;
-			else if (a2<RAMSIZE*5) weAux[5] = 1;
-			else if (a2<RAMSIZE*6) weAux[6] = 1;
+			if(a2<32) weAux[1] = 1;
+			else if (a2<32+1024) weAux[2] = 1;
+			else if (a2<32+1024+512) weAux[3] = 1;
 		end
 		
 	end
