@@ -13,7 +13,7 @@
 	- rd2: data requested
 */
 
-module mem #(parameter WIDTH = 32, parameter INSTRUCTIONWIDTH = 24, parameter RAMSIZE = 1024)
+module mem #(parameter WIDTH = 32, parameter INSTRUCTIONWIDTH = 24)
   (input logic clk, we, startIO,
 	input logic [WIDTH-1:0] a1, a2, wd,
 	output logic [INSTRUCTIONWIDTH-1:0] rd1,
@@ -40,10 +40,10 @@ module mem #(parameter WIDTH = 32, parameter INSTRUCTIONWIDTH = 24, parameter RA
 	assign aAux[WIDTH*4-1:WIDTH*3] = a2-(32+1024);
 
 	
-	unifiedmem #(WIDTH, RAMSIZE) unifiedmem(clk,
-														 weAux,
-														 aAux, wdAux,
-														 rdAux);
+	unifiedmem #(WIDTH) unifiedmem(clk,
+											 weAux,
+											 aAux, wdAux,
+											 rdAux);
 	
 	always_comb begin
 		rd2 = 0;
