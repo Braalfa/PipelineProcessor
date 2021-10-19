@@ -9,7 +9,7 @@ module CPU #(parameter WIDTH = 32, parameter REGNUM = 16,
 				parameter ADDRESSWIDTH = 4, parameter OPCODEWIDTH = 4,
 				parameter INSTRUCTIONWIDTH = 24)
 	(input logic clock, reset, startIO, 
-	output logic outFlagIOWB,
+	output logic outFlagIOE,
 	output logic [24:0] out);
 	
 	logic writeEnableDD,
@@ -42,8 +42,7 @@ module CPU #(parameter WIDTH = 32, parameter REGNUM = 16,
 	logic writeEnableDE,
 			writeDataEnableME,
 			resultSelectorWBE,
-			data2SelectorEE,
-			outFlagIOE;
+			data2SelectorEE;
 	logic [2:0] aluControlEE;	
 	logic [ADDRESSWIDTH-1:0] writeAddressD, 
 							regDestinationAddressD, regDestinationAddressE,
@@ -171,21 +170,20 @@ module CPU #(parameter WIDTH = 32, parameter REGNUM = 16,
 
 
 	 assign NewPCF = aluOutputE;
-	
+	 assign out = aluOutputE[24:0];
+
 	 // Execution - Memory Flip-Flop
 	 
 	 
-	 resetableflipflop  #(2*WIDTH+ADDRESSWIDTH+4) ExecuteFlipFlop(clock, reset, 1'b1,
+	 resetableflipflop  #(2*WIDTH+ADDRESSWIDTH+3) ExecuteFlipFlop(clock, reset, 1'b1,
 	 {aluOutputE, reg2FinalE, regDestinationAddressE,
 			writeEnableDE,
 			writeDataEnableME,
-			resultSelectorWBE,
-			outFlagIOE}, 
+			resultSelectorWBE}, 
 	 {aluOutputM, reg2ContentM, regDestinationAddressM,
 			writeEnableDM,
 			writeDataEnableMM,
-			resultSelectorWBM,
-			outFlagIOM});
+			resultSelectorWBM});
 	 
    //-------------------------------------------------------------------------------//
 
@@ -198,15 +196,13 @@ module CPU #(parameter WIDTH = 32, parameter REGNUM = 16,
 
 	 // Memory - Write Back Flip-Flop
 
-	resetableflipflop  #(2*WIDTH+ADDRESSWIDTH+3) MemoryFlipFlop(clock, reset, 1'b1,
+	resetableflipflop  #(2*WIDTH+ADDRESSWIDTH+2) MemoryFlipFlop(clock, reset, 1'b1,
 	 {aluOutputM, MemoryDataOutputM, regDestinationAddressM,
 		   writeEnableDM,
-			resultSelectorWBM,
-			outFlagIOM}, 
+			resultSelectorWBM}, 
 	 {aluOutputWB, MemoryDataOutputWB, regDestinationAddressWB,
 			writeEnableDWB,
-			resultSelectorWBWB,
-			outFlagIOWB});
+			resultSelectorWBWB});
 
     //-------------------------------------------------------------------------------//
 	 
@@ -220,8 +216,6 @@ module CPU #(parameter WIDTH = 32, parameter REGNUM = 16,
 	 
 	 
 	 
-	 assign out = MemoryDataOutputWB[24:0];
-
 	 initial begin 
 		resultSelectorWBE = 0;
 	 end

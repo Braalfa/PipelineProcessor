@@ -3,8 +3,8 @@ start:
     BI          drawAll
 
 drawAll_ret:
-    MOVI        r11, 30          ; Offset = 100, contador para mainWhile
-    MOVI        r12, 0          ; resultDraw = 0
+    MOVI        r11, 32          ; Offset = 100, contador para mainWhile
+    MOVI        r12, 1056        ; se guarda a partir de la 1056
 
 ; _________________________MAIN LOOP
 mainWhile:
@@ -15,11 +15,12 @@ mainWhile:
     BE          mainWhile_break
 
     LDR         r0, r0
-    STR         r11, r0
-    OUT         r11
+    STR         r12, r0
+    OUT         r0
 
     MOVI        r0, 1
     ADD         r11, r11, r0
+    ADD         r12, r12, r0
 
     BI          mainWhile
 

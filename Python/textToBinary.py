@@ -1,39 +1,27 @@
-text = "ABCDEFG   HIJKLMNOP   QRSA BCDE   FTUVWXYZ1"
-
-memsize = 512
-
+text = "Lorem ipsum dolor sit amet consectetur adipiscing elit sed do eiusmod tempor incididunt ut labore et dolore magna aliqua Ut enim ad minim veniam quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur Excepteur sint occaecat cupidatat non proident sunt in culpa qui officia deserunt mollit anim id est laborum Lorem ipsum dolor sit amet consectetur adipiscing elit sed do eiusmod tempor incididunt ut labore et dolore magna aliqua Ut enim ad minim veniam quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat"
+memsize = 1024
+text = text.upper()
 asciiList = []
-for i in range(0, 30):
-    asciiList.append('{:032b}'.format(0)+"\n" )
 for c in text:
     if c == " ":
-        asciiList.append('{:032b}'.format(29)+"\n" )
+        asciiList.append('{:05b}'.format(29)+"\n" )
     elif c == "1":
-        asciiList.append('{:032b}'.format(27)+"\n" )
-        asciiList.append('{:032b}'.format(28)+"\n" )
+        asciiList.append('{:05b}'.format(27)+"\n" )
+        asciiList.append('{:05b}'.format(28)+"\n" )
     else:
-        asciiList.append('{:032b}'.format(ord(c)-64)+"\n")
+        asciiList.append('{:05b}'.format(ord(c)-64)+"\n")
 
-print(len(asciiList)-30)
+print(len(asciiList))
 
 for i in range(len(asciiList), memsize):
-    asciiList.append('{:032b}'.format(0)+"\n" )
+    asciiList.append('{:05b}'.format(0)+"\n" )
 
 
-f = open("../mem2.txt", "w")
+f = open("../mem3.txt", "w")
 f.writelines(asciiList)
 
 mem = []
-for i in range(memsize):
+for i in range(512):
     mem.append('{:032b}'.format(0)+"\n" )
-
-f = open("../mem3.txt", "w")
-f.writelines(mem)
 f = open("../mem4.txt", "w")
-f.writelines(mem)
-f = open("../mem5.txt", "w")
-f.writelines(mem)
-f = open("../mem6.txt", "w")
-f.writelines(mem)
-f = open("../mem7.txt", "w")
 f.writelines(mem)
