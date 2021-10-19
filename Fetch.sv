@@ -19,6 +19,6 @@ module Fetch #(parameter WIDTH = 8)
 	
 	resetableflipflop  #(WIDTH) pcflipflop(clock, reset, enable, TempPC ,PC);
 	mux2  #(WIDTH) pcmux (PCPlus1, NewPC, PCSelector, TempPC);
-	adder  #(WIDTH) pcadder(PC, 1, PCPlus1);
+	adder  #(WIDTH) pcadder(PC, 36'b1, PCPlus1);
 	
 endmodule

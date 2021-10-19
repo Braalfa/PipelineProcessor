@@ -10,7 +10,7 @@ module CPU #(parameter WIDTH = 32, parameter REGNUM = 16,
 				parameter INSTRUCTIONWIDTH = 24)
 	(input logic clock, reset, startIO, 
 	output logic outFlagIOE,
-	output logic [24:0] out);
+	output logic [WIDTH-1:0] out);
 	
 	logic writeEnableDD,
 	writeDataEnableMD,
@@ -170,7 +170,7 @@ module CPU #(parameter WIDTH = 32, parameter REGNUM = 16,
 
 
 	 assign NewPCF = aluOutputE;
-	 assign out = aluOutputE[24:0];
+	 assign out = aluOutputE;
 
 	 // Execution - Memory Flip-Flop
 	 
