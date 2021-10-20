@@ -11,7 +11,7 @@ MOV r13, r12
 ADD r13, r13, r1
 STR r1, r13
 LDR r14, r1 
-OUT r1
+OUT r14
 ADD r14, r14, r1
 MOVI r2, 13
 CMP r2, r14
@@ -43,8 +43,7 @@ b4p:
 ADD r0, r0, r0
 MOVI r2, 2
 ADD r0, r2
-STR r2, r0
-OUT r2
+OUT r0
 MOVI r0, 0 
 MOVI r1, 1 
 MOV r13, r15
@@ -55,7 +54,4 @@ btemp:
 B r13
 bout:
 MOVI r2, 2
-STR r2, r0
-OUT r2
-MOVI r2, 3584
-OUT r2
+OUT r0
