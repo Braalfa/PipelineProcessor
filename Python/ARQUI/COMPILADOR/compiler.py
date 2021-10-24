@@ -131,10 +131,10 @@ for (i, l) in enumerate(text):
         for r in params:
             result += "R{0}({0:04b})".format(REGISTERS[r])
 
+    print(result)
     # Add the debug string to a final string
     binResult += result + "\n"
 
-print(binResult)
 # final is a list with just the binary code compiled
 # without the debug data, only the bits inside ()
 final = []

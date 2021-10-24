@@ -1,9 +1,9 @@
 ; _________________________SWITCH LOOP
 switchLoop:
-    MOVI        r0, 1568 
-    CGW         r1, r0         ; switch = mem[1568]
+    MOVI        r0, 1806 
+    CGW         r1, r0         ; switch = mem[1806]
     MOVI        r0, 1
-    CMP         r0 , r1
+    CMP         r0, r1
     SLI         start
     SL          switchLoop
 
@@ -12,8 +12,9 @@ start:
     SL          drawAll
 
 drawAll_ret:
-    MOVI        r11, 32          ; Offset = 100, contador para mainWhile
-    MOVI        r12, 1056        ; se guarda a partir de la 1056
+    MOVI        r10, 41          ; spaces = 41, contador para espacios
+    MOVI        r11, 32          ; offset1 = 32, contador para mainWhile
+    MOVI        r12, 1056        ; offset2 = 1056, se guarda a partir de la 1056
 
 ; _________________________MAIN LOOP
 mainWhile:
@@ -21,15 +22,19 @@ mainWhile:
 
     MOVI        r1, 0           ; r1 = 0
     CMP         r0, r1          ; 0 == char          
-    SLI          mainWhile_break
+    SLI         mainWhile_break
+
+    ;CMP         r0, r10          ; 0 == spaces        
+    ;SLI         checkSpaces
 
     CGW         r0, r0          ; dibujo = mem[char]
     GDW         r12, r0         ; mem[offset2] = dibujo
-    OUT         r0
+    ;OUT         r0
 
     MOVI        r0, 1
-    SUM         r11, r11, r0    ; offset ++
-    SUM         r12, r12, r0    ; offset2 ++
+    SUM         r11, r11, r0    ; offset1 = offset1 + tmp
+    SUM         r12, r12, r0    ; offset2 = offset2 + tmp
+    RES         r10, r10, r0    ; spaces = spaces - tmp
 
     SL          mainWhile
 
@@ -37,18 +42,73 @@ mainWhile_break:
     MOVI        r0, 27
     CGW         r0, r0
     GDW         r12, r0
-    OUT         r0
+    ;OUT         r0
     MOVI        r0, 1
     SUM         r12, r12, r0
 
     MOVI        r0, 28
     CGW         r0, r0
     GDW         r12, r0
-    OUT         r0
+    ;OUT         r0
     MOVI        r0, 1
     SUM         r12, r12, r0
 
+    MOVI        r12, 1806        ; limit
+    MOVI        r11, 1056          ; i
+outWhile:
+    CMP         r11, r12
+    SLI         outWhile_break
+
+    CGW         r0, r11
+    OUT         r0
+
+    MOVI        r0, 1
+    SUM         r11, r11, r0
+    SL          outWhile
+
+outWhile_break:
     SL          end
+
+; Args          r10, r11, r12
+; Out           NA
+; Overwrite     r0, r1
+; return point  NA
+checkSpaces:
+    MOVI        r0, 1
+    RES         r0, r11, r0
+    CGW         r0, r0
+    MOVI        r1, 31
+    CMP         r0, r1
+    SLI         mainWhile
+
+    CGW         r0, r11
+    CMP         r0, r1
+    SLI         mainWhile
+
+    MOV         r0, r12
+checkSpaces_while:
+    MOVI        r1, 31
+    CGW         r2, r11
+    CMP         r2, r1
+    SLI         checkSpaces_break
+
+    MOVI        r1, 0
+    GDW         r12, r1
+
+    MOVI        r1, 1
+    RES         r11, r11, r1
+    RES         r12, r12, r1
+
+    SL          checkSpaces_while
+checkSpaces_break:
+    MOVI        r1, 1
+    SUM         r11, r11, r1
+    MOV         r12, r0
+
+    MOVI        r10, 41       
+
+    SL         mainWhile
+
 
 ;-------------------------------------------
 ; r11 => Offset
@@ -65,7 +125,7 @@ mainWhile_break:
 absolute:
     MOVI        r1, 0           ; tmp = 0
     CMP         r1, r0          ; 0 < x
-    SLM          absolute_end
+    SLM         absolute_end
     SL          absolute_if
 
 absolute_if:

@@ -133,7 +133,7 @@ def drawAll():
     plotLine(0, 3, 4, 3)
     plotLine(0, 0, 0, 4)
     plotLine(4, 0, 4, 4)
-    memmoryLetters[i] = resultDraw
+    memmory[i] = resultDraw
     i += 1
 
     # B
@@ -144,7 +144,7 @@ def drawAll():
     plotLine(0, 0, 0, 4)  # |
     plotLine(3, 0, 3, 2)  # |
     plotLine(4, 2, 4, 4)  # |
-    memmoryLetters[i] = resultDraw
+    memmory[i] = resultDraw
     i += 1
 
     # C
@@ -152,7 +152,7 @@ def drawAll():
     plotLine(0, 0, 4, 0)  # -
     plotLine(0, 4, 4, 4)  # -
     plotLine(0, 0, 0, 4)  # |
-    memmoryLetters[i] = resultDraw
+    memmory[i] = resultDraw
     i += 1
 
     # D
@@ -161,7 +161,7 @@ def drawAll():
     plotLine(4, 1, 4, 3)  # |
     plotLine(0, 0, 4, 1)  # -
     plotLine(0, 4, 4, 3)  # -
-    memmoryLetters[i] = resultDraw
+    memmory[i] = resultDraw
     i += 1
 
     # E
@@ -170,7 +170,7 @@ def drawAll():
     plotLine(0, 2, 4, 2)  # -
     plotLine(0, 4, 4, 4)  # -
     plotLine(0, 0, 0, 4)  # |
-    memmoryLetters[i] = resultDraw
+    memmory[i] = resultDraw
     i += 1
 
     # F
@@ -178,7 +178,7 @@ def drawAll():
     plotLine(0, 0, 4, 0)  # -
     plotLine(0, 2, 4, 2)  # -
     plotLine(0, 0, 0, 4)  # |
-    memmoryLetters[i] = resultDraw
+    memmory[i] = resultDraw
     i += 1
 
     # G
@@ -188,7 +188,7 @@ def drawAll():
     plotLine(0, 4, 4, 4)  # -
     plotLine(0, 0, 0, 4)  # |
     plotLine(4, 2, 4, 4)  # |
-    memmoryLetters[i] = resultDraw
+    memmory[i] = resultDraw
     i += 1
 
     # H
@@ -196,7 +196,7 @@ def drawAll():
     plotLine(0, 2, 4, 2)  # -
     plotLine(0, 0, 0, 4)  # |
     plotLine(4, 0, 4, 4)  # |
-    memmoryLetters[i] = resultDraw
+    memmory[i] = resultDraw
     i += 1
 
     # I
@@ -204,7 +204,7 @@ def drawAll():
     plotLine(0, 0, 4, 0)  # -
     plotLine(0, 4, 4, 4)  # -
     plotLine(2, 0, 2, 4)  # |
-    memmoryLetters[i] = resultDraw
+    memmory[i] = resultDraw
     i += 1
 
     # J
@@ -212,7 +212,7 @@ def drawAll():
     plotLine(1, 0, 4, 0)  # -
     plotLine(2, 0, 2, 4)  # |
     plotLine(0, 4, 2, 4)  # -
-    memmoryLetters[i] = resultDraw
+    memmory[i] = resultDraw
     i += 1
 
     # K
@@ -220,14 +220,14 @@ def drawAll():
     plotLine(0, 0, 0, 4)  # |
     plotLine(1, 2, 4, 0)  # /
     plotLine(1, 2, 4, 4)  # \
-    memmoryLetters[i] = resultDraw
+    memmory[i] = resultDraw
     i += 1
 
     # L
     resultDraw = 0
     plotLine(0, 0, 0, 4)  # |
     plotLine(0, 4, 4, 4)  # -
-    memmoryLetters[i] = resultDraw
+    memmory[i] = resultDraw
     i += 1
 
     # M
@@ -236,7 +236,7 @@ def drawAll():
     plotLine(4, 0, 4, 4)  # |
     plotLine(0, 0, 2, 3)  # |
     plotLine(4, 0, 2, 3)  # |
-    memmoryLetters[i] = resultDraw
+    memmory[i] = resultDraw
     i += 1
 
     # N
@@ -244,7 +244,7 @@ def drawAll():
     plotLine(0, 0, 0, 4)  # |
     plotLine(4, 0, 4, 4)  # |
     plotLine(0, 0, 4, 4)  # |
-    memmoryLetters[i] = resultDraw
+    memmory[i] = resultDraw
     i += 1
 
     # O
@@ -253,7 +253,7 @@ def drawAll():
     plotLine(1, 0, 3, 0)  # -
     plotLine(1, 4, 3, 4)  # -
     plotLine(4, 1, 4, 3)  # |
-    memmoryLetters[i] = resultDraw
+    memmory[i] = resultDraw
     i += 1
 
     # P
@@ -262,7 +262,7 @@ def drawAll():
     plotLine(1, 0, 4, 0)  # -
     plotLine(1, 3, 4, 3)  # -
     plotLine(4, 0, 4, 3)  # |
-    memmoryLetters[i] = resultDraw
+    memmory[i] = resultDraw
     i += 1
 
     # Q
@@ -272,7 +272,7 @@ def drawAll():
     plotLine(1, 4, 3, 4)  # -
     plotLine(4, 1, 4, 3)  # |
     plotLine(3, 3, 4, 4)  # |
-    memmoryLetters[i] = resultDraw
+    memmory[i] = resultDraw
     i += 1
 
     # R
@@ -282,7 +282,7 @@ def drawAll():
     plotLine(0, 0, 3, 0)  # -
     plotLine(0, 3, 4, 3)  # -
     plotLine(4, 3, 4, 4)  # |
-    memmoryLetters[i] = resultDraw
+    memmory[i] = resultDraw
     i += 1
 
     # S
@@ -292,14 +292,14 @@ def drawAll():
     plotLine(0, 0, 4, 0)  # -
     plotLine(0, 4, 4, 4)  # -
     plotLine(0, 2, 4, 2)  # -
-    memmoryLetters[i] = resultDraw
+    memmory[i] = resultDraw
     i += 1
 
     # T
     resultDraw = 0
     plotLine(0, 0, 4, 0)  # -
     plotLine(2, 0, 2, 4)  # |
-    memmoryLetters[i] = resultDraw
+    memmory[i] = resultDraw
     i += 1
 
     # U
@@ -307,14 +307,14 @@ def drawAll():
     plotLine(0, 0, 0, 4)  # |
     plotLine(4, 0, 4, 4)  # |
     plotLine(0, 4, 4, 4)  # -
-    memmoryLetters[i] = resultDraw
+    memmory[i] = resultDraw
     i += 1
 
     # V
     resultDraw = 0
     plotLine(0, 0, 2, 4)  # \
     plotLine(4, 0, 2, 4)  # /
-    memmoryLetters[i] = resultDraw
+    memmory[i] = resultDraw
     i += 1
 
     # W
@@ -323,14 +323,14 @@ def drawAll():
     plotLine(2, 0, 2, 4)  # |
     plotLine(4, 0, 4, 4)  # |
     plotLine(0, 4, 4, 4)  # -
-    memmoryLetters[i] = resultDraw
+    memmory[i] = resultDraw
     i += 1
 
     # X
     resultDraw = 0
     plotLine(0, 0, 4, 4)  # \
     plotLine(4, 0, 0, 4)  # /
-    memmoryLetters[i] = resultDraw
+    memmory[i] = resultDraw
     i += 1
 
     # Y
@@ -338,7 +338,7 @@ def drawAll():
     plotLine(0, 0, 2, 2)  # \
     plotLine(4, 0, 2, 2)  # /
     plotLine(2, 3, 2, 4)  # |
-    memmoryLetters[i] = resultDraw
+    memmory[i] = resultDraw
     i += 1
 
     # Z
@@ -346,13 +346,13 @@ def drawAll():
     plotLine(0, 0, 4, 0)  # -
     plotLine(4, 0, 0, 4)  # /
     plotLine(0, 4, 4, 4)  # -
-    memmoryLetters[i] = resultDraw
+    memmory[i] = resultDraw
     i += 1
 
     # 27
     resultDraw = 0
     circleBres(2, 2, 2)  # O
-    memmoryLetters[i] = resultDraw
+    memmory[i] = resultDraw
     i += 1
 
     # 28
@@ -362,53 +362,101 @@ def drawAll():
     plotLine(0, 2, 1, 2)  # |
     plotLine(3, 2, 4, 2)  # |
     plotLine(0, 2, 0, 4)  # |
-    memmoryLetters[i] = resultDraw
+    memmory[i] = resultDraw
     i += 1
 
     # 29 ,
     resultDraw = 0
     plotLine(1, 2, 0, 4)  # |
-    memmoryLetters[i] = resultDraw
+    memmory[i] = resultDraw
     i += 1
 
     # 30 .
     resultDraw = 0
     plotLine(0, 3, 0, 4)  # |
     plotLine(1, 3, 1, 4)  # |
-    memmoryLetters[i] = resultDraw
+    memmory[i] = resultDraw
+    i += 1
+
+    # 31 ' '
+    resultDraw = 0
+    memmory[i] = resultDraw
     i += 1
 
 
-def draw(char):
-    tmp = memmoryLetters[char]
-    memmory[offset] = tmp
+def checkSpaces():
+    global offset1, offset2, spaces
+    tmp1 = 1
+    tmp1 = offset1 - tmp1
+    tmp1 = memmory[tmp1]
+    tmp2 = 31
+    if (tmp1 == tmp2):
+        return
+    tmp1 = memmory[offset1]
+    if(tmp1 == tmp2):
+        return
+
+    tmp1 = offset2
+    while True:
+        tmp2 = 31
+        tmp3 = memmory[offset1]
+        if (tmp3 == tmp2):
+            break
+        tmp2 = 0
+        memmory[offset2] = tmp2
+        tmp2 = 1
+        offset1 = offset1-tmp2
+        offset2 = offset2-tmp2
+    tmp2 = 1
+    offset1 = offset1 + tmp2
+    offset2 = tmp1
+
+    spaces = 41
 
 
-memmory = {x: 0 for x in range(200)}
 file = open("test.txt")
 text = file.read()
-memmoryText = [18, 29, 2, 30, 3, 0, ]
-memmoryLetters = {x: 0 for x in range(30)}
+memmory = {x: 0 for x in range(3000)}
+letters = [18, 1, 2, 3, 31, 18, 1, 2, 3, 31, 18, 1, 2, 3, 31, 18, 1, 2, 3, 31, 18, 1, 2, 3,
+           31, 18, 1, 2, 3, 31, 18, 1, 2, 3, 31, 18, 1, 2, 18, 1, 2, 3, 31, 18, 1, 2, 3, 31, 18, 1, 2, 3, 31, 18, 1, 2, 3, 31, 18, 1, 2, 3, 31, 18, 1, 2, 3, 31, 18, 1, 2, 3,
+           31, 18, 1, 2, 3, 31, 18, 1, 2, 3, 31, 18, 1, 2, 18, 1, 2, 3, 31, 18, 1, 2, 3, 31, 0, ]
+for i in range(200):
+    if (letters[i] == 0):
+        break
+    memmory[32+i] = letters[i]
 
-offset = 0
+spaces = 41
+offset1 = 32
+offset2 = 1056
 resultDraw = 0
 drawAll()
-print(memmoryLetters)
 while True:
-    if (memmoryText[offset] == 0):
+    if (memmory[offset1] == 0):
         break
-    draw(memmoryText[offset])
-    offset = offset + 1
+    tmp = 0
+    if (spaces == tmp):
+        checkSpaces()
+        continue
+
+    tmp = memmory[offset1]
+    tmp = memmory[tmp]
+    memmory[offset2] = tmp
+
+    tmp = 1
+    offset1 = offset1 + tmp
+    offset2 = offset2 + tmp
+    spaces = spaces - tmp
+
 
 # _________________________________/ALTO NIVEL/_________________________________
 LINE_SIZE = 41
 LETTERS = 60
 LETTER_BITS = 32
 
-im = Image.new('1', (300, 300))
+im = Image.new('1', (250, 250))
 offsetX = 0
 offsetY = 0
-for i in range(200):
+for i in range(1056, 1056+200):
     bits = list("{:036b}".format(memmory[i]))
     # print("{:036b}".format(memmory[i]))
     bits.reverse()
