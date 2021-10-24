@@ -26,10 +26,10 @@ module unifiedmem #(parameter WIDTH = 36)
 	logic [WIDTH-1:0] RAM4 [512-1:0];
 
 	initial begin
-		$readmemb("C://Users//alfab//Documents//PipelineProcessor//mem1.txt",RAM1);
-		$readmemb("C://Users//alfab//Documents//PipelineProcessor//mem2.txt",RAM2);
-		$readmemb("C://Users//alfab//Documents//PipelineProcessor//mem3.txt",RAM3);
-		$readmemb("C://Users//alfab//Documents//PipelineProcessor//mem4.txt",RAM4);
+		$readmemb("C://Users//Juanp//Documents//Workspace//TEC//PipelineProcessor//mem1.txt",RAM1);
+		$readmemb("C://Users//Juanp//Documents//Workspace//TEC//PipelineProcessor//mem2.txt",RAM2);
+		$readmemb("C://Users//Juanp//Documents//Workspace//TEC//PipelineProcessor//mem3.txt",RAM3);
+		$readmemb("C://Users//Juanp//Documents//Workspace//TEC//PipelineProcessor//mem4.txt",RAM4);
 	end
 	
 	assign rd[WIDTH-1:0] = RAM1[a[WIDTH-1:0]]; 

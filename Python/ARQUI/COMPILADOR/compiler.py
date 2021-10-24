@@ -21,20 +21,20 @@ REGISTERS = {
 }
 
 INSTR = {
-    "ADD":	{"OP": 5, "category": "ART"},
-    "OR":	{"OP": 8, "category": "ART"},
-    "SL":	{"OP": 9, "category": "ART"},
-    "SUB":	{"OP": 6, "category": "ART"},
-    "BI":	{"OP": 15, "category": "BI"},
-    "B":	{"OP": 12, "category": "BR"},
-    "BL":	{"OP": 13, "category": "BI"},
-    "BE":	{"OP": 11, "category": "BI"},
-    "CMP":	{"OP": 10, "category": "CMP"},
-    "LDR":	{"OP": 7, "category": "LDW"},
-    "MOV":	{"OP": 3, "category": "MOV"},
-    "MOVI":	{"OP": 2, "category": "MOVI"},
-    "STR":	{"OP": 1, "category": "STW"},
-    "OUT":	{"OP": 4, "category": "OUT"}
+    "SUM":	{"OP": 5, "category": "ART"},  # Suma
+    "OBB":	{"OP": 8, "category": "ART"},  # O bit a bit
+    "DLI":	{"OP": 9, "category": "ART"},  # Desplazamiento lateral izquierda
+    "RES":	{"OP": 6, "category": "ART"},  # Resta
+    "SL":	{"OP": 15, "category": "BI"},  # Salto a Label incondicional
+    "SR":	{"OP": 12, "category": "BR"},  # Salto a registro incondicional
+    "SLM":	{"OP": 13, "category": "BI"},  # Salto si menor que a Label
+    "SLI":	{"OP": 11, "category": "BI"},  # Salto si igual que a Label
+    "CMP":	{"OP": 10, "category": "CMP"},  # Comparar
+    "CGW":	{"OP": 7, "category": "LDW"},  # Cargar palabra
+    "MOV":	{"OP": 3, "category": "MOV"},  # Mover
+    "MOVI":	{"OP": 2, "category": "MOVI"},  # Mover inmediato
+    "GDW":	{"OP": 1, "category": "STW"},  # Guardar palabra
+    "OUT":	{"OP": 4, "category": "OUT"}   # ???
 }
 
 
@@ -155,6 +155,6 @@ final = "".join(final)
 final = final.split("\n")
 final = [x.ljust(24, "0") for x in final]
 
-outFile = open("OUT.txt", "w")
+outFile = open("../../../mem1.txt", "w")
 outFile.write("\n".join(final))
 print("Compiled succesesfully!")

@@ -1,6 +1,15 @@
+; _________________________SWITCH LOOP
+switchLoop:
+    MOVI        r0, 1568 
+    CGW         r1, r0         ; switch = mem[1568]
+    MOVI        r0, 1
+    CMP         r0 , r1
+    SLI         start
+    SL          switchLoop
+
 ; _________________________START
 start:
-    BI          drawAll
+    SL          drawAll
 
 drawAll_ret:
     MOVI        r11, 32          ; Offset = 100, contador para mainWhile
@@ -8,24 +17,38 @@ drawAll_ret:
 
 ; _________________________MAIN LOOP
 mainWhile:
-    LDR         r0, r11         ; char = mem[Offset]
+    CGW         r0, r11         ; char = mem[Offset]
 
     MOVI        r1, 0           ; r1 = 0
     CMP         r0, r1          ; 0 == char          
-    BE          mainWhile_break
+    SLI          mainWhile_break
 
-    LDR         r0, r0
-    STR         r12, r0
+    CGW         r0, r0          ; dibujo = mem[char]
+    GDW         r12, r0         ; mem[offset2] = dibujo
     OUT         r0
 
     MOVI        r0, 1
-    ADD         r11, r11, r0
-    ADD         r12, r12, r0
+    SUM         r11, r11, r0    ; offset ++
+    SUM         r12, r12, r0    ; offset2 ++
 
-    BI          mainWhile
+    SL          mainWhile
 
 mainWhile_break:
-    BI          end
+    MOVI        r0, 27
+    CGW         r0, r0
+    GDW         r12, r0
+    OUT         r0
+    MOVI        r0, 1
+    SUM         r12, r12, r0
+
+    MOVI        r0, 28
+    CGW         r0, r0
+    GDW         r12, r0
+    OUT         r0
+    MOVI        r0, 1
+    SUM         r12, r12, r0
+
+    SL          end
 
 ;-------------------------------------------
 ; r11 => Offset
@@ -42,14 +65,14 @@ mainWhile_break:
 absolute:
     MOVI        r1, 0           ; tmp = 0
     CMP         r1, r0          ; 0 < x
-    BL          absolute_end
-    BI          absolute_if
+    SLM          absolute_end
+    SL          absolute_if
 
 absolute_if:
-    SUB         r0, r1, r0      ; x = tmp-x
+    RES         r0, r1, r0      ; x = tmp-x
 
 absolute_end:
-    B           r13             ; return
+    SR           r13             ; return
 
 ; Args          r0 => x, r1 => y
 ; Out           r0 => coords
@@ -57,16 +80,16 @@ absolute_end:
 ; return point  r13
 getCoords:
     MOVI        r2, 6  
-    ADD         r0, r0, r2
+    SUM         r0, r0, r2
     MOVI        r2, 1           ; tmp = 1
-    SL          r0, r2, r0      ; coords = tmp << x
+    DLI          r0, r2, r0      ; coords = tmp << x
 
     MOVI        r2, 2           ; tmp = 2         
-    SL          r2, r1, r2      ; tmp = y << 2
-    ADD         r2, r2, r1      ; tmp = tmp + y
-    ADD         r2, r2, r1      ; tmp = tmp + y
-    SL          r0, r0, r2      ; coords = coords << tmp
-    B           r13             ; return 
+    DLI          r2, r1, r2      ; tmp = y << 2
+    SUM         r2, r2, r1      ; tmp = tmp + y
+    SUM         r2, r2, r1      ; tmp = tmp + y
+    DLI          r0, r0, r2      ; coords = coords << tmp
+    SR           r13             ; return 
 
 ; Args          r3 => xc, r4 => yc, r5 => x, r6 => y
 ; Out           NA
@@ -75,55 +98,55 @@ getCoords:
 ; internal      
 ;               
 drawCircle:
-    ADD         r0, r3, r5          ;resultDraw = resultDraw | getCoords(xc + x, yc + y)
-    ADD         r1, r4, r6
+    SUM         r0, r3, r5          ;resultDraw = resultDraw | getCoords(xc + x, yc + y)
+    SUM         r1, r4, r6
     MOV         r13, r15
-    BI          getCoords
-    OR          r12, r12, r0
+    SL          getCoords
+    OBB          r12, r12, r0
 
-    SUB         r0, r3, r5          ;resultDraw = resultDraw | getCoords(xc - x, yc + y)
-    ADD         r1, r4, r6
+    RES         r0, r3, r5          ;resultDraw = resultDraw | getCoords(xc - x, yc + y)
+    SUM         r1, r4, r6
     MOV         r13, r15
-    BI          getCoords
-    OR          r12, r12, r0
+    SL          getCoords
+    OBB          r12, r12, r0
 
-    ADD         r0, r3, r5          ;resultDraw = resultDraw | getCoords(xc + x, yc - y)
-    SUB         r1, r4, r6
+    SUM         r0, r3, r5          ;resultDraw = resultDraw | getCoords(xc + x, yc - y)
+    RES         r1, r4, r6
     MOV         r13, r15
-    BI          getCoords
-    OR          r12, r12, r0
+    SL          getCoords
+    OBB          r12, r12, r0
     
-    SUB         r0, r3, r5          ;resultDraw = resultDraw | getCoords(xc - x, yc - y)
-    SUB         r1, r4, r6
+    RES         r0, r3, r5          ;resultDraw = resultDraw | getCoords(xc - x, yc - y)
+    RES         r1, r4, r6
     MOV         r13, r15
-    BI          getCoords
-    OR          r12, r12, r0
+    SL          getCoords
+    OBB          r12, r12, r0
 
-    ADD         r0, r3, r6          ;resultDraw = resultDraw | getCoords(xc + y, yc + x)
-    ADD         r1, r4, r5
+    SUM         r0, r3, r6          ;resultDraw = resultDraw | getCoords(xc + y, yc + x)
+    SUM         r1, r4, r5
     MOV         r13, r15
-    BI          getCoords
-    OR          r12, r12, r0
+    SL          getCoords
+    OBB          r12, r12, r0
 
-    SUB         r0, r3, r6          ;resultDraw = resultDraw | getCoords(xc - y, yc + x)
-    ADD         r1, r4, r5
+    RES         r0, r3, r6          ;resultDraw = resultDraw | getCoords(xc - y, yc + x)
+    SUM         r1, r4, r5
     MOV         r13, r15
-    BI          getCoords
-    OR          r12, r12, r0
+    SL          getCoords
+    OBB          r12, r12, r0
 
-    ADD         r0, r3, r6          ;resultDraw = resultDraw | getCoords(xc + y, yc - x)
-    SUB         r1, r4, r5
+    SUM         r0, r3, r6          ;resultDraw = resultDraw | getCoords(xc + y, yc - x)
+    RES         r1, r4, r5
     MOV         r13, r15
-    BI          getCoords
-    OR          r12, r12, r0
+    SL          getCoords
+    OBB          r12, r12, r0
 
-    SUB         r0, r3, r6          ;resultDraw = resultDraw | getCoords(xc - y, yc - x)
-    SUB         r1, r4, r5
+    RES         r0, r3, r6          ;resultDraw = resultDraw | getCoords(xc - y, yc - x)
+    RES         r1, r4, r5
     MOV         r13, r15
-    BI          getCoords
-    OR          r12, r12, r0
+    SL          getCoords
+    OBB          r12, r12, r0
     
-    B          r10
+    SR          r10
 
 
 ; Args          r3 => xc, r4 => yc, r7 => r
@@ -141,63 +164,63 @@ circleBres:
     MOVI        r5, 0                   ; x = 0
     MOV         r6, r7                  ; y = r
     MOVI        r0, 1               
-    SL          r0, r7, r0              ; tmp = r << 1
+    DLI          r0, r7, r0              ; tmp = r << 1
 
     
 
     MOVI        r1, 3
-    SUB         r8, r1, r0              ; d = 3 - tmp
+    RES         r8, r1, r0              ; d = 3 - tmp
 
     MOV         r10, r15                ; ret = PC + 2
-    BI          drawCircle              ; drawCircle(xc, yc, x, y)
+    SL          drawCircle              ; drawCircle(xc, yc, x, y)
 
 circleBresWhile:
     ;MOV         r0 ,r8
-    ;STR         r11, r0
+    ;GDW         r11, r0
     ;OUT         r11
 
     CMP         r6, r5                  ; y < x
-    BL          circleBresWhile_break   ; break
+    SLM          circleBresWhile_break   ; break
 
     MOVI        r0, 1                       
-    ADD         r5, r5, r0              ; x = x + 1
+    SUM         r5, r5, r0              ; x = x + 1
 
     MOVI        r0, 0
     CMP         r0, r8                  ; 0 < d
-    BL          circleBres_if1
-    BI          circleBres_else1
+    SLM          circleBres_if1
+    SL          circleBres_else1
 
 circleBres_if1:
     MOVI        r0, 1   
-    SUB         r6, r6, r0              ; y = y - 1
+    RES         r6, r6, r0              ; y = y - 1
     
     MOVI        r0, 10
-    ADD         r8, r8, r0              ; d = d + 10
+    SUM         r8, r8, r0              ; d = d + 10
 
-    SUB         r0, r5, r6              ; tmp = x - y
+    RES         r0, r5, r6              ; tmp = x - y
 
     MOVI        r1, 2
-    SL          r0, r0, r1              ; tmp = tmp << 2
+    DLI          r0, r0, r1              ; tmp = tmp << 2
 
-    ADD         r8, r8, r0              ; d = d + tmp
-    BI circleBres_ret1
+    SUM         r8, r8, r0              ; d = d + tmp
+    SL circleBres_ret1
 circleBres_else1:
     MOVI        r0, 6
-    ADD         r8, r8, r0              ; d = d + 6
+    SUM         r8, r8, r0              ; d = d + 6
 
     MOVI        r0, 2
-    SL          r0, r5, r0              ; tmp = x << 2
+    DLI          r0, r5, r0              ; tmp = x << 2
 
-    ADD         r8, r8, r0              ; d = d + tmp
+    SUM         r8, r8, r0              ; d = d + tmp
 circleBres_ret1:
 
     MOV         r10, r15                ; ret = PC + 2
-    BI          drawCircle              ; drawCircle(xc, yc, x, y)
-    BI          circleBresWhile
+    SL          drawCircle              ; drawCircle(xc, yc, x, y)
+    SL          circleBresWhile
 
 
 circleBresWhile_break:
-    B          r14
+    SR          r14
 
 ; Args          r6 => x0, r7 => y0, r8 => x1, r9 => y1
 ; Out           NA
@@ -213,30 +236,30 @@ circleBresWhile_break:
 ;               r4 => dx && dif
 ;               r3 => D
 plotLine:
-    SUB         r10, r8, r6         ; eval = x1 - x0
+    RES         r10, r8, r6         ; eval = x1 - x0
     MOV         r0, r10
     MOV         r13, r15            ; ret2 = PC + 2
-    BI          absolute
+    SL          absolute
     MOV         r10, r0             ; eval = absolute(eval)
 
-    SUB         r0, r9, r7          ; tmp = y1 - y0
+    RES         r0, r9, r7          ; tmp = y1 - y0
     MOV         r13, r15            ; ret2 = PC + 2
-    BI          absolute            ; tmp = absolute(tmp)
+    SL          absolute            ; tmp = absolute(tmp)
 
     CMP         r0, r10             ; tmp < eval
-    BL          plotLine_if1
-    BI          plotLine_else1
+    SLM          plotLine_if1
+    SL          plotLine_else1
 plotLine_if1:
     MOVI        r10, 1              ; eval = 1
-    BI          plotLine_ret1       
+    SL          plotLine_ret1       
 plotLine_else1:
     MOVI        r10, 0              ; eval = 0
 plotLine_ret1:
 
     MOVI        r0, 0
     CMP         r10, r0             ; not eval
-    BE          plotLine_if2
-    BI          plotLine_ret2
+    SLI          plotLine_if2
+    SL          plotLine_ret2
 plotLine_if2:
     MOV         r0, r6              ; tmp = x0
     MOV         r6, r7              ; x0 = y0
@@ -245,70 +268,70 @@ plotLine_if2:
     MOV         r8, r9              ; x1 = y1
     MOV         r9, r0              ; y1 = tmp
 plotLine_ret2:
-    SUB         r4, r8, r6          ; dx = x1 - x0
-    SUB         r9, r9, r7          ; dy = y1 - y0
+    RES         r4, r8, r6          ; dx = x1 - x0
+    RES         r9, r9, r7          ; dy = y1 - y0
     MOVI        r5, 1               ; yi = 1
 
     MOVI        r0, 0
     CMP         r9, r0              ; dy < 0
-    BL          plotLine_if3
-    BI          plotLine_ret3
+    SLM          plotLine_if3
+    SL          plotLine_ret3
 plotLine_if3:
     MOVI        r1, 1
-    SUB         r5, r0, r1          ; yi = -1
-    SUB         r9, r0, r9          ; dy = -dy
+    RES         r5, r0, r1          ; yi = -1
+    RES         r9, r0, r9          ; dy = -dy
 plotLine_ret3:
     
 
-    SUB         r4, r9, r4          ; dif = dy - dx
-    ADD         r3, r9, r4          ; D = dy + dif
+    RES         r4, r9, r4          ; dif = dy - dx
+    SUM         r3, r9, r4          ; D = dy + dif
     MOV         r7, r7              ; y = y0
     MOV         r6, r6              ; x = x0
 
    
 draWhile:
     CMP         r8, r6              ; x1 < x
-    BL          draw_end
+    SLM          draw_end
 
     MOVI        r1, 1
     CMP         r10, r1             ; if eval == 1
-    BE          plotLine_if4
-    BI          plotLine_else4
+    SLI          plotLine_if4
+    SL          plotLine_else4
 plotLine_if4:
     MOV         r0, r6              ; param x = x
     MOV         r1, r7              ; param y = y
     MOV         r13, r15            ; ret2 = PC + 2
-    BI          getCoords           ; coords = getCoords(x, y)
-    BI          plotLine_ret4
+    SL          getCoords           ; coords = getCoords(x, y)
+    SL          plotLine_ret4
 plotLine_else4:
     MOV         r0, r7              ; param x = y
     MOV         r1, r6              ; param y = x
     MOV         r13, r15            ; ret2 = PC + 2
-    BI          getCoords           ; coords = getCoords(x, y)
+    SL          getCoords           ; coords = getCoords(x, y)
 plotLine_ret4:
 
-    OR          r12, r12,  r0       ; resultDraw = resultDraw | coords
+    OBB          r12, r12,  r0       ; resultDraw = resultDraw | coords
     
     MOVI        r0, 0               ; tmp = 0
     CMP         r0, r3              ; 0 < D
-    BL          plotLine_if5
-    BI          plotLine_else5
+    SLM          plotLine_if5
+    SL          plotLine_else5
 
 plotLine_if5:
-    ADD         r7, r7, r5          ; y = y + yi
-    ADD         r3, r3, r4          ; D = D + dif
-    ADD         r3, r3, r4          ; D = D + dif
-    BI          plotLine_ret5
+    SUM         r7, r7, r5          ; y = y + yi
+    SUM         r3, r3, r4          ; D = D + dif
+    SUM         r3, r3, r4          ; D = D + dif
+    SL          plotLine_ret5
 plotLine_else5: 
-    ADD         r3, r3, r9          ; D = D + dy
-    ADD         r3, r3, r9          ; D = D + dy
+    SUM         r3, r3, r9          ; D = D + dy
+    SUM         r3, r3, r9          ; D = D + dy
 plotLine_ret5:
     MOVI        r0, 1
-    ADD         r6, r6, r0          ; x = x + 1
-    BI  draWhile
+    SUM         r6, r6, r0          ; x = x + 1
+    SL  draWhile
 
 draw_end:
-    B           r14
+    SR           r14
 
 
 
@@ -327,74 +350,74 @@ drawAll:
     MOVI        r8, 4
     MOVI        r9, 0
     MOV         r14, r15
-    BI          plotLine
+    SL          plotLine
 
     MOVI        r6, 0
     MOVI        r7, 3
     MOVI        r8, 4
     MOVI        r9, 3
     MOV         r14, r15
-    BI          plotLine
+    SL          plotLine
 
     MOVI        r6, 0
     MOVI        r7, 0
     MOVI        r8, 0
     MOVI        r9, 4
     MOV         r14, r15
-    BI          plotLine
+    SL          plotLine
 
     MOVI        r6, 4
     MOVI        r7, 0
     MOVI        r8, 4
     MOVI        r9, 4
     MOV         r14, r15
-    BI          plotLine
+    SL          plotLine
 
-    STR         r11, r12
+    GDW         r11, r12
     MOVI        r0, 1
-    ADD         r11, r11, r0
+    SUM         r11, r11, r0
     MOVI        r12, 0
 
-    ; B
+    ; SR
     MOVI r6, 0
     MOVI r7, 0
     MOVI r8, 3
     MOVI r9, 0
     MOV r14, r15
-    BI plotLine
+    SL plotLine
     MOVI r6, 0
     MOVI r7, 2
     MOVI r8, 4
     MOVI r9, 2
     MOV r14, r15
-    BI plotLine
+    SL plotLine
     MOVI r6, 0
     MOVI r7, 4
     MOVI r8, 4
     MOVI r9, 4
     MOV r14, r15
-    BI plotLine
+    SL plotLine
     MOVI r6, 0
     MOVI r7, 0
     MOVI r8, 0
     MOVI r9, 4
     MOV r14, r15
-    BI plotLine
+    SL plotLine
     MOVI r6, 3
     MOVI r7, 0
     MOVI r8, 3
     MOVI r9, 2
     MOV r14, r15
-    BI plotLine
+    SL plotLine
     MOVI r6, 4
     MOVI r7, 2
     MOVI r8, 4
     MOVI r9, 4
     MOV r14, r15
-    BI plotLine
-    STR r11, r12
+    SL plotLine
+    GDW r11, r12
     MOVI r0, 1
-    ADD r11, r11, r0
+    SUM r11, r11, r0
     MOVI r12, 0
     ; C
     MOVI r6, 0
@@ -402,22 +425,22 @@ drawAll:
     MOVI r8, 4
     MOVI r9, 0
     MOV r14, r15
-    BI plotLine
+    SL plotLine
     MOVI r6, 0
     MOVI r7, 4
     MOVI r8, 4
     MOVI r9, 4
     MOV r14, r15
-    BI plotLine
+    SL plotLine
     MOVI r6, 0
     MOVI r7, 0
     MOVI r8, 0
     MOVI r9, 4
     MOV r14, r15
-    BI plotLine
-    STR r11, r12
+    SL plotLine
+    GDW r11, r12
     MOVI r0, 1
-    ADD r11, r11, r0
+    SUM r11, r11, r0
     MOVI r12, 0
     ; D
     MOVI r6, 0
@@ -425,28 +448,28 @@ drawAll:
     MOVI r8, 0
     MOVI r9, 4
     MOV r14, r15
-    BI plotLine
+    SL plotLine
     MOVI r6, 4
     MOVI r7, 1
     MOVI r8, 4
     MOVI r9, 3
     MOV r14, r15
-    BI plotLine
+    SL plotLine
     MOVI r6, 0
     MOVI r7, 0
     MOVI r8, 4
     MOVI r9, 1
     MOV r14, r15
-    BI plotLine
+    SL plotLine
     MOVI r6, 0
     MOVI r7, 4
     MOVI r8, 4
     MOVI r9, 3
     MOV r14, r15
-    BI plotLine
-    STR r11, r12
+    SL plotLine
+    GDW r11, r12
     MOVI r0, 1
-    ADD r11, r11, r0
+    SUM r11, r11, r0
     MOVI r12, 0
     ; E
     MOVI r6, 0
@@ -454,28 +477,28 @@ drawAll:
     MOVI r8, 4
     MOVI r9, 0
     MOV r14, r15
-    BI plotLine
+    SL plotLine
     MOVI r6, 0
     MOVI r7, 2
     MOVI r8, 4
     MOVI r9, 2
     MOV r14, r15
-    BI plotLine
+    SL plotLine
     MOVI r6, 0
     MOVI r7, 4
     MOVI r8, 4
     MOVI r9, 4
     MOV r14, r15
-    BI plotLine
+    SL plotLine
     MOVI r6, 0
     MOVI r7, 0
     MOVI r8, 0
     MOVI r9, 4
     MOV r14, r15
-    BI plotLine
-    STR r11, r12
+    SL plotLine
+    GDW r11, r12
     MOVI r0, 1
-    ADD r11, r11, r0
+    SUM r11, r11, r0
     MOVI r12, 0
     ; F
     MOVI r6, 0
@@ -483,22 +506,22 @@ drawAll:
     MOVI r8, 4
     MOVI r9, 0
     MOV r14, r15
-    BI plotLine
+    SL plotLine
     MOVI r6, 0
     MOVI r7, 2
     MOVI r8, 4
     MOVI r9, 2
     MOV r14, r15
-    BI plotLine
+    SL plotLine
     MOVI r6, 0
     MOVI r7, 0
     MOVI r8, 0
     MOVI r9, 4
     MOV r14, r15
-    BI plotLine
-    STR r11, r12
+    SL plotLine
+    GDW r11, r12
     MOVI r0, 1
-    ADD r11, r11, r0
+    SUM r11, r11, r0
     MOVI r12, 0
     ; G
     MOVI r6, 0
@@ -506,34 +529,34 @@ drawAll:
     MOVI r8, 4
     MOVI r9, 0
     MOV r14, r15
-    BI plotLine
+    SL plotLine
     MOVI r6, 2
     MOVI r7, 2
     MOVI r8, 4
     MOVI r9, 2
     MOV r14, r15
-    BI plotLine
+    SL plotLine
     MOVI r6, 0
     MOVI r7, 4
     MOVI r8, 4
     MOVI r9, 4
     MOV r14, r15
-    BI plotLine
+    SL plotLine
     MOVI r6, 0
     MOVI r7, 0
     MOVI r8, 0
     MOVI r9, 4
     MOV r14, r15
-    BI plotLine
+    SL plotLine
     MOVI r6, 4
     MOVI r7, 2
     MOVI r8, 4
     MOVI r9, 4
     MOV r14, r15
-    BI plotLine
-    STR r11, r12
+    SL plotLine
+    GDW r11, r12
     MOVI r0, 1
-    ADD r11, r11, r0
+    SUM r11, r11, r0
     MOVI r12, 0
     ; H
     MOVI r6, 0
@@ -541,22 +564,22 @@ drawAll:
     MOVI r8, 4
     MOVI r9, 2
     MOV r14, r15
-    BI plotLine
+    SL plotLine
     MOVI r6, 0
     MOVI r7, 0
     MOVI r8, 0
     MOVI r9, 4
     MOV r14, r15
-    BI plotLine
+    SL plotLine
     MOVI r6, 4
     MOVI r7, 0
     MOVI r8, 4
     MOVI r9, 4
     MOV r14, r15
-    BI plotLine
-    STR r11, r12
+    SL plotLine
+    GDW r11, r12
     MOVI r0, 1
-    ADD r11, r11, r0
+    SUM r11, r11, r0
     MOVI r12, 0
     ; I
     MOVI r6, 0
@@ -564,22 +587,22 @@ drawAll:
     MOVI r8, 4
     MOVI r9, 0
     MOV r14, r15
-    BI plotLine
+    SL plotLine
     MOVI r6, 0
     MOVI r7, 4
     MOVI r8, 4
     MOVI r9, 4
     MOV r14, r15
-    BI plotLine
+    SL plotLine
     MOVI r6, 2
     MOVI r7, 0
     MOVI r8, 2
     MOVI r9, 4
     MOV r14, r15
-    BI plotLine
-    STR r11, r12
+    SL plotLine
+    GDW r11, r12
     MOVI r0, 1
-    ADD r11, r11, r0
+    SUM r11, r11, r0
     MOVI r12, 0
     ; J
     MOVI r6, 1
@@ -587,22 +610,22 @@ drawAll:
     MOVI r8, 4
     MOVI r9, 0
     MOV r14, r15
-    BI plotLine
+    SL plotLine
     MOVI r6, 2
     MOVI r7, 0
     MOVI r8, 2
     MOVI r9, 4
     MOV r14, r15
-    BI plotLine
+    SL plotLine
     MOVI r6, 0
     MOVI r7, 4
     MOVI r8, 2
     MOVI r9, 4
     MOV r14, r15
-    BI plotLine
-    STR r11, r12
+    SL plotLine
+    GDW r11, r12
     MOVI r0, 1
-    ADD r11, r11, r0
+    SUM r11, r11, r0
     MOVI r12, 0
     ; K
     MOVI r6, 0
@@ -610,22 +633,22 @@ drawAll:
     MOVI r8, 0
     MOVI r9, 4
     MOV r14, r15
-    BI plotLine
+    SL plotLine
     MOVI r6, 1
     MOVI r7, 2
     MOVI r8, 4
     MOVI r9, 0
     MOV r14, r15
-    BI plotLine
+    SL plotLine
     MOVI r6, 1
     MOVI r7, 2
     MOVI r8, 4
     MOVI r9, 4
     MOV r14, r15
-    BI plotLine
-    STR r11, r12
+    SL plotLine
+    GDW r11, r12
     MOVI r0, 1
-    ADD r11, r11, r0
+    SUM r11, r11, r0
     MOVI r12, 0
     ; L
     MOVI r6, 0
@@ -633,16 +656,16 @@ drawAll:
     MOVI r8, 0
     MOVI r9, 4
     MOV r14, r15
-    BI plotLine
+    SL plotLine
     MOVI r6, 0
     MOVI r7, 4
     MOVI r8, 4
     MOVI r9, 4
     MOV r14, r15
-    BI plotLine
-    STR r11, r12
+    SL plotLine
+    GDW r11, r12
     MOVI r0, 1
-    ADD r11, r11, r0
+    SUM r11, r11, r0
     MOVI r12, 0
     ; M
     MOVI r6, 0
@@ -650,28 +673,28 @@ drawAll:
     MOVI r8, 0
     MOVI r9, 4
     MOV r14, r15
-    BI plotLine
+    SL plotLine
     MOVI r6, 4
     MOVI r7, 0
     MOVI r8, 4
     MOVI r9, 4
     MOV r14, r15
-    BI plotLine
+    SL plotLine
     MOVI r6, 0
     MOVI r7, 0
     MOVI r8, 2
     MOVI r9, 3
     MOV r14, r15
-    BI plotLine
+    SL plotLine
     MOVI r6, 4
     MOVI r7, 0
     MOVI r8, 2
     MOVI r9, 3
     MOV r14, r15
-    BI plotLine
-    STR r11, r12
+    SL plotLine
+    GDW r11, r12
     MOVI r0, 1
-    ADD r11, r11, r0
+    SUM r11, r11, r0
     MOVI r12, 0
     ; N
     MOVI r6, 0
@@ -679,22 +702,22 @@ drawAll:
     MOVI r8, 0
     MOVI r9, 4
     MOV r14, r15
-    BI plotLine
+    SL plotLine
     MOVI r6, 4
     MOVI r7, 0
     MOVI r8, 4
     MOVI r9, 4
     MOV r14, r15
-    BI plotLine
+    SL plotLine
     MOVI r6, 0
     MOVI r7, 0
     MOVI r8, 4
     MOVI r9, 4
     MOV r14, r15
-    BI plotLine
-    STR r11, r12
+    SL plotLine
+    GDW r11, r12
     MOVI r0, 1
-    ADD r11, r11, r0
+    SUM r11, r11, r0
     MOVI r12, 0
     ; O
     MOVI r6, 0
@@ -702,28 +725,28 @@ drawAll:
     MOVI r8, 0
     MOVI r9, 3
     MOV r14, r15
-    BI plotLine
+    SL plotLine
     MOVI r6, 1
     MOVI r7, 0
     MOVI r8, 3
     MOVI r9, 0
     MOV r14, r15
-    BI plotLine
+    SL plotLine
     MOVI r6, 1
     MOVI r7, 4
     MOVI r8, 3
     MOVI r9, 4
     MOV r14, r15
-    BI plotLine
+    SL plotLine
     MOVI r6, 4
     MOVI r7, 1
     MOVI r8, 4
     MOVI r9, 3
     MOV r14, r15
-    BI plotLine
-    STR r11, r12
+    SL plotLine
+    GDW r11, r12
     MOVI r0, 1
-    ADD r11, r11, r0
+    SUM r11, r11, r0
     MOVI r12, 0
     ; P
     MOVI r6, 0
@@ -731,28 +754,28 @@ drawAll:
     MOVI r8, 0
     MOVI r9, 4
     MOV r14, r15
-    BI plotLine
+    SL plotLine
     MOVI r6, 1
     MOVI r7, 0
     MOVI r8, 4
     MOVI r9, 0
     MOV r14, r15
-    BI plotLine
+    SL plotLine
     MOVI r6, 1
     MOVI r7, 3
     MOVI r8, 4
     MOVI r9, 3
     MOV r14, r15
-    BI plotLine
+    SL plotLine
     MOVI r6, 4
     MOVI r7, 0
     MOVI r8, 4
     MOVI r9, 3
     MOV r14, r15
-    BI plotLine
-    STR r11, r12
+    SL plotLine
+    GDW r11, r12
     MOVI r0, 1
-    ADD r11, r11, r0
+    SUM r11, r11, r0
     MOVI r12, 0
     ; Q
     MOVI r6, 0
@@ -760,34 +783,34 @@ drawAll:
     MOVI r8, 0
     MOVI r9, 3
     MOV r14, r15
-    BI plotLine
+    SL plotLine
     MOVI r6, 1
     MOVI r7, 0
     MOVI r8, 3
     MOVI r9, 0
     MOV r14, r15
-    BI plotLine
+    SL plotLine
     MOVI r6, 1
     MOVI r7, 4
     MOVI r8, 3
     MOVI r9, 4
     MOV r14, r15
-    BI plotLine
+    SL plotLine
     MOVI r6, 4
     MOVI r7, 1
     MOVI r8, 4
     MOVI r9, 3
     MOV r14, r15
-    BI plotLine
+    SL plotLine
     MOVI r6, 3
     MOVI r7, 3
     MOVI r8, 4
     MOVI r9, 4
     MOV r14, r15
-    BI plotLine
-    STR r11, r12
+    SL plotLine
+    GDW r11, r12
     MOVI r0, 1
-    ADD r11, r11, r0
+    SUM r11, r11, r0
     MOVI r12, 0
     ; R
     MOVI r6, 0
@@ -795,34 +818,34 @@ drawAll:
     MOVI r8, 0
     MOVI r9, 4
     MOV r14, r15
-    BI plotLine
-    MOVI r6, 1
+    SL plotLine
+    MOVI r6, 3
     MOVI r7, 0
-    MOVI r8, 4
+    MOVI r8, 3
+    MOVI r9, 3
+    MOV r14, r15
+    SL plotLine
+    MOVI r6, 0
+    MOVI r7, 0
+    MOVI r8, 3
     MOVI r9, 0
     MOV r14, r15
-    BI plotLine
-    MOVI r6, 1
+    SL plotLine
+    MOVI r6, 0
     MOVI r7, 3
     MOVI r8, 4
     MOVI r9, 3
     MOV r14, r15
-    BI plotLine
+    SL plotLine
     MOVI r6, 4
-    MOVI r7, 0
-    MOVI r8, 4
-    MOVI r9, 3
-    MOV r14, r15
-    BI plotLine
-    MOVI r6, 3
     MOVI r7, 3
     MOVI r8, 4
     MOVI r9, 4
     MOV r14, r15
-    BI plotLine
-    STR r11, r12
+    SL plotLine
+    GDW r11, r12
     MOVI r0, 1
-    ADD r11, r11, r0
+    SUM r11, r11, r0
     MOVI r12, 0
     ; S
     MOVI r6, 0
@@ -830,34 +853,34 @@ drawAll:
     MOVI r8, 0
     MOVI r9, 2
     MOV r14, r15
-    BI plotLine
+    SL plotLine
     MOVI r6, 4
     MOVI r7, 2
     MOVI r8, 4
     MOVI r9, 4
     MOV r14, r15
-    BI plotLine
+    SL plotLine
     MOVI r6, 0
     MOVI r7, 0
     MOVI r8, 4
     MOVI r9, 0
     MOV r14, r15
-    BI plotLine
+    SL plotLine
     MOVI r6, 0
     MOVI r7, 4
     MOVI r8, 4
     MOVI r9, 4
     MOV r14, r15
-    BI plotLine
+    SL plotLine
     MOVI r6, 0
     MOVI r7, 2
     MOVI r8, 4
     MOVI r9, 2
     MOV r14, r15
-    BI plotLine
-    STR r11, r12
+    SL plotLine
+    GDW r11, r12
     MOVI r0, 1
-    ADD r11, r11, r0
+    SUM r11, r11, r0
     MOVI r12, 0
     ; T
     MOVI r6, 0
@@ -865,16 +888,16 @@ drawAll:
     MOVI r8, 4
     MOVI r9, 0
     MOV r14, r15
-    BI plotLine
+    SL plotLine
     MOVI r6, 2
     MOVI r7, 0
     MOVI r8, 2
     MOVI r9, 4
     MOV r14, r15
-    BI plotLine
-    STR r11, r12
+    SL plotLine
+    GDW r11, r12
     MOVI r0, 1
-    ADD r11, r11, r0
+    SUM r11, r11, r0
     MOVI r12, 0
     ; U
     MOVI r6, 0
@@ -882,22 +905,22 @@ drawAll:
     MOVI r8, 0
     MOVI r9, 4
     MOV r14, r15
-    BI plotLine
+    SL plotLine
     MOVI r6, 4
     MOVI r7, 0
     MOVI r8, 4
     MOVI r9, 4
     MOV r14, r15
-    BI plotLine
+    SL plotLine
     MOVI r6, 0
     MOVI r7, 4
     MOVI r8, 4
     MOVI r9, 4
     MOV r14, r15
-    BI plotLine
-    STR r11, r12
+    SL plotLine
+    GDW r11, r12
     MOVI r0, 1
-    ADD r11, r11, r0
+    SUM r11, r11, r0
     MOVI r12, 0
     ; V
     MOVI r6, 0
@@ -905,16 +928,16 @@ drawAll:
     MOVI r8, 2
     MOVI r9, 4
     MOV r14, r15
-    BI plotLine
+    SL plotLine
     MOVI r6, 4
     MOVI r7, 0
     MOVI r8, 2
     MOVI r9, 4
     MOV r14, r15
-    BI plotLine
-    STR r11, r12
+    SL plotLine
+    GDW r11, r12
     MOVI r0, 1
-    ADD r11, r11, r0
+    SUM r11, r11, r0
     MOVI r12, 0
     ; W
     MOVI r6, 0
@@ -922,28 +945,28 @@ drawAll:
     MOVI r8, 0
     MOVI r9, 4
     MOV r14, r15
-    BI plotLine
+    SL plotLine
     MOVI r6, 2
     MOVI r7, 0
     MOVI r8, 2
     MOVI r9, 4
     MOV r14, r15
-    BI plotLine
+    SL plotLine
     MOVI r6, 4
     MOVI r7, 0
     MOVI r8, 4
     MOVI r9, 4
     MOV r14, r15
-    BI plotLine
+    SL plotLine
     MOVI r6, 0
     MOVI r7, 4
     MOVI r8, 4
     MOVI r9, 4
     MOV r14, r15
-    BI plotLine
-    STR r11, r12
+    SL plotLine
+    GDW r11, r12
     MOVI r0, 1
-    ADD r11, r11, r0
+    SUM r11, r11, r0
     MOVI r12, 0
     ; X
     MOVI r6, 0
@@ -951,16 +974,16 @@ drawAll:
     MOVI r8, 4
     MOVI r9, 4
     MOV r14, r15
-    BI plotLine
+    SL plotLine
     MOVI r6, 4
     MOVI r7, 0
     MOVI r8, 0
     MOVI r9, 4
     MOV r14, r15
-    BI plotLine
-    STR r11, r12
+    SL plotLine
+    GDW r11, r12
     MOVI r0, 1
-    ADD r11, r11, r0
+    SUM r11, r11, r0
     MOVI r12, 0
     ; Y
     MOVI r6, 0
@@ -968,22 +991,22 @@ drawAll:
     MOVI r8, 2
     MOVI r9, 2
     MOV r14, r15
-    BI plotLine
+    SL plotLine
     MOVI r6, 4
     MOVI r7, 0
     MOVI r8, 2
     MOVI r9, 2
     MOV r14, r15
-    BI plotLine
+    SL plotLine
     MOVI r6, 2
     MOVI r7, 3
     MOVI r8, 2
     MOVI r9, 4
     MOV r14, r15
-    BI plotLine
-    STR r11, r12
+    SL plotLine
+    GDW r11, r12
     MOVI r0, 1
-    ADD r11, r11, r0
+    SUM r11, r11, r0
     MOVI r12, 0
     ; Z
     MOVI r6, 0
@@ -991,22 +1014,22 @@ drawAll:
     MOVI r8, 4
     MOVI r9, 0
     MOV r14, r15
-    BI plotLine
+    SL plotLine
     MOVI r6, 4
     MOVI r7, 0
     MOVI r8, 0
     MOVI r9, 4
     MOV r14, r15
-    BI plotLine
+    SL plotLine
     MOVI r6, 0
     MOVI r7, 4
     MOVI r8, 4
     MOVI r9, 4
     MOV r14, r15
-    BI plotLine
-    STR r11, r12
+    SL plotLine
+    GDW r11, r12
     MOVI r0, 1
-    ADD r11, r11, r0
+    SUM r11, r11, r0
     MOVI r12, 0
 
     
@@ -1016,11 +1039,11 @@ drawAll:
     MOVI        r4, 2
     MOVI        r7, 2
     MOV         r14, r15
-    BI          circleBres
+    SL          circleBres
 
-    STR         r11, r12
+    GDW         r11, r12
     MOVI        r0, 1
-    ADD         r11, r11, r0
+    SUM         r11, r11, r0
     MOVI        r12, 0
 
     ; 28
@@ -1029,46 +1052,78 @@ drawAll:
     MOVI r8, 2
     MOVI r9, 1
     MOV r14, r15
-    BI plotLine
+    SL plotLine
     MOVI r6, 2
     MOVI r7, 3
     MOVI r8, 2
     MOVI r9, 4
     MOV r14, r15
-    BI plotLine
+    SL plotLine
     MOVI r6, 0
     MOVI r7, 2
     MOVI r8, 1
     MOVI r9, 2
     MOV r14, r15
-    BI plotLine
+    SL plotLine
     MOVI r6, 3
     MOVI r7, 2
     MOVI r8, 4
     MOVI r9, 2
     MOV r14, r15
-    BI plotLine
+    SL plotLine
     MOVI r6, 0
     MOVI r7, 2
     MOVI r8, 0
     MOVI r9, 4
     MOV r14, r15
-    BI plotLine
+    SL plotLine
 
-    STR r11, r12
+    GDW r11, r12
     MOVI r0, 1
-    ADD r11, r11, r0
+    SUM r11, r11, r0
+    MOVI r12, 0
+
+    ; 29 ,
+    MOVI r6, 1
+    MOVI r7, 2
+    MOVI r8, 0
+    MOVI r9, 4
+    MOV r14, r15
+    SL plotLine
+
+    GDW r11, r12
+    MOVI r0, 1
+    SUM r11, r11, r0
+    MOVI r12, 0
+
+    ; 30 .
+    MOVI r6, 0
+    MOVI r7, 3
+    MOVI r8, 0
+    MOVI r9, 4
+    MOV r14, r15
+    SL plotLine
+    MOVI r6, 1
+    MOVI r7, 3
+    MOVI r8, 1
+    MOVI r9, 4
+    MOV r14, r15
+    SL plotLine
+
+    GDW r11, r12
+    MOVI r0, 1
+    SUM r11, r11, r0
     MOVI r12, 0
 
 
-    ;29
+    ;DEFAULT
     MOVI        r12, 0
-    STR         r11, r12
+    GDW         r11, r12
     MOVI        r0, 1
-    ADD         r11, r11, r0
+    SUM         r11, r11, r0
     MOVI        r12, 0
 
-    BI          drawAll_ret
+    SL          drawAll_ret
 
 
 

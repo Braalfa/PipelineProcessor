@@ -16,8 +16,8 @@ def getCoords(x, y):
     tmp = 2
     tmp = y << tmp
     tmp = tmp + y
-    tmp = tmp + y 
-    coords = coords << tmp     
+    tmp = tmp + y
+    coords = coords << tmp
     return coords
 
 
@@ -349,19 +349,32 @@ def drawAll():
     memmoryLetters[i] = resultDraw
     i += 1
 
-    # 28
+    # 27
     resultDraw = 0
     circleBres(2, 2, 2)  # O
     memmoryLetters[i] = resultDraw
     i += 1
 
-    # 29
+    # 28
     resultDraw = 0
     plotLine(2, 0, 2, 1)  # |
     plotLine(2, 3, 2, 4)  # |
     plotLine(0, 2, 1, 2)  # |
     plotLine(3, 2, 4, 2)  # |
     plotLine(0, 2, 0, 4)  # |
+    memmoryLetters[i] = resultDraw
+    i += 1
+
+    # 29 ,
+    resultDraw = 0
+    plotLine(1, 2, 0, 4)  # |
+    memmoryLetters[i] = resultDraw
+    i += 1
+
+    # 30 .
+    resultDraw = 0
+    plotLine(0, 3, 0, 4)  # |
+    plotLine(1, 3, 1, 4)  # |
     memmoryLetters[i] = resultDraw
     i += 1
 
@@ -374,12 +387,13 @@ def draw(char):
 memmory = {x: 0 for x in range(200)}
 file = open("test.txt")
 text = file.read()
-memmoryText = [1, 23, 4, 9, 18, 0]
+memmoryText = [18, 29, 2, 30, 3, 0, ]
 memmoryLetters = {x: 0 for x in range(30)}
 
 offset = 0
 resultDraw = 0
 drawAll()
+print(memmoryLetters)
 while True:
     if (memmoryText[offset] == 0):
         break
@@ -396,7 +410,7 @@ offsetX = 0
 offsetY = 0
 for i in range(200):
     bits = list("{:036b}".format(memmory[i]))
-    print("{:036b}".format(memmory[i]))
+    # print("{:036b}".format(memmory[i]))
     bits.reverse()
     for j in range(36):
         X = j % 6 + offsetX*6

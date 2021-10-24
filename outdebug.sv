@@ -53,9 +53,10 @@ module outdebug();
 	logic [WIDTH-1:0] aluOutputWB;
 	logic [ADDRESSWIDTH-1:0] regDestinationAddressWB;
 	logic [WIDTH-1:0] outputWB;
+	logic startIO;
 	
 	CPU #(WIDTH, REGNUM, ADDRESSWIDTH, OPCODEWIDTH, INSTRUCTIONWIDTH) CPU
-	(clock, reset, 0,
+	(clock, reset, startIO,
 	outFlag,
 	out,
 	writeEnableDD,
@@ -101,9 +102,11 @@ module outdebug();
 	outputWB);
 
 	logic [15:0] i;
+	logic [15:0] j;
 	integer OutFile;
 	initial begin
-		OutFile = $fopen("C://Users//alfab//Documents//PipelineProcessor//outfile.txt");
+		startIO = 0;
+		OutFile = $fopen("C://Users//Juanp//Documents//Workspace//TEC//PipelineProcessor//outfile.txt");
 
 		reset = 1;
 		clock = 0;
@@ -115,7 +118,12 @@ module outdebug();
 		#10;
 		
 		i = 0;
-		while(i<667) begin
+		j = 0;
+		while(i<668) begin
+			j = j + 1;
+			if (j == 10) begin
+				startIO = 1;
+			end
 			clock = 1;
 			#10
 			if(outFlag) begin 
