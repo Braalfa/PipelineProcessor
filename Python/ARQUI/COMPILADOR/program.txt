@@ -12,7 +12,7 @@ start:
     SL          drawAll
 
 drawAll_ret:
-    MOVI        r10, 41          ; spaces = 41, contador para espacios
+    MOVI        r10, 50          ; spaces = 41, contador para espacios
     MOVI        r11, 32          ; offset1 = 32, contador para mainWhile
     MOVI        r12, 1056        ; offset2 = 1056, se guarda a partir de la 1056
 
@@ -24,8 +24,9 @@ mainWhile:
     CMP         r0, r1          ; 0 == char          
     SLI         mainWhile_break
 
-    ;CMP         r0, r10          ; 0 == spaces        
-    ;SLI         checkSpaces
+    MOVI        r1, 0
+    CMP         r1, r10          ; 0 == spaces        
+    SLI         checkSpaces
 
     CGW         r0, r0          ; dibujo = mem[char]
     GDW         r12, r0         ; mem[offset2] = dibujo
@@ -79,11 +80,22 @@ checkSpaces:
     CGW         r0, r0
     MOVI        r1, 31
     CMP         r0, r1
-    SLI         mainWhile
+    SLI         checkSpaces_if1
+    SL          checkSpaces_ret1
+checkSpaces_if1:
+    MOVI        r10, 50        
+    SL          mainWhile
+checkSpaces_ret1:
 
     CGW         r0, r11
     CMP         r0, r1
-    SLI         mainWhile
+    SLI         checkSpaces_if2
+    SL          checkSpaces_ret2
+checkSpaces_if2:
+    MOVI        r10, 50        
+    SL          mainWhile
+checkSpaces_ret2:
+
 
     MOV         r0, r12
 checkSpaces_while:
@@ -105,7 +117,7 @@ checkSpaces_break:
     SUM         r11, r11, r1
     MOV         r12, r0
 
-    MOVI        r10, 41       
+    MOVI        r10, 50       
 
     SL         mainWhile
 

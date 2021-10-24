@@ -391,9 +391,11 @@ def checkSpaces():
     tmp1 = memmory[tmp1]
     tmp2 = 31
     if (tmp1 == tmp2):
+        spaces = 41
         return
     tmp1 = memmory[offset1]
     if(tmp1 == tmp2):
+        spaces = 41
         return
 
     tmp1 = offset2

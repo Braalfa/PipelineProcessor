@@ -26,6 +26,6 @@ f.writelines(asciiList)
 
 mem = []
 for i in range(750):
-    mem.append('{:032b}'.format(0)+"\n" )
+    mem.append('{:036b}'.format(0)+"\n" )
 f = open("../mem4.txt", "w")
 f.writelines(mem)

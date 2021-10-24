@@ -119,7 +119,7 @@ module outdebug();
 		
 		i = 0;
 		j = 0;
-		while(i<668) begin
+		while(i<750) begin
 			j = j + 1;
 			if (j == 10) begin
 				startIO = 1;
