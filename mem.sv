@@ -47,17 +47,17 @@ module mem #(parameter WIDTH = 32, parameter INSTRUCTIONWIDTH = 24)
 	
 	always_comb begin
 		rd2 = 0;
-		if (a2==1568) rd2 = startIOExtended;
+		if (a2==1806) rd2 = startIOExtended;
 		else if(a2<32) rd2 = rdAux[WIDTH*2-1:WIDTH];
 		else if (a2<32+1024) rd2  = rdAux[WIDTH*3-1:WIDTH*2];
-		else if (a2<32+1024+512)  rd2  = rdAux[WIDTH*4-1:WIDTH*3];
+		else if (a2<32+1024+750)  rd2  = rdAux[WIDTH*4-1:WIDTH*3];
 		
 	
 		weAux[3:1] = 0;
 		if (we) begin
 			if(a2<32) weAux[1] = 1;
 			else if (a2<32+1024) weAux[2] = 1;
-			else if (a2<32+1024+512) weAux[3] = 1;
+			else if (a2<32+1024+750) weAux[3] = 1;
 		end
 		
 	end

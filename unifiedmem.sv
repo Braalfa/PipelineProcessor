@@ -20,10 +20,10 @@ module unifiedmem #(parameter WIDTH = 36)
 	output logic [WIDTH*4-1:0] rd);
 	
 
-	logic [WIDTH-1:0] RAM1 [1024-1:0];
+	logic [24-1:0] RAM1 [1024-1:0];
 	logic [WIDTH-1:0] RAM2 [32-1:0];
 	logic [5-1:0] RAM3 [1024-1:0];
-	logic [WIDTH-1:0] RAM4 [512-1:0];
+	logic [WIDTH-1:0] RAM4 [750-1:0];
 
 	initial begin
 		$readmemb("C://Users//Juanp//Documents//Workspace//TEC//PipelineProcessor//mem1.txt",RAM1);
