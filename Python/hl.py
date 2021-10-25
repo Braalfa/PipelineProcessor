@@ -3,7 +3,7 @@ import numpy as np
 # _________________________________/ALTO NIVEL/_________________________________
 LINE_SIZE = 41
 
-im = Image.new('1', (300, 300), 'white')
+im = Image.new('1', (250, 250), 'white')
 offsetX = 0
 offsetY = 0
 
@@ -14,15 +14,15 @@ with open('../outfile.txt') as f:
 for i in range(len(memmory)):
     memmory[i] = memmory[i][:-1]
 
-for i in range(len(memmory), 2500):
+for i in range(len(memmory), 1681):
     memmory.append("{:036b}".format(0))
 
-for i in range(2500):
+for i in range(1681):
     bits = [int(c) for c in memmory[i]]
     bits.reverse()
     for j in range(36):
-        X = j % 6 + 6*(i%50)
-        Y = j//6 + 6*(i//50)
+        X = j % 6 + 6*(i%41)
+        Y = j//6 + 6*(i//41)
         if (bits[j] == 1):
             color = ImageColor.getcolor('black', '1')
         else:
